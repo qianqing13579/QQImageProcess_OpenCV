@@ -1,0 +1,2 @@
+# QQImageProcess_OpenCV
+OpenCV版本的图像处理库
