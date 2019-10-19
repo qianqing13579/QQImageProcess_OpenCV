@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);</LibraryPath>
+    <_PropertySheetDisplayName>VS2013_Debug</_PropertySheetDisplayName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>opencv_calib3d342d.lib;opencv_core342d.lib;opencv_dnn342d.lib;opencv_features2d342d.lib;opencv_flann342d.lib;opencv_highgui342d.lib;opencv_imgcodecs342d.lib;opencv_imgproc342d.lib;opencv_ml342d.lib;opencv_objdetect342d.lib;opencv_photo342d.lib;opencv_shape342d.lib;opencv_superres342d.lib;opencv_videoio342d.lib;opencv_video342d.lib;opencv_videostab342d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../../Resource/3rdParty/OpenCV_3.4.2/x86/vc12/lib</AdditionalLibraryDirectories>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>../../../../Resource/3rdParty/OpenCV_3.4.2/include;../../../../Src/;../../../../Src/3rdParty/rapidjson/include/;../../../../Src/3rdParty/;../../../../Src/Utility/;../../../../Src/DNN/</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
