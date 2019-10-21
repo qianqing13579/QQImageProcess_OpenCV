@@ -2,6 +2,7 @@
 # ----------------------------------------------------------------------------
 
 Build/* 
+Resource/3rdParty/*
 
 # qtcreator generated files
 *.pro.user*
