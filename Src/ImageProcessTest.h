@@ -3,8 +3,8 @@
 
 //////////////////////////////////////////////////////////////////////////
 
-#ifndef __IMAGEPROCESS_TEST_H__
-#define __IMAGEPROCESS_TEST_H__
+#ifndef __QQ_IMAGEPROCESS_TEST_H__
+#define __QQ_IMAGEPROCESS_TEST_H__
 
 #include "opencv2/opencv.hpp"
 #include"All.h"

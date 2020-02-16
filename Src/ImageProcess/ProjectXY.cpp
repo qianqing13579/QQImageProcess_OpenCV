@@ -7,9 +7,7 @@ using namespace std;
 namespace QQ
 {
 
-
-
-//#define INTEGRALIMAGE
+#define RESULT	"D:/Image/Projects/WuHu/Result/"
 
 //2015-3-4 16:36:18,by QQ
 //垂直投影(向X轴方向投影)

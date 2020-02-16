@@ -265,13 +265,17 @@ void ImageProcessTest::TestConvolution()
 		time1 = getTickCount();
 
 		// 测试环境：2017-7-29 16:43:30,Core i5-6200U,12G,Release
-		Convolution22(srcImage, kernel, dstImage);// 9.815479,优化后的算法速度较快
-		//Convolution2(srcImage, kernel, dstImage);// 10.792738
+		//Convolution1(srcImage, kernel, dstImage);// 24
+		Convolution12(srcImage, kernel, dstImage);// 21
+
+		//Convolution2(srcImage, kernel, dstImage);// 17
+		//Convolution22(srcImage, kernel, dstImage);// 13,优化后的算法速度较快
+
 		time2 = getTickCount();
 		sum += (time2 - time1)*1000.0 / getTickFrequency();
 	}
 
-	imwrite("D:/1.jpg", dstImage);
+	imwrite("Result.jpg", dstImage);
 	printf("average time:%f\n", sum / NUM_LOOP);
 	
 }

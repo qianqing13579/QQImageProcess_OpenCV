@@ -5,6 +5,81 @@
 namespace QQ
 {
 
+//计算窗口像素平均值
+static int CalculateMeanValue(uchar *imageData, int pixelCount)
+{
+	int sum = 0;
+	for (int i = 0; i <= pixelCount - 1; ++i)
+	{
+		sum += imageData[i];
+	}
+	return sum / pixelCount;
+}
+
+//计算亮度中值和灰度<=中值的像素点个数
+static void CalculateImage_MedianGray_PixelCount(const Mat &histogram, int pixelCount, int &medianValue, int &pixleCountLowerMedian)
+{
+	float  *data = (float *)histogram.data;//直方图
+	int sum = 0;
+	for (int i = 0; i <= 255; ++i)
+	{
+		//
+		sum += data[i];
+		if (2 * sum>pixelCount)
+		{
+			medianValue = i;
+			pixleCountLowerMedian = sum;
+			break;
+		}
+	}
+}
+
+// 用于比较
+static uchar GetMedianValue(const Mat& image)
+{
+	double time1 = getTickCount();
+	////////////////////////求直方图////////////////////////////////////
+	Mat histogram;//直方图
+	int channels[] = { 0 };//需要计算的通道
+	int histogramSize[] = { 256 };////每个直方图bin的个数	
+
+	//每个直方图灰度级范围
+	float range[] = { 0, 256 };//多个直方图，需要设置多个数组 ，参考 Learn_calcHist_minMaxLoc_Function_Demo3()   
+	const float* histRange[] = { range };
+
+	//计算直方图
+	calcHist(&image, //Mat 数组，这里只计算一副图像
+		1,//Mat的个数
+		channels,//使用哪些单通道的图像来计算目标直方图，通道数：0,1,2...
+		Mat(),//Mat()返回一个空值，表示不用mask,
+		histogram, //直方图
+		1, //直方图的维数，如果计算2个直方图，就为2
+		histogramSize, //每一个直方图bin的个数,也就是每列的行数
+		histRange//灰度级变化范围
+		);
+	double time2 = getTickCount();
+	double elapse_ms = (time2 - time1)*1000. / getTickFrequency();
+	std::cout << "OpenCV time:" << elapse_ms << std::endl;
+
+
+	////////////////////////求中值////////////////////////////////////
+	float *data = (float *)histogram.data;
+	int sum = 0;
+	int medianValue;
+	int pixelCount = image.cols*image.rows;
+	for (int i = 0; i <= 255; ++i)
+	{
+		sum += data[i];
+		if (sum >= pixelCount / 2)
+		{
+			medianValue = i;
+			break;
+		}
+
+	}
+	return medianValue;
+}
+
 //2015-1-1 20:23:53，by QQ
 //使用copyMakeBorder扩充图像边界，处理滤波边界
 void Blur(const Mat &srcImage, Mat &dstImage, Size size_Aperture)
@@ -461,15 +536,7 @@ void Blur_1(const Mat &srcImage, Mat &dstImage,Size size_Aperture)
 	}
 }
 
-int CalculateMeanValue(uchar *imageData,int pixelCount)
-{
-	int sum=0;
-	for (int i=0;i<=pixelCount-1;++i)
-	{
-		sum+=imageData[i];
-	}
-	return sum/pixelCount;
-}
+
 
 //2015-4-22 19:51:29,by QQ
 //改进的高效中值滤波：没有采用OpenCV求直方图
@@ -794,23 +861,7 @@ void FastMedianBlur_1(const Mat &srcImage, Mat &dstImage, int width_Aperture)
 	}//end of y
 
 }
-//计算亮度中值和灰度<=中值的像素点个数
-void CalculateImage_MedianGray_PixelCount(const Mat &histogram,int pixelCount,int &medianValue,int &pixleCountLowerMedian)
-{
-	float  *data = (float *)histogram.data;//直方图
-	int sum=0;
-	for (int i=0;i<=255;++i)
-	{
-		//
-		sum+=data[i];
-		if (2*sum>pixelCount)
-		{
-			medianValue=i;
-			pixleCountLowerMedian=sum;
-			break;
-		}
-	}
-}
+
 
 
 //边界没处理
@@ -902,50 +953,7 @@ void MedianBlur(const Mat &srcImage, Mat &dstImage, int width_Aperture)
 
 }
 
-uchar GetMedianValue(const Mat& image)
-{
-	double time1 = getTickCount();
-	////////////////////////求直方图////////////////////////////////////
-	Mat histogram;//直方图
-	int channels[] = { 0 };//需要计算的通道
-	int histogramSize[] = { 256 };////每个直方图bin的个数	
 
-	//每个直方图灰度级范围
-	float range[] = { 0, 256 };//多个直方图，需要设置多个数组 ，参考 Learn_calcHist_minMaxLoc_Function_Demo3()   
-	const float* histRange[] = { range };
-
-	//计算直方图
-	calcHist(&image, //Mat 数组，这里只计算一副图像
-		1,//Mat的个数
-		channels,//使用哪些单通道的图像来计算目标直方图，通道数：0,1,2...
-		Mat(),//Mat()返回一个空值，表示不用mask,
-		histogram, //直方图
-		1, //直方图的维数，如果计算2个直方图，就为2
-		histogramSize, //每一个直方图bin的个数,也就是每列的行数
-		histRange//灰度级变化范围
-		);
-	double time2 = getTickCount();
-	double elapse_ms = (time2-time1)*1000. / getTickFrequency();
-	std::cout << "OpenCV time:" << elapse_ms << std::endl;
-
-
-	////////////////////////求中值////////////////////////////////////
-	float *data = (float *)histogram.data;
-	int sum = 0;
-	int medianValue;
-	int pixelCount = image.cols*image.rows;
-	for (int i = 0; i <= 255; ++i)
-	{
-		sum += data[i];
-		if (sum >= pixelCount / 2)
-		{
-			medianValue = i;
-			break;
-		}
-
-	}
-	return medianValue;
-}
 
 // 2016-10-4,by QQ
 void GaussianBlur(const Mat &srcImage, Mat &dstImage, double sigma)

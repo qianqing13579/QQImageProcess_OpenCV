@@ -4,18 +4,12 @@
 //
 // Please contact me if you find any bugs, or have any suggestions.
 // Contact:
-//		Telephone:17761745857
-//		Email:654393155@qq.com
+//		Email:qianqing13579@163.com
 //		Blog: http://blog.csdn.net/qianqing13579
 //////////////////////////////////////////////////////////////////////////
 
-
-#ifndef __TYPE_DEFINITION_H__
-#define __TYPE_DEFINITION_H__
-
-//////////////////////////////////////////////////////////////////////////
-//						Common macros
-//////////////////////////////////////////////////////////////////////////
+#ifndef __QQ_TYPE_DEFINITION_H__
+#define __QQ_TYPE_DEFINITION_H__
 
 //WIN32,_WIN32：平台判断
 //DLLAPI_EXPORTS：条件宏
@@ -42,8 +36,5 @@ printf("%d\n", SATURATE(-89)); // 0
 #define  SATURATE(x)   (uchar)(((x) & ~255) == 0 ? (x) : ~((x)>>31)) // min(max(x,0),255)，适用于x为任意类型
 
 
-//////////////////////////////////////////////////////////////////////////
-//						Common type definitions
-//////////////////////////////////////////////////////////////////////////
 
 #endif

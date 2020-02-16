@@ -11,7 +11,7 @@ int main()
 	//AccessMat_CV_8UC1_2();
 	//AccessMat_ByCol();
 	ImageProcessTest imageProcessTest;
-	imageProcessTest.TestRotate();
+	imageProcessTest.TestConvolution();
 	/*LBP lbp;
 	lbp.Test();*/
 

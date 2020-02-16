@@ -4,20 +4,16 @@
 //
 // Please contact me if you find any bugs, or have any suggestions.
 // Contact:
-//		Telephone:17761745857
-//		Email:654393155@qq.com
+//		Email:qianqing13579@163.com
 //		Blog: http://blog.csdn.net/qianqing13579
 //////////////////////////////////////////////////////////////////////////
 
+#ifndef __QQ_PROJECTXY_H__
+#define __QQ_PROJECTXY_H__
 
-#ifndef __PROJECTXY_H__
-#define __PROJECTXY_H__
 #include "CommonDefinition.h"
 #include "opencv2/opencv.hpp"
 using namespace cv;
-
-//
-#define RESULT	"D:/Image/Projects/WuHu/Result/"
 
 namespace QQ
 {
