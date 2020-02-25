@@ -4,7 +4,7 @@
 //
 // Please contact me if you find any bugs, or have any suggestions.
 // Contact:
-//		Email:qianqing13579@163.com
+//		Email:654393155@qq.com
 //		Blog: http://blog.csdn.net/qianqing13579
 //////////////////////////////////////////////////////////////////////////
 // Updated 2016-12-12 01:12:55 by QQ, LBP 1.1,GetMinBinary()函数修改为查找表，提高了计算速度
