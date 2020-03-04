@@ -1,10 +1,12 @@
-/** @file    CommonUtility.h
- *  @note   
- *  @brief  通用工具
- *
- *  @author	QQ
- *  @date	2016-5-9
- */
+//////////////////////////////////////////////////////////////////////////
+// 通用工具 CommonUtility.h
+// 2016-5-9，by QQ
+//
+// Please contact me if you find any bugs, or have any suggestions.
+// Contact:
+//		Email:654393155@qq.com
+//		Blog: http://blog.csdn.net/qianqing13579
+//////////////////////////////////////////////////////////////////////////
 
 #ifndef __COMMON_UTILITY_H__
 #define __COMMON_UTILITY_H__

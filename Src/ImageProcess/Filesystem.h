@@ -1,10 +1,12 @@
-/** @file    Filesystem.h
- *  @note    
- *  @brief   文件以及目录处理
- *
- *  @author	 QQ
- *  @date	2018-1-6
- */
+//////////////////////////////////////////////////////////////////////////
+// 文件以及目录处理 Filesystem.h
+// 2018-1-6，by QQ
+//
+// Please contact me if you find any bugs, or have any suggestions.
+// Contact:
+//		Email:654393155@qq.com
+//		Blog: http://blog.csdn.net/qianqing13579
+//////////////////////////////////////////////////////////////////////////
 
 #ifndef __FILE_SYSTEM_H__
 #define __FILE_SYSTEM_H__
