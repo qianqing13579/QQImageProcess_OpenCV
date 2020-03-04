@@ -48,12 +48,18 @@
     <ClCompile Include="..\..\..\..\Src\ImageProcess\ProjectXY.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Src\ImageProcess\CommonUtility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Src\ImageProcess\Filesystem.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Src\ImageProcess\SimpleLog.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Src\ImageProcessTest.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Src\ImageProcess\All.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Src\ImageProcess\CommonDefinition.h">
@@ -84,6 +90,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Src\ImageProcess\ProjectXY.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Src\ImageProcess\CommonUtility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Src\ImageProcess\Filesystem.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Src\ImageProcess\SimpleLog.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,6 +11,8 @@
 #ifndef __QQ_TYPE_DEFINITION_H__
 #define __QQ_TYPE_DEFINITION_H__
 
+#include"SimpleLog.h"
+
 //WIN32,_WIN32：平台判断
 //DLLAPI_EXPORTS：条件宏
 //DLL_EXPORTS:DLL导出符号
@@ -34,7 +36,6 @@ printf("%d\n", SATURATE(255)); // 255
 printf("%d\n", SATURATE(-89)); // 0
 */
 #define  SATURATE(x)   (uchar)(((x) & ~255) == 0 ? (x) : ~((x)>>31)) // min(max(x,0),255)，适用于x为任意类型
-
 
 
 #endif

@@ -1,25 +1,9 @@
 #include "ImageProcessTest.h"
-#include<time.h>
-#include<iostream>
-#include<fstream>
-using namespace std;
-
-
-int main()
+int main(int argc,char *argv[])
 {
-	//AccessMat_CV_8UC1_1();
-	//AccessMat_CV_8UC1_2();
-	//AccessMat_ByCol();
 	ImageProcessTest imageProcessTest;
-	imageProcessTest.TestConvolution();
-	/*LBP lbp;
-	lbp.Test();*/
-
-	/*Mat src(300, 300, CV_8UC1);
-	Scalar value(0, 128, 255);
-	src.setTo(value);
-
-	imshow("src", src);
-	waitKey(0);*/
+	imageProcessTest.LBP_Rotation_Uniform_SVM();
+	
+	
 	return 0;
 }

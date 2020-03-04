@@ -48,7 +48,6 @@ void LBP::BuildUniformPatternTable(int *table)
 
 }
 
-// 2017-7-30 00:06:53,by QQ
 void LBP::ComputeLBPFeatureVector_256_O(const Mat &srcImage, Size cellSize, Mat &featureVector)
 {
 	// 参数检查，内存分配

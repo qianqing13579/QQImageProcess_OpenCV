@@ -1,9 +1,38 @@
 #include "ImageProcessTest.h"
 #include<time.h>
 #include<string>
+#include"All.h"
+#include"CommonUtility.h"
+#include"FileSystem.h"
+
 using namespace std;
 using namespace QQ;
 using QQ::LBP;
+
+////////////////////////////图像路径//////////////////////////////////////////////
+#ifdef _WIN32
+#define LENA_GRAY		"../../../../Resource/Image/Gray/Lena512.bmp"
+#define LENA_COLOR		"../../../../Resource/Image/Color/Lena800.bmp"
+#define BEAUTY_COLOR	"../../../../Resource/Image/Color/Beauty.bmp"
+#define BEAUTY_GRAY		"../../../../Resource/Image/Gray/Beauty.bmp"
+#define CAMERA_GRAY		"../../../../Resource/Image/Gray/Camera256.bmp"
+#define CAMERA_COLOR	"../../../../Resource/Image/Color/Camera256.bmp"
+#else
+#define LENA_GRAY		"../../../Resource/Image/Gray/Lena512.bmp"
+#define LENA_COLOR		"../../../Resource/Image/Color/Lena800.bmp"
+#define BEAUTY_COLOR	"../../../Resource/Image/Color/Beauty.bmp"
+#define BEAUTY_GRAY		"../../../Resource/Image/Gray/Beauty.bmp"
+#define CAMERA_GRAY		"../../../Resource/Image/Gray/Camera256.bmp"
+#define CAMERA_COLOR	"../../../Resource/Image/Color/Camera256.bmp"
+#endif
+
+//源图像路径
+#define GRAY	"D:/Image/Gray/"
+#define COLOR	"D:/Image/Color/"
+
+//目标图像路径
+#define RESULT			"D:/Image/Temp/"
+
 
 void ImageProcessTest::TestConnectImage()
 {
@@ -524,223 +553,214 @@ void ImageProcessTest::TestGradientHist()
 
 // LBP的测试
 #define CELLSIZE_LBP  16  // LBP的窗口大小，4,8，16
-#define PATH "E:/Image/Texture/Example_01/"
+#define PATH "D:/Image/Texture/Example_02/"
 
 // LBP等价模式 + SVM
-void ImageProcessTest::LBP_SVM()
+void ImageProcessTest::LBP_Uniform_SVM()
 {
 	// 读入训练样本路径和类别
-	vector<string> imagePaths;
-	vector<int> imageClass;
-	string buffer;
+	vector<string> fileNameListOfTrainData;
+	vector<int> labelsOfTrainData;
+	string line;
 	int numberOfLine = 0;
-	std::ifstream file("",ios::in);
-	while (!getline(file, buffer))
+	std::ifstream trainData(string(PATH)+"TrainData.txt", ios::in);
+	while (getline(trainData, line))
 	{
+		if (line.empty())
+			continue;
+
 		++numberOfLine;
 		if (numberOfLine % 2 == 0)//读到样本类别
 		{
-			imageClass.push_back(atoi(buffer.c_str()));
+			labelsOfTrainData.push_back(atoi(line.c_str()));
 		}
 		else
 		{
-			imagePaths.push_back(buffer);
+			fileNameListOfTrainData.push_back(line);
 
 		}
 
 	}
-
-	file.close();
+	trainData.close();
 
 	// 计算样本LBP特征向量矩阵和类别矩阵
-	int lengthOfFeatureVector = (32 / CELLSIZE_LBP)*(64 / CELLSIZE_LBP) * 58; // 特征向量的维数
-	Mat featureVectorOfSample(imagePaths.size(), lengthOfFeatureVector, CV_32FC1); // 样本的特征向量矩阵
-	Mat classOfSample(imagePaths.size(), 1, CV_32SC1);
-	vector<string>::size_type numberOfSample = imagePaths.size();
-	Mat srcImage;
+	LOG_INFO(stdout, "Computing LBP Feature...\n");
+	
+	// 首先计算特征向量的长度
 	LBP lbp;
-	vector<float> featureVector;
-	for (vector<string>::size_type i = 0; i <= numberOfSample - 1; ++i)
+	Mat srcImage = imread(fileNameListOfTrainData[0], 0);// 读入灰度图
+	Mat featureVector;
+	lbp.ComputeLBPFeatureVector_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
+	int lengthOfFeatureVector = featureVector.size[1]; // size:每一维元素的个数
+	
+	Mat allfeatureVectors(fileNameListOfTrainData.size(), lengthOfFeatureVector, CV_32FC1); // 样本的特征向量矩阵
+	Mat classOfSample(fileNameListOfTrainData.size(), 1, CV_32SC1);
+	for (int i = 0; i < fileNameListOfTrainData.size(); ++i)
 	{
 		// 读入图片
-		srcImage = imread(imagePaths[i], -1);
+		Mat srcImage = imread(fileNameListOfTrainData[i], -1);
 
 		// 计算样本LBP特征向量
-		//lbp.ComputeLBPFeatureVector_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
+		lbp.ComputeLBPFeatureVector_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
 
-		for (vector<float>::size_type j = 0; j <= lengthOfFeatureVector - 1; ++j)
+		for (int j = 0; j <= lengthOfFeatureVector - 1; ++j)
 		{
-			featureVectorOfSample.at<float>(i, j) = featureVector[j];
+			allfeatureVectors.at<float>(i, j) = featureVector.at<float>(0, j);
 		}
 
-		classOfSample.at<int>(i, 0) = imageClass[i];
+		classOfSample.at<int>(i, 0) = labelsOfTrainData[i];
+
+		// log
+		double process = (1.0*(i + 1) / fileNameListOfTrainData.size()) * 100;
+		LOG_INFO(stdout, "%s  done! %f%\n", GetFileName(fileNameListOfTrainData[i]).c_str(), process);
 	}
+	LOG_INFO(stdout, "Computing LBP Feature done!\n");
 
 	// 使用SVM分类器训练
-	// 参数设置
-	/*CvSVMParams param;
-	param.svm_type = CvSVM::C_SVC;  
-	param.kernel_type = CvSVM::LINEAR;
-	param.C = 1;
-	param.p = 5e-3;
-	param.gamma = 0.01;
-	param.term_crit = cvTermCriteria(TermCriteria::MAX_ITER, 100, 1e-6);
-	CvSVM svm;
-	svm.train(featureVectorOfSample, classOfSample, Mat(), Mat(), param);
-	svm.save("Classifier.xml");*/
-
-	// Train the SVM
+	LOG_INFO(stdout, "Traing SVM...\n");
 	Ptr<cv::ml::SVM> svm = cv::ml::SVM::create();
 	svm->setType(cv::ml::SVM::C_SVC);
 	svm->setKernel(cv::ml::SVM::LINEAR);
 	svm->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 1e-6));
-	svm->train(featureVectorOfSample, cv::ml::ROW_SAMPLE, classOfSample);
-	svm->save("Classifier.xml");
-
+	svm->train(allfeatureVectors, cv::ml::ROW_SAMPLE, classOfSample);
+	svm->save(string(PATH)+"Classifier.xml");
+	LOG_INFO(stdout, "Traing done!\n");
 
 	// 使用训练好的分类器进行识别
-	vector<string> testImagePath;
-	ifstream testFile(string(PATH) + "TestData.txt", ios::in);// 注意要去掉最后一行的换行，否则最后一幅图片读出来就是空的
-	while (!testFile.eof())
+	LOG_INFO(stdout, "Testing...\n");
+	vector<string> fileNameListOfTestData;
+	ifstream testData(string(PATH) + "TestData.txt", ios::in);// 注意要去掉最后一行的换行，否则最后一幅图片读出来就是空的
+	while (getline(testData, line))
 	{
-		getline(testFile, buffer);
-		testImagePath.push_back(buffer);
+		if (line.empty())
+			continue;
+
+		fileNameListOfTestData.push_back(line);
 	}
-
-	// 识别
-	Mat testImage;
-	vector<string>::size_type numberOfTestImage = testImagePath.size();
-	vector<float> featureVectorOfTestImage;
-	Mat _featureVectorOfTestImage(1, lengthOfFeatureVector, CV_32FC1);
-	char line[512];
+	testData.close();
 	ofstream resultOfPrediction(string(PATH) + "PredictResult.txt", ios::out);
-
-	// 注意将循环体内的耗时变量和操作提取到循环体内
-	for (vector<string>::size_type i = 0; i <= numberOfTestImage - 1; ++i)
+	for (int i = 0; i < fileNameListOfTestData.size(); ++i)
 	{
-		testImage = imread(testImagePath[i], -1);
+		Mat testImage = imread(fileNameListOfTestData[i], 0);// 读入灰度图
 
 		// 计算LBP特征向量
-		//lbp.ComputerLBPFeatureVector(testImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVectorOfTestImage);
-		for (vector<float>::size_type j = 0; j <= featureVectorOfTestImage.size() - 1; ++j)
-		{
-			_featureVectorOfTestImage.at<float>(0, j) = featureVectorOfTestImage[j];
-		}
+		Mat featureVectorOfTestImage;
+		lbp.ComputeLBPFeatureVector_Uniform(testImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVectorOfTestImage);
 
-		int predict = svm->predict(_featureVectorOfTestImage);
-		sprintf(line, "%s %d\n", testImagePath[i].c_str(), predict);
-		resultOfPrediction << line;
+		int predict = svm->predict(featureVectorOfTestImage);
+		char result[512];
+		sprintf(result, "%s %d\n", fileNameListOfTestData[i].c_str(), predict);
+		resultOfPrediction << result;
+
+		// log
+		double process = (1.0*(i + 1) / fileNameListOfTestData.size()) * 100;
+		LOG_INFO(stdout, "%s -> %d %f%\n", GetFileName(fileNameListOfTestData[i]).c_str(), predict, process);
 	}
+	LOG_INFO(stdout, "Testing done!\n");
 	resultOfPrediction.close();
 }
 // LBP旋转不变，等价模式+SVM
-void ImageProcessTest::LBP_SVM_Rotation()
+void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 {
 	// 读入训练样本路径和类别
-	vector<string> imagePaths;
-	vector<int> imageClass;
-	string buffer;
+	vector<string> fileNameListOfTrainData;
+	vector<int> labelsOfTrainData;
+	string line;
 	int numberOfLine = 0;
-	ifstream file(string(PATH) + "TrainData.txt", ios::in);
-	while (!file.eof())
+	std::ifstream trainData(string(PATH) + "TrainData.txt", ios::in);
+	while (getline(trainData, line))
 	{
-		if (getline(file, buffer))
-		{
-			++numberOfLine;
-			if (numberOfLine % 2 == 0)//读到样本类别
-			{
-				imageClass.push_back(atoi(buffer.c_str()));
-			}
-			else
-			{
-				imagePaths.push_back(buffer);
+		if (line.empty())
+			continue;
 
-			}
+		++numberOfLine;
+		if (numberOfLine % 2 == 0)//读到样本类别
+		{
+			labelsOfTrainData.push_back(atoi(line.c_str()));
+		}
+		else
+		{
+			fileNameListOfTrainData.push_back(line);
 
 		}
 
 	}
-
-	file.close();
+	trainData.close();
 
 	// 计算样本LBP特征向量矩阵和类别矩阵
-	int lengthOfFeatureVector = (32 / CELLSIZE_LBP)*(64 / CELLSIZE_LBP) * 9; // 特征向量的维数
-	Mat featureVectorOfSample(imagePaths.size(), lengthOfFeatureVector, CV_32FC1); // 样本的特征向量矩阵
-	Mat classOfSample(imagePaths.size(), 1, CV_32SC1);
-	vector<string>::size_type numberOfSample = imagePaths.size();
-	Mat srcImage;
+	LOG_INFO(stdout, "Computing LBP Feature...\n");
+
+	// 首先计算特征向量的长度
 	LBP lbp;
-	vector<float> featureVector;
-	for (vector<string>::size_type i = 0; i <= numberOfSample - 1; ++i)
+	Mat srcImage = imread(fileNameListOfTrainData[0], 0);// 读入灰度图
+	Mat featureVector;
+	lbp.ComputeLBPFeatureVector_Rotation_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
+	int lengthOfFeatureVector = featureVector.size[1]; // size:每一维元素的个数
+
+	Mat allfeatureVectors(fileNameListOfTrainData.size(), lengthOfFeatureVector, CV_32FC1); // 样本的特征向量矩阵
+	Mat classOfSample(fileNameListOfTrainData.size(), 1, CV_32SC1);
+	for (int i = 0; i < fileNameListOfTrainData.size(); ++i)
 	{
 		// 读入图片
-		srcImage = imread(imagePaths[i], -1);
+		Mat srcImage = imread(fileNameListOfTrainData[i], -1);
 
 		// 计算样本LBP特征向量
-		//lbp.ComputerLBPFeatureVector_Rotation(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
+		lbp.ComputeLBPFeatureVector_Rotation_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
 
-		for (vector<float>::size_type j = 0; j <= lengthOfFeatureVector - 1; ++j)
+		for (int j = 0; j <= lengthOfFeatureVector - 1; ++j)
 		{
-			featureVectorOfSample.at<float>(i, j) = featureVector[j];
+			allfeatureVectors.at<float>(i, j) = featureVector.at<float>(0, j);
 		}
 
-		classOfSample.at<int>(i, 0) = imageClass[i];
+		classOfSample.at<int>(i, 0) = labelsOfTrainData[i];
+
+		// log
+		double process = (1.0*(i + 1) / fileNameListOfTrainData.size()) * 100;
+		LOG_INFO(stdout, "%s  done! %f%\n", GetFileName(fileNameListOfTrainData[i]).c_str(), process);
 	}
+	LOG_INFO(stdout, "Computing LBP Feature done!\n");
 
 	// 使用SVM分类器训练
-	// 参数设置
-	/*CvSVMParams param;
-	param.svm_type = CvSVM::C_SVC;
-	param.kernel_type = CvSVM::LINEAR;
-	param.C = 1;
-	param.p = 5e-3;
-	param.gamma = 0.01;
-	param.term_crit = cvTermCriteria(TermCriteria::MAX_ITER, 100, 1e-6);
-	CvSVM svm;
-	svm.train(featureVectorOfSample, classOfSample, Mat(), Mat(), param);
-	svm.save("Classifier.xml");*/
-
-	// Train the SVM
+	LOG_INFO(stdout, "Traing SVM...\n");
 	Ptr<cv::ml::SVM> svm = cv::ml::SVM::create();
 	svm->setType(cv::ml::SVM::C_SVC);
 	svm->setKernel(cv::ml::SVM::LINEAR);
 	svm->setTermCriteria(TermCriteria(TermCriteria::MAX_ITER, 100, 1e-6));
-	svm->train(featureVectorOfSample, cv::ml::ROW_SAMPLE, classOfSample);
-	svm->save("Classifier.xml");
+	svm->train(allfeatureVectors, cv::ml::ROW_SAMPLE, classOfSample);
+	svm->save(string(PATH) + "Classifier.xml");
+	LOG_INFO(stdout, "Traing done!\n");
 
 	// 使用训练好的分类器进行识别
-	vector<string> testImagePath;
-	ifstream testFile(string(PATH) + "TestData.txt", ios::in);// 注意要去掉最后一行的换行，否则最后一幅图片读出来就是空的
-	while (!testFile.eof())
+	LOG_INFO(stdout, "Testing...\n");
+	vector<string> fileNameListOfTestData;
+	ifstream testData(string(PATH) + "TestData.txt", ios::in);// 注意要去掉最后一行的换行，否则最后一幅图片读出来就是空的
+	while (getline(testData, line))
 	{
-		getline(testFile, buffer);
-		testImagePath.push_back(buffer);
+		if (line.empty())
+			continue;
+
+		fileNameListOfTestData.push_back(line);
 	}
-
-	// 识别
-	Mat testImage;
-	vector<string>::size_type numberOfTestImage = testImagePath.size();
-	vector<float> featureVectorOfTestImage;
-	Mat _featureVectorOfTestImage(1, lengthOfFeatureVector, CV_32FC1);
-	char line[512];
+	testData.close();
 	ofstream resultOfPrediction(string(PATH) + "PredictResult.txt", ios::out);
-
-	// 注意将循环体内的耗时变量和操作提取到循环体内
-	for (vector<string>::size_type i = 0; i <= numberOfTestImage - 1; ++i)
+	for (int i = 0; i < fileNameListOfTestData.size(); ++i)
 	{
-		testImage = imread(testImagePath[i], -1);
+		Mat testImage = imread(fileNameListOfTestData[i], 0);// 读入灰度图
 
 		// 计算LBP特征向量
-		//lbp.ComputerLBPFeatureVector_Rotation(testImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVectorOfTestImage);
-		for (vector<float>::size_type j = 0; j <= featureVectorOfTestImage.size() - 1; ++j)
-		{
-			_featureVectorOfTestImage.at<float>(0, j) = featureVectorOfTestImage[j];
-		}
+		Mat featureVectorOfTestImage;
+		lbp.ComputeLBPFeatureVector_Rotation_Uniform(testImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVectorOfTestImage);
 
-		int predict = svm->predict(_featureVectorOfTestImage);
-		sprintf(line, "%s %d\n", testImagePath[i].c_str(), predict);
-		resultOfPrediction << line;
+		int predict = svm->predict(featureVectorOfTestImage);
+		char result[512];
+		sprintf(result, "%s %d\n", fileNameListOfTestData[i].c_str(), predict);
+		resultOfPrediction << result;
+
+		// log
+		double process = (1.0*(i + 1) / fileNameListOfTestData.size()) * 100;
+		LOG_INFO(stdout, "%s -> %d %f%\n", GetFileName(fileNameListOfTestData[i]).c_str(), predict, process);
 	}
+	LOG_INFO(stdout, "Testing done!\n");
 	resultOfPrediction.close();
 }
 // 2016-5-19 11:14:18,by QQ

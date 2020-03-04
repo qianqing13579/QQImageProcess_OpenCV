@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////////////////////////////
 // Updated 2016-12-12 01:12:55 by QQ, LBP 1.1,GetMinBinary()函数修改为查找表，提高了计算速度
 // Updated 2016-12-13 14:41:58 by QQ, LBP 2.0,先计算整幅图像的LBP特征图，然后计算每个cell的LBP直方图
-// Updated 2017-7-29&30 by QQ,add 对ComputeLBPFeatureVector_256和ComputeLBPFeatureVector_Uniform进行了优化:添加了滑动窗口像素查找表
+// Updated 2017-7-29 by QQ,add 对ComputeLBPFeatureVector_256和ComputeLBPFeatureVector_Uniform进行了优化:添加了滑动窗口像素查找表
 
 #ifndef __QQ_LBP_H__
 #define __QQ_LBP_H__
