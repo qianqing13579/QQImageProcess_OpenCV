@@ -85,9 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Src\ImageProcessTest.cpp" />
-    <ClCompile Include="..\..\..\..\Src\ImageProcess\CommonUtility.cpp" />
     <ClCompile Include="..\..\..\..\Src\ImageProcess\Edge.cpp" />
-    <ClCompile Include="..\..\..\..\Src\ImageProcess\Filesystem.cpp" />
     <ClCompile Include="..\..\..\..\Src\ImageProcess\Filter.cpp" />
     <ClCompile Include="..\..\..\..\Src\ImageProcess\GeometryTransformation.cpp" />
     <ClCompile Include="..\..\..\..\Src\ImageProcess\GradientHistogram.cpp" />
@@ -96,15 +94,14 @@
     <ClCompile Include="..\..\..\..\Src\ImageProcess\IntegralImage.cpp" />
     <ClCompile Include="..\..\..\..\Src\ImageProcess\LBP.cpp" />
     <ClCompile Include="..\..\..\..\Src\ImageProcess\ProjectXY.cpp" />
-    <ClCompile Include="..\..\..\..\Src\ImageProcess\SimpleLog.cpp" />
     <ClCompile Include="..\..\..\..\Src\main.cpp" />
+    <ClCompile Include="..\..\..\..\Src\Utility\CommonUtility.cpp" />
+    <ClCompile Include="..\..\..\..\Src\Utility\Filesystem.cpp" />
+    <ClCompile Include="..\..\..\..\Src\Utility\SimpleLog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Src\ImageProcessTest.h" />
-    <ClInclude Include="..\..\..\..\Src\ImageProcess\CommonDefinition.h" />
-    <ClInclude Include="..\..\..\..\Src\ImageProcess\CommonUtility.h" />
     <ClInclude Include="..\..\..\..\Src\ImageProcess\Edge.h" />
-    <ClInclude Include="..\..\..\..\Src\ImageProcess\Filesystem.h" />
     <ClInclude Include="..\..\..\..\Src\ImageProcess\Filter.h" />
     <ClInclude Include="..\..\..\..\Src\ImageProcess\GeometryTransformation.h" />
     <ClInclude Include="..\..\..\..\Src\ImageProcess\GradientHistogram.h" />
@@ -113,7 +110,11 @@
     <ClInclude Include="..\..\..\..\Src\ImageProcess\IntegralImage.h" />
     <ClInclude Include="..\..\..\..\Src\ImageProcess\LBP.h" />
     <ClInclude Include="..\..\..\..\Src\ImageProcess\ProjectXY.h" />
-    <ClInclude Include="..\..\..\..\Src\ImageProcess\SimpleLog.h" />
+    <ClInclude Include="..\..\..\..\Src\Utility\All.h" />
+    <ClInclude Include="..\..\..\..\Src\Utility\CommonDefinition.h" />
+    <ClInclude Include="..\..\..\..\Src\Utility\CommonUtility.h" />
+    <ClInclude Include="..\..\..\..\Src\Utility\Filesystem.h" />
+    <ClInclude Include="..\..\..\..\Src\Utility\SimpleLog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -27,7 +27,6 @@ namespace QQ
 {
 
 #if defined _WIN32 || defined WINCE
-# include <windows.h>
     const char dir_separators[] = "/\\";
 
 	struct dirent
@@ -40,7 +39,7 @@ namespace QQ
 #ifdef WINRT
 		WIN32_FIND_DATAW data;
 #else
-		WIN32_FIND_DATA data;
+        WIN32_FIND_DATAA data;
 #endif
 		HANDLE handle;
 		dirent ent;
