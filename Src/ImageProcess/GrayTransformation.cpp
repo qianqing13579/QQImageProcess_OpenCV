@@ -1,5 +1,7 @@
 #define DLLAPI_EXPORTS
-#include "GrayTransformation.h"
+
+#include"GrayTransformation.h"
+#include"Histogram.h"
 
 namespace QQ
 {

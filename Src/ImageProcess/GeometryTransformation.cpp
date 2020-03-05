@@ -1,6 +1,7 @@
 #define DLLAPI_EXPORTS
 
 #include "GeometryTransformation.h"
+
 using namespace std;
 
 namespace QQ

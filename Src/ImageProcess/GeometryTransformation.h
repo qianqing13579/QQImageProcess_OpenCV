@@ -1,15 +1,9 @@
-﻿//////////////////////////////////////////////////////////////////////////
-// 几何变换 GeometryTransformation.h
-// 2015-3-5，by QQ
-//
-// Please contact me if you find any bugs, or have any suggestions.
-// Contact:
-//		Email:654393155@qq.com
-//		Blog: http://blog.csdn.net/qianqing13579
-//////////////////////////////////////////////////////////////////////////
+﻿// Copyright (c) 2014-2020, QQ<654393155@qq.com>, all rights reserved.
 
-#ifndef __QQ_GEOMETRY_TRANSFORMATION_H__
-#define __QQ_GEOMETRY_TRANSFORMATION_H__
+// 几何变换
+
+#ifndef __GEOMETRY_TRANSFORMATION_H__
+#define __GEOMETRY_TRANSFORMATION_H__
 
 #include "CommonDefinition.h"
 #include "opencv2/opencv.hpp"

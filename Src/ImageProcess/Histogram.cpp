@@ -3,7 +3,6 @@
 
 namespace QQ
 {
-//2015-4-23 10:01:26,by QQ
 //不支持ROI
 void GetHistogram(const Mat &image, int *histogram)
 {
@@ -18,8 +17,6 @@ void GetHistogram(const Mat &image, int *histogram)
 		histogram[gray]++;
 	}
 }
-
-//2015-4-23 9:36:39,by QQ
 void GetMedianValue(const Mat &image, int &medianValue)
 {
 	//获取直方图
@@ -40,8 +37,6 @@ void GetMedianValue(const Mat &image, int &medianValue)
 	}
 
 }
-
-//2015-4-23 10:25:56，by QQ
 void GetMedianValue_AndPixelCountLowerMedian(const Mat &image, int &medianValue, int &pixelCountLowerMedian)
 {
 	//获取直方图

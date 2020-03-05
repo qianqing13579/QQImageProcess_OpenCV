@@ -694,67 +694,6 @@ void LBP::ComputeLBPImage_Rotation_Uniform(const Mat &srcImage, Mat &LBPImage)
 
 }
 
-void LBP::ComputeLBPImage_Rotation_Uniform_2(const Mat &srcImage, Mat &LBPImage)
-{
-    // 参数检查，内存分配
-    CV_Assert(srcImage.depth() == CV_8U&&srcImage.channels() == 1);
-    LBPImage.create(srcImage.size(), srcImage.type());
-
-    // 扩充图像，处理边界情况
-    Mat extendedImage;
-    copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_DEFAULT);
-
-    // 构建LBP 等价模式查找表
-    //int table[256];
-    //BuildUniformPatternTable(table);
-
-    // 通过查找表
-    static const int table[256] = { 1, 2, 3, 4, 5, 0, 6, 7, 8, 0, 0, 0, 9, 0, 10, 11, 12, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 14, 0, 15, 16, 17, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 20, 0, 21, 22, 23, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25,
-        0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 27, 0, 28, 29, 30, 31, 0, 32, 0, 0, 0, 33, 0, 0, 0, 0, 0, 0, 0, 34, 0, 0, 0, 0
-        , 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 36, 37, 38, 0, 39, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42
-        , 43, 44, 0, 45, 0, 0, 0, 46, 0, 0, 0, 0, 0, 0, 0, 47, 48, 49, 0, 50, 0, 0, 0, 51, 52, 53, 0, 54, 55, 56, 57, 58 };
-
-    uchar binary[8] = { 0 };// 记录每个像素的LBP值
-    int heigthOfExtendedImage = extendedImage.rows;
-    int widthOfExtendedImage = extendedImage.cols;
-    int widthOfLBPImage = LBPImage.cols;
-
-    uchar *rowOfExtendedImage = extendedImage.data + widthOfExtendedImage + 1;
-    uchar *rowOfLBPImage = LBPImage.data;
-    for (int y = 1; y <= heigthOfExtendedImage - 2; ++y, rowOfExtendedImage += widthOfExtendedImage, rowOfLBPImage += widthOfLBPImage)
-    {
-        // 列
-        uchar *colOfExtendedImage = rowOfExtendedImage;
-        uchar *colOfLBPImage = rowOfLBPImage;
-        for (int x = 1; x <= widthOfExtendedImage - 2; ++x, ++colOfExtendedImage, ++colOfLBPImage)
-        {
-            // 计算旋转不变LBP(最小的二进制模式)
-            binary[0] = colOfExtendedImage[0 - widthOfExtendedImage - 1] >= colOfExtendedImage[0] ? 1 : 0;
-            binary[1] = colOfExtendedImage[0 - widthOfExtendedImage] >= colOfExtendedImage[0] ? 1 : 0;
-            binary[2] = colOfExtendedImage[0 - widthOfExtendedImage + 1] >= colOfExtendedImage[0] ? 1 : 0;
-            binary[3] = colOfExtendedImage[0 + 1] >= colOfExtendedImage[0] ? 1 : 0;
-            binary[4] = colOfExtendedImage[0 + widthOfExtendedImage + 1] >= colOfExtendedImage[0] ? 1 : 0;
-            binary[5] = colOfExtendedImage[0 + widthOfExtendedImage] >= colOfExtendedImage[0] ? 1 : 0;
-            binary[6] = colOfExtendedImage[0 + widthOfExtendedImage - 1] >= colOfExtendedImage[0] ? 1 : 0;
-            binary[7] = colOfExtendedImage[0 - 1] >= colOfExtendedImage[0] ? 1 : 0;
-
-            int minValue = GetMinBinary(binary);
-
-            // 计算58种等价模式LBP
-            int value58=table[minValue];
-
-            // 计算9种等价模式
-            colOfLBPImage[0] = ComputeValue9(value58);
-        }
-
-    }
-}
-
-
-// 验证灰度不变+旋转不变+等价模式种类
 void LBP::Test()
 {
 	uchar LBPValue[8] = { 0 };
@@ -788,7 +727,7 @@ void LBP::Test()
 			number[numberOfMinBinary++] = minBinary;
 		}
 	}
-	cout << "旋转不变一共有："<<numberOfMinBinary <<"种"<< endl;
+    printf("旋转不变一共有：%d 种\n",numberOfMinBinary);
 
 	// LUT
 	static const int table[256] = { 1, 2, 3, 4, 5, 0, 6, 7, 8, 0, 0, 0, 9, 0, 10, 11, 12, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 14, 0, 15, 16, 17, 0, 0, 0,
@@ -801,7 +740,7 @@ void LBP::Test()
 	
 	for (int i = 0; i <= numberOfMinBinary - 1; ++i)
 	{
-		cout << "旋转不变的LBP："<<number[i] << " "<<"对应的等价模式：" << table[number[i]] << endl;
+        printf("旋转不变的LBP：%d 对应的等价模式：%d\n",number[i],table[number[i]]);
 	}
 
 }
@@ -822,7 +761,6 @@ void LBP::TestGetMinBinaryLUT()
 		}
 		uchar minBinary=GetMinBinary(a);
 		printf("%d,",minBinary);
-
 	}
 }
 

@@ -1,12 +1,6 @@
-//////////////////////////////////////////////////////////////////////////
-// 文件以及目录处理 Filesystem.h
-// 2018-1-6，by QQ
-//
-// Please contact me if you find any bugs, or have any suggestions.
-// Contact:
-//		Email:654393155@qq.com
-//		Blog: http://blog.csdn.net/qianqing13579
-//////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2014-2020, QQ<654393155@qq.com>, all rights reserved.
+
+// 文件以及目录处理
 
 #ifndef __FILE_SYSTEM_H__
 #define __FILE_SYSTEM_H__

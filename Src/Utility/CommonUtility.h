@@ -1,12 +1,6 @@
-//////////////////////////////////////////////////////////////////////////
-// 通用工具 CommonUtility.h
-// 2016-5-9，by QQ
-//
-// Please contact me if you find any bugs, or have any suggestions.
-// Contact:
-//		Email:654393155@qq.com
-//		Blog: http://blog.csdn.net/qianqing13579
-//////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2014-2020, QQ<654393155@qq.com>, all rights reserved.
+
+// 通用工具
 
 #ifndef __COMMON_UTILITY_H__
 #define __COMMON_UTILITY_H__

@@ -1,23 +1,13 @@
-//////////////////////////////////////////////////////////////////////////
-// 灰度变换 GrayTransformation.h
-// 2016-7-9，by QQ
-//
-// Please contact me if you find any bugs, or have any suggestions.
-// Contact:
-//		Email:654393155@qq.com
-//		Blog: http://blog.csdn.net/qianqing13579
-//////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2014-2020, QQ<654393155@qq.com>, all rights reserved.
 
+// 灰度变换
 
-#ifndef __QQ_GRAY_TRANSFORMATION_H__
-#define __QQ_GRAY_TRANSFORMATION_H__
+#ifndef __GRAY_TRANSFORMATION_H__
+#define __GRAY_TRANSFORMATION_H__
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
 #include "CommonDefinition.h"
 #include "opencv2/opencv.hpp"
-#include"Histogram.h"
+
 using namespace cv;
 
 namespace QQ

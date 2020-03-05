@@ -1,27 +1,22 @@
-//////////////////////////////////////////////////////////////////////////
-// 类型定义 TypeDefinition.h
-// 2014-11-28，by QQ
-//
-// Please contact me if you find any bugs, or have any suggestions.
-// Contact:
-//		Email:654393155@qq.com
-//		Blog: http://blog.csdn.net/qianqing13579
-//////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2014-2020, QQ<654393155@qq.com>, all rights reserved.
 
-#ifndef __QQ_TYPE_DEFINITION_H__
-#define __QQ_TYPE_DEFINITION_H__
+// 类型定义
+
+#ifndef _COMMON_DEFINITION_H__
+#define _COMMON_DEFINITION_H__
 
 #include"SimpleLog.h"
 
-//WIN32,_WIN32：平台判断
-//DLLAPI_EXPORTS：条件宏
-//DLL_EXPORTS:DLL导出符号
-#if (defined WIN32 || defined _WIN32 || defined WINCE || defined __CYGWIN__) && defined DLLAPI_EXPORTS
+#ifdef DLLAPI_EXPORTS
+#if (defined WIN32 || defined _WIN32 || defined WINCE || defined __CYGWIN__)
 #  define DLL_EXPORTS __declspec(dllexport)
 #elif defined __GNUC__ && __GNUC__ >= 4
 #  define DLL_EXPORTS __attribute__((visibility ("default")))
-#else
-#  define DLL_EXPORTS
+#endif
+#endif
+
+#ifndef DLL_EXPORTS
+#define DLL_EXPORTS
 #endif
 
 typedef unsigned char BYTE;

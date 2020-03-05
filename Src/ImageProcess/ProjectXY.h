@@ -1,18 +1,13 @@
-//////////////////////////////////////////////////////////////////////////
-// 投影图 ProjectXY.h
-// 2014-11-28，by QQ
-//
-// Please contact me if you find any bugs, or have any suggestions.
-// Contact:
-//		Email:654393155@qq.com
-//		Blog: http://blog.csdn.net/qianqing13579
-//////////////////////////////////////////////////////////////////////////
+// Copyright (c) 2014-2020, QQ<654393155@qq.com>, all rights reserved.
 
-#ifndef __QQ_PROJECTXY_H__
-#define __QQ_PROJECTXY_H__
+// 投影图
+
+#ifndef __PROJECTXY_H__
+#define __PROJECTXY_H__
 
 #include "CommonDefinition.h"
 #include "opencv2/opencv.hpp"
+
 using namespace cv;
 
 namespace QQ

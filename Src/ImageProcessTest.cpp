@@ -1,13 +1,13 @@
-#include "ImageProcessTest.h"
+#include"ImageProcessTest.h"
 #include<time.h>
 #include<string>
 #include"All.h"
 #include"CommonUtility.h"
 #include"FileSystem.h"
+#include"SimpleLog.h"
 
 using namespace std;
 using namespace QQ;
-using QQ::LBP;
 
 ////////////////////////////Í¼ÏñÂ·¾¶//////////////////////////////////////////////
 #ifdef _WIN32
@@ -355,7 +355,6 @@ void ImageProcessTest::TestEdge()//²âÊÔ±ßÔµ¼ì²â
 	printf("ShenJun:%d ms\n",sum>>4);
 	imwrite(string(RESULT)+"ShenJun.bmp",image_ShenJun);
 }
-// 2016-6-19 02:02:30£¬by QQ
 #define NUM 32
 #define LOW 50
 #define HIGH 150
@@ -438,7 +437,6 @@ void ImageProcessTest::TestGeometryTransformation()
 	imwrite(string(RESULT) + "HorizontalFlip.bmp", dst2);
 }
 
-// 2016-7-9 16:21:56,by QQ
 void ImageProcessTest::TestEqualiz()
 {
 	Mat srcImage = imread(BEAUTY_GRAY, -1);
@@ -447,7 +445,6 @@ void ImageProcessTest::TestEqualiz()
 	imwrite(string(RESULT) + "Equalized.bmp", dstImage);
 }
 
-// 2016-7-9 16:42:24,by QQ
 void ImageProcessTest::TestThin()
 {
 	Mat srcImage = imread("D:/Image/Gray/thin.bmp", 0);
@@ -458,7 +455,6 @@ void ImageProcessTest::TestThin()
 
 }
 
-// 2016-7-9 16:00:43,by QQ
 void ImageProcessTest::TestCvtColor()
 {
 	Mat srcImage = imread(BEAUTY_COLOR, -1);
@@ -470,7 +466,6 @@ void ImageProcessTest::TestCvtColor()
 
 }
 
-// 2016-8-11 16:18:10,by QQ
 void ImageProcessTest::TestRotate()
 {
 	Mat srcImage = imread(BEAUTY_COLOR, -1);
@@ -763,41 +758,46 @@ void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 	LOG_INFO(stdout, "Testing done!\n");
 	resultOfPrediction.close();
 }
-// 2016-5-19 11:14:18,by QQ
 void ImageProcessTest::TestLBP()
 {
 	LBP lbp;
 	Mat srcImage = imread(BEAUTY_GRAY, -1);
-	Mat featureVector;
 
-	double time1, time2, sum = 0;
-	for (int i = 0; i < NUM_LOOP; ++i)
-	{
-		time1 = getTickCount();
+    //
+    Mat lbpImage;
+    lbp.ComputeLBPImage_Uniform(srcImage,lbpImage);
+    imwrite("LBPImage.jpg",lbpImage);
 
-		// ²âÊÔ»·¾³£º2017-7-30 11:24:41,Core i5-6200U,12G,Release
-		//lbp.ComputeLBPFeatureVector_256_O_2(srcImage, Size(16, 16), featureVector);// 16.706699
-		//lbp.ComputeLBPFeatureVector_256_O(srcImage, Size(16, 16), featureVector);// 17.877541
-		//lbp.ComputeLBPFeatureVector_256(srcImage, Size(16, 16), featureVector);// 17.640340
-		//lbp.ComputeLBPFeatureVector_Uniform(srcImage, Size(16, 16), featureVector); // 18.424251
-		lbp.ComputeLBPFeatureVector_Uniform_O(srcImage, Size(16, 16), featureVector); // 18.333606
+    //
+//    Mat featureVector;
+//	double time1, time2, sum = 0;
+//	for (int i = 0; i < NUM_LOOP; ++i)
+//	{
+//		time1 = getTickCount();
 
-		time2 = getTickCount();
-		sum += (time2 - time1)*1000.0 / getTickFrequency();
-	}
-	printf("average time:%f\n", sum / NUM_LOOP);
+//		// ²âÊÔ»·¾³£º2017-7-30 11:24:41,Core i5-6200U,12G,Release
+//		//lbp.ComputeLBPFeatureVector_256_O_2(srcImage, Size(16, 16), featureVector);// 16.706699
+//		//lbp.ComputeLBPFeatureVector_256_O(srcImage, Size(16, 16), featureVector);// 17.877541
+//		//lbp.ComputeLBPFeatureVector_256(srcImage, Size(16, 16), featureVector);// 17.640340
+//		//lbp.ComputeLBPFeatureVector_Uniform(srcImage, Size(16, 16), featureVector); // 18.424251
+//		lbp.ComputeLBPFeatureVector_Uniform_O(srcImage, Size(16, 16), featureVector); // 18.333606
 
-	float *dataOfFeature = (float *)featureVector.data;
-	int dimensionOfFeature = featureVector.rows*featureVector.cols;
-	std::ofstream outFile("D:/Feature.txt", ios::out);
+//		time2 = getTickCount();
+//		sum += (time2 - time1)*1000.0 / getTickFrequency();
+//	}
+//	printf("average time:%f\n", sum / NUM_LOOP);
 
-	outFile << "dimension:" << dimensionOfFeature << endl;
-	for (int i = 0; i <= dimensionOfFeature - 1;++i)
-	{
-		outFile << dataOfFeature[i] << endl;
-	}
+//	float *dataOfFeature = (float *)featureVector.data;
+//	int dimensionOfFeature = featureVector.rows*featureVector.cols;
+//	std::ofstream outFile("D:/Feature.txt", ios::out);
 
-	outFile.close();
+//	outFile << "dimension:" << dimensionOfFeature << endl;
+//	for (int i = 0; i <= dimensionOfFeature - 1;++i)
+//	{
+//		outFile << dataOfFeature[i] << endl;
+//	}
+
+//	outFile.close();
 
 
 
