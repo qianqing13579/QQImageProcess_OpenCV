@@ -9,30 +9,17 @@
 using namespace std;
 using namespace QQ;
 
-////////////////////////////图像路径//////////////////////////////////////////////
-#ifdef _WIN32
+// 图像路径
 #define LENA_GRAY		"../../../../Resource/Image/Gray/Lena512.bmp"
 #define LENA_COLOR		"../../../../Resource/Image/Color/Lena800.bmp"
 #define BEAUTY_COLOR	"../../../../Resource/Image/Color/Beauty.bmp"
 #define BEAUTY_GRAY		"../../../../Resource/Image/Gray/Beauty.bmp"
 #define CAMERA_GRAY		"../../../../Resource/Image/Gray/Camera256.bmp"
 #define CAMERA_COLOR	"../../../../Resource/Image/Color/Camera256.bmp"
-#else
-#define LENA_GRAY		"../../../Resource/Image/Gray/Lena512.bmp"
-#define LENA_COLOR		"../../../Resource/Image/Color/Lena800.bmp"
-#define BEAUTY_COLOR	"../../../Resource/Image/Color/Beauty.bmp"
-#define BEAUTY_GRAY		"../../../Resource/Image/Gray/Beauty.bmp"
-#define CAMERA_GRAY		"../../../Resource/Image/Gray/Camera256.bmp"
-#define CAMERA_COLOR	"../../../Resource/Image/Color/Camera256.bmp"
-#endif
 
-//源图像路径
-#define GRAY	"D:/Image/Gray/"
-#define COLOR	"D:/Image/Color/"
-
-//目标图像路径
-#define RESULT			"D:/Image/Temp/"
-
+#define COLOR	"./"
+#define GRAY	"./"
+#define RESULT	"./"
 
 void ImageProcessTest::TestConnectImage()
 {
@@ -293,7 +280,7 @@ void ImageProcessTest::TestConvolution()
 	{
 		time1 = getTickCount();
 
-		// 测试环境：2017-7-29 16:43:30,Core i5-6200U,12G,Release
+		// 测试环境：Core i5-6200U,12G,Release
 		//Convolution1(srcImage, kernel, dstImage);// 24
 		Convolution12(srcImage, kernel, dstImage);// 21
 
@@ -496,7 +483,7 @@ void ImageProcessTest::TestGradientHist()
 	{
 		time1 = getTickCount();
 
-		// 测试环境：2017-8-4 15:38:21,Core i5-4460,8G,Release,测试图片LENA_GRAY
+		// 测试环境：Core i5-4460,8G,Release,测试图片LENA_GRAY
 		ComputeGradient2(srcImage, gradient, gradientAngle, 9, false);// 12.860420 ms
 
 		// 调用HOG
@@ -763,19 +750,19 @@ void ImageProcessTest::TestLBP()
 	LBP lbp;
 	Mat srcImage = imread(BEAUTY_GRAY, -1);
 
-    //
+    // 测试LBP图像
     Mat lbpImage;
     lbp.ComputeLBPImage_Uniform(srcImage,lbpImage);
     imwrite("LBPImage.jpg",lbpImage);
 
-    //
+	// 测试LBP特征向量
 //    Mat featureVector;
 //	double time1, time2, sum = 0;
 //	for (int i = 0; i < NUM_LOOP; ++i)
 //	{
 //		time1 = getTickCount();
 
-//		// 测试环境：2017-7-30 11:24:41,Core i5-6200U,12G,Release
+//		// 测试环境：Core i5-6200U,12G,Release
 //		//lbp.ComputeLBPFeatureVector_256_O_2(srcImage, Size(16, 16), featureVector);// 16.706699
 //		//lbp.ComputeLBPFeatureVector_256_O(srcImage, Size(16, 16), featureVector);// 17.877541
 //		//lbp.ComputeLBPFeatureVector_256(srcImage, Size(16, 16), featureVector);// 17.640340
