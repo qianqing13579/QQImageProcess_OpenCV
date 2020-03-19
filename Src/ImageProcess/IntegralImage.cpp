@@ -87,8 +87,10 @@ void CalculateIntegralImage_Old(const Mat &srcImage,Mat &image_Integral)
 	int width_Dst=srcImage.cols;
 	int height_Dst=srcImage.rows;
 	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//如果重新分配，之前的空间会扔掉
-	IplImage iplImage=image_Integral;
-	cvSetZero(&iplImage);
+	
+	// OpenCV4.0之后不支持IplImage
+	// IplImage iplImage=image_Integral;
+	// cvSetZero(&iplImage);
 
 	/////////////////////////////step 2.计算积分图/////////////////////////////////////////////
 	for (int y=0;y<=srcImage.rows-1;++y)
@@ -155,8 +157,10 @@ void CalculateIntegralImage_2(const Mat &srcImage,Mat &image_Integral)
 	int width_Dst=srcImage.cols;
 	int height_Dst=srcImage.rows;
 	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//如果重新分配，之前的空间会扔掉
-	IplImage iplImage=image_Integral;
-	cvSetZero(&iplImage);
+	
+	// OpenCV4.0之后不支持IplImage
+	// IplImage iplImage=image_Integral;
+	// cvSetZero(&iplImage);
 
 	/////////////////////////////step 2.计算积分图/////////////////////////////////////////////
 	for (int y=0;y<=srcImage.rows-1;++y)
@@ -204,8 +208,10 @@ void CalculateIntegralImage_1(const Mat &srcImage,Mat &image_Integral)
 	int width_Dst=srcImage.cols;
 	int height_Dst=srcImage.rows;
 	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//如果重新分配，之前的空间会扔掉
-	IplImage iplImage=image_Integral;
-	cvSetZero(&iplImage);
+	
+	// OpenCV4.0之后不支持IplImage
+	// IplImage iplImage=image_Integral;
+	// cvSetZero(&iplImage);
 
 	/////////////////////////////step 2.计算积分图/////////////////////////////////////////////
 	for (int y=0;y<=srcImage.rows-1;++y)

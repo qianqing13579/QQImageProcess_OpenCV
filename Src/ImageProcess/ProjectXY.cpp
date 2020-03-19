@@ -224,8 +224,10 @@ void DrawProjectYImage(Mat &image_ProjectY,int width_ProjectYImage,int *projectY
 	int width_Dst = width_ProjectYImage;
 	int height_Dst = projectYSize;
 	image_ProjectY.create(Size(width_Dst, height_Dst), CV_8UC1);//如果重新分配，之前的空间会扔掉
-	IplImage iplImage = image_ProjectY;
-	cvSetZero(&iplImage);
+
+	// OpenCV4.0之后不支持IplImage
+	// IplImage iplImage = image_ProjectY;
+	// cvSetZero(&iplImage);
 
 
 	/////////////////////////////step 2.创建投影数组Mat/////////////////////////////////////////////
@@ -240,7 +242,7 @@ void DrawProjectYImage(Mat &image_ProjectY,int width_ProjectYImage,int *projectY
 	}
 
 	///////////////////////////////step 2.归一化///////////////////////////////////////////
-	normalize(mat_ProjectX, mat_ProjectX, 0, width_ProjectYImage, CV_MINMAX, -1);//
+	normalize(mat_ProjectX, mat_ProjectX, 0, width_ProjectYImage, 32, -1);//
 
 	//////////////////////////step 3.开始画图////////////////////////////////////////////////
 	//每个元素通道数，移动列指针
