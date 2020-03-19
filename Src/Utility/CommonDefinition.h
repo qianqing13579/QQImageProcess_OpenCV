@@ -17,6 +17,9 @@
 using namespace std;
 using namespace cv;
 
+namespace QQ
+{
+
 #ifdef DLLAPI_EXPORTS
 #if (defined WIN32 || defined _WIN32 || defined WINCE || defined __CYGWIN__)
 #  define DLL_EXPORTS __declspec(dllexport)
@@ -48,5 +51,7 @@ printf("%d\n", SATURATE(-89)); // 0
 #else
 #define  PATH_SEPARATOR '/'
 #endif
+
+}
 
 #endif
