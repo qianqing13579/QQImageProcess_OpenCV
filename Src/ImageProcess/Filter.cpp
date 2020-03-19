@@ -81,7 +81,7 @@ static uchar GetMedianValue(const Mat& image)
 	return medianValue;
 }
 
-//2015-1-1 20:23:53，by QQ
+//2015-1-1 20:23:53,by QQ
 //使用copyMakeBorder扩充图像边界，处理滤波边界
 void Blur(const Mat &srcImage, Mat &dstImage, Size size_Aperture)
 {

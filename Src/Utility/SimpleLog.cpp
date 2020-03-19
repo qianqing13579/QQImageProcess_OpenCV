@@ -10,8 +10,9 @@
 #else
 #include <unistd.h>
 #include <dirent.h>
+#include <sys/time.h>
 #endif
-
+#include "Filesystem.h"
 
 using namespace std;
 
@@ -133,161 +134,13 @@ LogTime LogManager::GetTime()
     return currentTime;
 }
 
-#if defined _WIN32 || defined WINCE
-# include <windows.h>
-struct dirent
+LogManager* LogManager::GetInstance()
 {
-	const char* d_name;
-};
-
-struct DIR
-{
-#ifdef WINRT
-	WIN32_FIND_DATAW data;
-#else
-	WIN32_FIND_DATA data;
-#endif
-	HANDLE handle;
-	dirent ent;
-#ifdef WINRT
-	DIR() { }
-	~DIR()
-	{
-		if (ent.d_name)
-			delete[] ent.d_name;
-	}
-#endif
-};
-
-#else
-# include <dirent.h>
-# include <sys/stat.h>
-#endif
-
-static bool IsPathSeparator(char c)
-{
-    return c == '/' || c == '\\';
+    static LogManager logManager;
+    return &logManager;
 }
 
-static bool isDir(const string &path, DIR* dir)
-{
-#if defined _WIN32 || defined WINCE
-    DWORD attributes;
-    BOOL status = TRUE;
-    if (dir)
-        attributes = dir->data.dwFileAttributes;
-    else
-    {
-        WIN32_FILE_ATTRIBUTE_DATA all_attrs;
-#ifdef WINRT
-        wchar_t wpath[MAX_PATH];
-        size_t copied = mbstowcs(wpath, path.c_str(), MAX_PATH);
-        CV_Assert((copied != MAX_PATH) && (copied != (size_t)-1));
-        status = ::GetFileAttributesExW(wpath, GetFileExInfoStandard, &all_attrs);
-#else
-        status = ::GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, &all_attrs);
-#endif
-        attributes = all_attrs.dwFileAttributes;
-    }
 
-    return status && ((attributes & FILE_ATTRIBUTE_DIRECTORY) != 0);
-#else
-    (void)dir;
-    struct stat stat_buf;
-    if (0 != stat(path.c_str(), &stat_buf))
-        return false;
-    int is_dir = S_ISDIR(stat_buf.st_mode);
-    return is_dir != 0;
-#endif
-}
-
-static bool IsDirectory(const string &path)
-{
-    return isDir(path, NULL);
-}
-static bool CreateDirectory(const string &path)
-{
-#if defined WIN32 || defined _WIN32 || defined WINCE
-#ifdef WINRT
-            wchar_t wpath[MAX_PATH];
-        size_t copied = mbstowcs(wpath, path.c_str(), MAX_PATH);
-        CV_Assert((copied != MAX_PATH) && (copied != (size_t)-1));
-        int result = CreateDirectoryA(wpath, NULL) ? 0 : -1;
-#else
-            int result = _mkdir(path.c_str());
-#endif
-#elif defined __linux__ || defined __APPLE__
-            int result = mkdir(path.c_str(), 0777);
-#else
-            int result = -1;
-#endif
-
-        if (result == -1)
-        {
-            return IsDirectory(path);
-        }
-        return true;
-}
-
-bool LogManager::CreateDirectories(const string &directoryPath)
-{
-    string path = directoryPath;
-
-    for (;;)
-    {
-        char last_char = path.empty() ? 0 : path[path.length() - 1];
-        if (IsPathSeparator(last_char))
-        {
-            path = path.substr(0, path.length() - 1);
-            continue;
-        }
-        break;
-    }
-
-    if (path.empty() || path == "./" || path == ".\\" || path == ".")
-        return true;
-    if (IsDirectory(path))
-        return true;
-
-    size_t pos = path.rfind('/');
-    if (pos == string::npos)
-        pos = path.rfind('\\');
-    if (pos != string::npos)
-    {
-        string parent_directory = path.substr(0, pos);
-        if (!parent_directory.empty())
-        {
-            if (!CreateDirectories(parent_directory))
-                return false;
-        }
-    }
-
-    return CreateDirectory(path);
-}
-
-bool LogManager::Exists(const string& path)
-{
-
-#if defined _WIN32 || defined WINCE
-        BOOL status = TRUE;
-    {
-        WIN32_FILE_ATTRIBUTE_DATA all_attrs;
-#ifdef WINRT
-        wchar_t wpath[MAX_PATH];
-        size_t copied = mbstowcs(wpath, path.c_str(), MAX_PATH);
-        CV_Assert((copied != MAX_PATH) && (copied != (size_t)-1));
-        status = ::GetFileAttributesExW(wpath, GetFileExInfoStandard, &all_attrs);
-#else
-        status = ::GetFileAttributesExA(path.c_str(), GetFileExInfoStandard, &all_attrs);
-#endif
-    }
-
-    return !!status;
-#else
-    struct stat stat_buf;
-    return (0 == stat(path.c_str(), &stat_buf));
-#endif
-}
 
 
 }

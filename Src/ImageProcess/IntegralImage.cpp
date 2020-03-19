@@ -6,7 +6,7 @@ namespace QQ
 {
 
 
-//2015-3-4 16:53:57，by QQ
+//2015-3-4 16:53:57,by QQ
 //改进的计算像素灰度值积分图像
 //srcImage:灰度图
 //image_Integral：srcImage大小相同的CV_32SC1类型

@@ -13,21 +13,13 @@
 #include <dirent.h>
 #endif
 #include "CommonUtility.h"
-#include"opencv2/opencv.hpp"
-
-using namespace cv;
+#include "SimpleLog.h"
  
-// 路径分隔符(Linux:‘/’,Windows:’\\’)
-#ifdef _WIN32
-#define  PATH_SEPARATOR '\\'
-#else
-#define  PATH_SEPARATOR '/'
-#endif
-
 namespace QQ
 {
 
 #if defined _WIN32 || defined WINCE
+# include <windows.h>
     const char dir_separators[] = "/\\";
 
 	struct dirent
@@ -497,47 +489,6 @@ namespace QQ
 			}
 		}
 	}
-
-
-        void RemoveAllSdk(const string& path)
-        {
-#ifdef MINIVISIONSDK
-            if (!Exists(path))
-                return;
-
-            if (IsDirectory(path))
-            {
-                std::vector<string> entries;
-                GetFileNameList2(path, string(), entries, false, true);
-                for (size_t i = 0; i < entries.size(); i++)
-                {
-                    const string& e = entries[i];
-                    RemoveAll(e);
-                }
-#ifdef _MSC_VER
-                bool result = _rmdir(path.c_str()) == 0;
-#else
-                bool result = rmdir(path.c_str()) == 0;
-#endif
-                if (!result)
-                {
-                    LOG_INFO(stdout, "can't remove directory: %s\n", path.c_str());
-                }
-            }
-            else
-            {
-#ifdef _MSC_VER
-                bool result = _unlink(path.c_str()) == 0;
-#else
-                bool result = unlink(path.c_str()) == 0;
-#endif
-                if (!result)
-                {
-                    LOG_INFO(stdout, "can't remove file: %s\n", path.c_str());
-                }
-            }
-#endif
-        }
 
 	void Remove(const string &directory, const string &extension)
 	{
