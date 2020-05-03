@@ -1,6 +1,12 @@
-// Copyright (c) 2014-2020, QQ<654393155@qq.com>, all rights reserved.
-
+//////////////////////////////////////////////////////////////////////////
 // 文件以及目录处理
+// 2018-1-6,by QQ
+//
+// Please contact me if you find any bugs, or have any suggestions.
+// Contact:
+//		Email:654393155@qq.com
+//		Blog:http://blog.csdn.net/qianqing13579
+//////////////////////////////////////////////////////////////////////////
 
 #ifndef __FILE_SYSTEM_H__
 #define __FILE_SYSTEM_H__
@@ -13,8 +19,6 @@ using namespace std;
  
 namespace QQ
 {
-
-	
 
     // 路径是否存在
 	DLL_EXPORTS bool Exists(const string &path);
@@ -30,7 +34,10 @@ namespace QQ
     // 创建多级目录,注意：创建多级目录的时候，目标目录是不能有文件存在的
 	DLL_EXPORTS bool CreateDirectories(const string &directoryPath);
 
-    bool CreateSingleDirectory(const string &path);
+    /* 已弃用，使用 CreateDirectories
+    创建单级目录
+    */
+    DLL_EXPORTS bool CreateSingleDirectory(const string &path);
 
 	/**
     * 生成符合指定模式的文件名列表(支持递归遍历)
@@ -110,6 +117,7 @@ namespace QQ
 	// 重命名目录中的文件
 	// 将srcPath中的文件重名到dstPath,重名采用时间戳的方式,如果 srcPath==dstPath,则直接替换原文件
 	DLL_EXPORTS void RenameFilesInDirectory(const string &srcPath, const string &dstPath);
+        
 }
 
 #endif //

@@ -3,7 +3,7 @@
 #include<string>
 #include"All.h"
 #include"CommonUtility.h"
-#include"FileSystem.h"
+#include"Filesystem.h"
 #include"SimpleLog.h"
 
 using namespace std;
@@ -57,55 +57,56 @@ void ImageProcessTest::TestProject()
 void ImageProcessTest::TestMat_IplImage4ALigned()//测试Mat是否4字节对齐
 {
 	
-	Mat mat=imread(string(GRAY)+"White_Small.bmp",-1);
-	int widthStep_Mat=mat.step[0];//9
+	// Mat mat=imread(string(GRAY)+"White_Small.bmp",-1);
+	// int widthStep_Mat=mat.step[0];//9
 
-	IplImage *iplImage=cvLoadImage((string(GRAY)+"White_Small.bmp").c_str(),-1);
-	int widthStep_Ipl=iplImage->widthStep;//12
+	// OpenCV4.0之后不支持IplImage
+	// IplImage *iplImage=cvLoadImage((string(GRAY)+"White_Small.bmp").c_str(),-1);
+	// int widthStep_Ipl=iplImage->widthStep;//12
 
-	int pixelCount=mat.cols*mat.rows;
+	// int pixelCount=mat.cols*mat.rows;
 	
-	//打印出Mat
-	uchar *imageData=mat.data;
-	printf("Mat\n");
-	for (int i=0;i<=pixelCount-1;++i)
-	{
-		printf("%d,",*imageData++);//挨个打印出来，没有填充的数据
-	}
-	printf("\n\n");
+	// //打印出Mat
+	// uchar *imageData=mat.data;
+	// printf("Mat\n");
+	// for (int i=0;i<=pixelCount-1;++i)
+	// {
+	// 	printf("%d,",*imageData++);//挨个打印出来，没有填充的数据
+	// }
+	// printf("\n\n");
 	
-	//打印出IplImage
-	uchar *imageData_Ipl=(uchar *)iplImage->imageData;
-	printf("IplImage\n");
-	for (int i=0;i<=pixelCount-1;++i)
-	{
-		printf("%d,",*imageData_Ipl++);//挨个打印出来，填充的数据
-	}
-	printf("\n\n");
+	// //打印出IplImage
+	// uchar *imageData_Ipl=(uchar *)iplImage->imageData;
+	// printf("IplImage\n");
+	// for (int i=0;i<=pixelCount-1;++i)
+	// {
+	// 	printf("%d,",*imageData_Ipl++);//挨个打印出来，填充的数据
+	// }
+	// printf("\n\n");
 	
-	////////////////////////////IplImage转为Mat//////////////////////////////////////////////
+	// ////////////////////////////IplImage转为Mat//////////////////////////////////////////////
 	
-	//将4字节对齐的IplImage转化为Mat
-	Mat ipl2Mat_True = cvarrToMat(iplImage, true);
-	int withStep3=ipl2Mat_True.step[0];//9
-	uchar *imageData2=ipl2Mat_True.data;
-	printf("Mat ipl2Mat_True(iplImage,true)\n");
-	for (int i=0;i<=pixelCount-1;++i)
-	{
-		printf("%d,",*imageData2++);//挨个打印出来，填充的数据
-	}
-	printf("\n\n");
+	// //将4字节对齐的IplImage转化为Mat
+	// Mat ipl2Mat_True = cvarrToMat(iplImage, true);
+	// int withStep3=ipl2Mat_True.step[0];//9
+	// uchar *imageData2=ipl2Mat_True.data;
+	// printf("Mat ipl2Mat_True(iplImage,true)\n");
+	// for (int i=0;i<=pixelCount-1;++i)
+	// {
+	// 	printf("%d,",*imageData2++);//挨个打印出来，填充的数据
+	// }
+	// printf("\n\n");
 
 	
-	//将4字节对齐的IplImage转化为Mat
-	Mat ipl2Mat_false=cvarrToMat(iplImage, false);
-	int withStep4=ipl2Mat_false.step[0];//12
-	uchar *imageData3=ipl2Mat_false.data;
-	printf("Mat ipl2Mat_false(iplImage,false)\n");
-	for (int i=0;i<=pixelCount-1;++i)
-	{
-		printf("%d,",*imageData3++);//挨个打印出来，填充的数据
-	}
+	// //将4字节对齐的IplImage转化为Mat
+	// Mat ipl2Mat_false=cvarrToMat(iplImage, false);
+	// int withStep4=ipl2Mat_false.step[0];//12
+	// uchar *imageData3=ipl2Mat_false.data;
+	// printf("Mat ipl2Mat_false(iplImage,false)\n");
+	// for (int i=0;i<=pixelCount-1;++i)
+	// {
+	// 	printf("%d,",*imageData3++);//挨个打印出来，填充的数据
+	// }
 
 }
 
