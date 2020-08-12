@@ -30,8 +30,9 @@
 1. 下文中的当前目录为github工程根目录
 
 ### 安装OpenCV
-1. 解压Resource/3rdParty.tar.gz，解压完路径为"Resource/3rdParty/OpenCV_3.4.2/"
-2. 对于Windows系统可以直接将需要的.dll文件拷贝到可执行文件目录，对于Linux系统需要将OpenCV加入~/.bashrc环境变量
+1. 对于Linux系统需要安装OpenCV依赖：sh ./Resource/InstallOpenCV/InstallOpenCVDependences.sh，该脚本同时提供了Ubuntu和CentOS两种系统下的安装教程
+2. 解压Resource/3rdParty.tar.gz，解压完路径为"Resource/3rdParty/OpenCV_3.4.2/"
+3. 对于Windows系统可以直接将需要的.dll文件拷贝到可执行文件目录，对于Linux系统需要将OpenCV加入~/.bashrc环境变量
     1. vim ~/.bashrc
     2. 在文件最后加入 export  LD_LIBRARY_PATH=项目根路径/Resource/3rdParty/OpenCV_3.4.2/Ubuntu16.04/lib/:$LD_LIBRARY_PATH
     3. source ~/.bashrc
