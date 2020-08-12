@@ -31,12 +31,12 @@
 
 ### 安装OpenCV
 1. 解压Resource/3rdParty.tar.gz，解压完路径为"Resource/3rdParty/OpenCV_3.4.2/"
-2. 对于Linux系统需要将OpenCV加入bashrc环境变量
+2. 对于Windows系统可以直接将需要的.dll文件拷贝到可执行文件目录，对于Linux系统需要将OpenCV加入~/.bashrc环境变量
     1. vim ~/.bashrc
     2. 在文件最后加入 export  LD_LIBRARY_PATH=项目根路径/Resource/3rdParty/OpenCV_3.4.2/Ubuntu16.04/lib/:$LD_LIBRARY_PATH
     3. source ~/.bashrc
 
-注意：Resource目录下的OpenCV只提供了VS2013版本和Ubuntu16.04版本，如果需要其他版本，需要重新编译OpenCV，同时需要修改./CMakeLists.txt中OpenCV的头文件路径和库路径。Resource/InstallOpenCV/目录下提供了OpenCV3.4.2的源代码工程，可以用来源码安装OpenCV。
+注意：Resource目录下的OpenCV只提供了VS2013版本和Ubuntu16.04版本，如果需要其他版本，需要重新编译OpenCV，同时需要修改CMakeLists.txt中OpenCV的头文件路径和库路径,以及~/.bashrc中的OpenCV库路径。Resource/InstallOpenCV/目录下提供了OpenCV3.4.2的源代码工程，可以用来源码安装OpenCV。
 
 ### Windows
 #### VS
