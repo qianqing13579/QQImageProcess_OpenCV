@@ -3,25 +3,25 @@
 namespace QQ
 {
 
-//»ñÈ¡iÖĞ0,1µÄÌø±ä´ÎÊı
+//è·å–iä¸­0,1çš„è·³å˜æ¬¡æ•°
 int LBP::GetHopCount(int i)
 {
-	// ×ª»»Îª¶ş½øÖÆ
+	// è½¬æ¢ä¸ºäºŒè¿›åˆ¶
 	int a[8] = { 0 };
 	int k = 7;
 	while (i)
 	{
-		// ³ı2È¡Óà
+		// é™¤2å–ä½™
 		a[k] = i % 2;
 		i/=2;
 		--k;
 	}
 
-	// ¼ÆËãÌø±ä´ÎÊı
+	// è®¡ç®—è·³å˜æ¬¡æ•°
 	int count = 0;
 	for (int k = 0; k<8; ++k)
 	{
-		// ×¢Òâ£¬ÊÇÑ­»·¶ş½øÖÆ,ËùÒÔĞèÒªÅĞ¶ÏÊÇ·ñÎª8
+		// æ³¨æ„ï¼Œæ˜¯å¾ªç¯äºŒè¿›åˆ¶,æ‰€ä»¥éœ€è¦åˆ¤æ–­æ˜¯å¦ä¸º8
 		if (a[k] != a[k + 1 == 8 ? 0 : k + 1])
 		{
 			++count;
@@ -31,8 +31,8 @@ int LBP::GetHopCount(int i)
 
 }
 
-// ½¨Á¢µÈ¼ÛÄ£Ê½±í
-// ÕâÀïÎªÁË±ãÓÚ½¨Á¢LBPÌØÕ÷Í¼£¬58ÖÖµÈ¼ÛÄ£Ê½ĞòºÅ´Ó1¿ªÊ¼:1~58,µÚ59Àà»ìºÏÄ£Ê½Ó³ÉäÎª0
+// å»ºç«‹ç­‰ä»·æ¨¡å¼è¡¨
+// è¿™é‡Œä¸ºäº†ä¾¿äºå»ºç«‹LBPç‰¹å¾å›¾ï¼Œ58ç§ç­‰ä»·æ¨¡å¼åºå·ä»1å¼€å§‹:1~58,ç¬¬59ç±»æ··åˆæ¨¡å¼æ˜ å°„ä¸º0
 void LBP::BuildUniformPatternTable(int *table)
 {
 	memset(table, 0, 256*sizeof(int));
@@ -50,14 +50,14 @@ void LBP::BuildUniformPatternTable(int *table)
 
 void LBP::ComputeLBPFeatureVector_256_O(const Mat &srcImage, Size cellSize, Mat &featureVector)
 {
-	// ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+	// å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
 	CV_Assert(srcImage.type() == CV_8UC1);
 
-	// ¼ÆËãLBPÌØÕ÷Í¼
+	// è®¡ç®—LBPç‰¹å¾å›¾
 	Mat LBPImage;
 	ComputeLBPImage_256(srcImage, LBPImage);
 
-	// ¹¹½¨»¬¶¯´°¿ÚÏñËØ²éÕÒ±í,¼ÆËã»¬¶¯´°¿ÚÖĞÃ¿¸öÏñËØÔÚÍ¼ÏñÖĞÏà¶ÔÓÚ»¬¶¯´°¿ÚÖ¸ÕëµÄÆ«ÒÆ(ÕâÀïµÄ»¬¶¯´°¿Ú¾ÍÊÇcell)
+	// æ„å»ºæ»‘åŠ¨çª—å£åƒç´ æŸ¥æ‰¾è¡¨,è®¡ç®—æ»‘åŠ¨çª—å£ä¸­æ¯ä¸ªåƒç´ åœ¨å›¾åƒä¸­ç›¸å¯¹äºæ»‘åŠ¨çª—å£æŒ‡é’ˆçš„åç§»(è¿™é‡Œçš„æ»‘åŠ¨çª—å£å°±æ˜¯cell)
 	std::vector<int> pixelOffset;
 	int pixelCountOfCell = cellSize.height*cellSize.width;
 	pixelOffset.resize(pixelCountOfCell);
@@ -72,12 +72,12 @@ void LBP::ComputeLBPFeatureVector_256_O(const Mat &srcImage, Size cellSize, Mat 
 		}
 	}
 
-	// ¼ÆËãcellµÄ¸öÊı
+	// è®¡ç®—cellçš„ä¸ªæ•°
 	Size numberOfCells;
 	numberOfCells.width = LBPImage.cols / cellSize.width;
 	numberOfCells.height = LBPImage.rows / cellSize.height;
 
-	// ÌØÕ÷ÏòÁ¿
+	// ç‰¹å¾å‘é‡
 	int numberOfDimension = 256 * numberOfCells.width*numberOfCells.height;
 	featureVector.create(1, numberOfDimension, CV_32FC1);
 	featureVector.setTo(Scalar(0));
@@ -89,22 +89,22 @@ void LBP::ComputeLBPFeatureVector_256_O(const Mat &srcImage, Size cellSize, Mat 
 		int yOffset = y*cellSize.height;
 		for (int x = 0; x <= numberOfCells.width - 1;++x)
 		{
-			// ¼ÆËã»¬¶¯´°¿ÚÔÚÍ¼ÏñÖĞµÄÆ«ÒÆ,²¢×ª»¯ÎªÖ¸Ïò¸Ã»¬¶¯´°¿ÚµÄÖ¸Õë
+			// è®¡ç®—æ»‘åŠ¨çª—å£åœ¨å›¾åƒä¸­çš„åç§»,å¹¶è½¬åŒ–ä¸ºæŒ‡å‘è¯¥æ»‘åŠ¨çª—å£çš„æŒ‡é’ˆ
 			int xOffset = x*cellSize.width;
 			uchar *dataOfROI = LBPImage.data + yOffset*LBPImage.cols + xOffset;
 			
-			// ¸Ã»¬¶¯´°¿ÚÌØÕ÷ÏòÁ¿ÔÚÕû¸öÌØÕ÷ÏòÁ¿ÖĞµÄÆ«ÒÆ,²¢×ª»¯ÎªÖ¸Ïò¸Ã»¬¶¯´°¿ÚÌØÕ÷ÏòÁ¿µÄÖ¸Õë
+			// è¯¥æ»‘åŠ¨çª—å£ç‰¹å¾å‘é‡åœ¨æ•´ä¸ªç‰¹å¾å‘é‡ä¸­çš„åç§»,å¹¶è½¬åŒ–ä¸ºæŒ‡å‘è¯¥æ»‘åŠ¨çª—å£ç‰¹å¾å‘é‡çš„æŒ‡é’ˆ
 			index += 256;
 			float *featureOfCell = dataOfFeatureVector + index;
 
-			// ¼ÆËã»¬¶¯´°¿ÚµÄLBPÖ±·½Í¼
+			// è®¡ç®—æ»‘åŠ¨çª—å£çš„LBPç›´æ–¹å›¾
 			for (int i = 0; i < pixelOffset.size(); ++i)
 			{
 				int LBPValue=dataOfROI[pixelOffset[i]];
 				++featureOfCell[LBPValue];
 			}
 
-			// Ò»¶¨Òª¹éÒ»»¯£¡·ñÔò·ÖÀàÆ÷¼ÆËãÎó²îºÜ´ó
+			// ä¸€å®šè¦å½’ä¸€åŒ–ï¼å¦åˆ™åˆ†ç±»å™¨è®¡ç®—è¯¯å·®å¾ˆå¤§
 			for (int i = 0; i <= 255; ++i)
 				featureOfCell[i] /= pixelCountOfCell;
 
@@ -115,14 +115,14 @@ void LBP::ComputeLBPFeatureVector_256_O(const Mat &srcImage, Size cellSize, Mat 
 
 void LBP::ComputeLBPFeatureVector_256_O_2(const Mat &srcImage, Size cellSize, Mat &featureVector)
 {
-	// ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+	// å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
 	CV_Assert(srcImage.type() == CV_8UC1);
 
-	// ¼ÆËãLBPÌØÕ÷Í¼
+	// è®¡ç®—LBPç‰¹å¾å›¾
 	Mat LBPImage;
 	ComputeLBPImage_256(srcImage, LBPImage);
 
-	// ¹¹½¨»¬¶¯´°¿ÚÏñËØ²éÕÒ±í,¼ÆËã»¬¶¯´°¿ÚÖĞÃ¿¸öÏñËØÔÚÔ­Í¼ÖĞÏà¶ÔÓÚ»¬¶¯´°¿ÚÖ¸ÕëÆ«ÒÆ
+	// æ„å»ºæ»‘åŠ¨çª—å£åƒç´ æŸ¥æ‰¾è¡¨,è®¡ç®—æ»‘åŠ¨çª—å£ä¸­æ¯ä¸ªåƒç´ åœ¨åŸå›¾ä¸­ç›¸å¯¹äºæ»‘åŠ¨çª—å£æŒ‡é’ˆåç§»
 	std::vector<int> pixelOffset;
 	int pixelCountOfCell = cellSize.height*cellSize.width;
 	pixelOffset.resize(pixelCountOfCell);
@@ -137,18 +137,18 @@ void LBP::ComputeLBPFeatureVector_256_O_2(const Mat &srcImage, Size cellSize, Ma
 		}
 	}
 
-	// ¼ÆËãcellµÄ¸öÊı
+	// è®¡ç®—cellçš„ä¸ªæ•°
 	Size numberOfCells;
 	numberOfCells.width = LBPImage.cols / cellSize.width;
 	numberOfCells.height = LBPImage.rows / cellSize.height;
 
-	// ÌØÕ÷ÏòÁ¿
+	// ç‰¹å¾å‘é‡
 	int numberOfDimension = 256 * numberOfCells.width*numberOfCells.height;
 	featureVector.create(1, numberOfDimension, CV_32FC1);
 	featureVector.setTo(Scalar(0));
 	float *dataOfFeatureVector = (float *)featureVector.data;
 
-	// ÓÅ»¯Ñ­»·ÖĞµÄ³Ë·¨£¬ÓÃ¼Ó·¨Ìæ»»³Ë·¨
+	// ä¼˜åŒ–å¾ªç¯ä¸­çš„ä¹˜æ³•ï¼Œç”¨åŠ æ³•æ›¿æ¢ä¹˜æ³•
 	uchar *rowOfROI = LBPImage.data;
 	int yStep = cellSize.height*LBPImage.cols;
 	int xStep = cellSize.width;
@@ -158,22 +158,22 @@ void LBP::ComputeLBPFeatureVector_256_O_2(const Mat &srcImage, Size cellSize, Ma
 		uchar *colOfROI = rowOfROI;
 		for (int x = 0; x <= numberOfCells.width - 1; ++x,colOfROI+=xStep)
 		{
-			// ¼ÆËãcellÔÚÔ­Í¼ÖĞµÄÆ«ÒÆ,²¢×ª»¯ÎªÖ¸Ïò¸Ã»¬¶¯´°¿ÚµÄÖ¸Õë
+			// è®¡ç®—cellåœ¨åŸå›¾ä¸­çš„åç§»,å¹¶è½¬åŒ–ä¸ºæŒ‡å‘è¯¥æ»‘åŠ¨çª—å£çš„æŒ‡é’ˆ
 			//int xOffset = x*cellSize.width;
 			//uchar *dataOfROI = LBPImage.data + yOffset*LBPImage.cols + xOffset;
 
-			// ¸ÃcellÌØÕ÷ÏòÁ¿ÔÚÕû¸öÌØÕ÷ÏòÁ¿ÖĞµÄÆ«ÒÆ,²¢×ª»¯ÎªÖ¸Õë
+			// è¯¥cellç‰¹å¾å‘é‡åœ¨æ•´ä¸ªç‰¹å¾å‘é‡ä¸­çš„åç§»,å¹¶è½¬åŒ–ä¸ºæŒ‡é’ˆ
 			index += 256;
 			float *featureOfCell = dataOfFeatureVector + index;
 
-			// ¼ÆËãcellµÄLBPÖ±·½Í¼
+			// è®¡ç®—cellçš„LBPç›´æ–¹å›¾
 			for (int i = 0; i < pixelOffset.size(); ++i)
 			{
 				int LBPValue = colOfROI[pixelOffset[i]];
 				++featureOfCell[LBPValue];
 			}
 
-			// Ò»¶¨Òª¹éÒ»»¯£¡·ñÔò·ÖÀàÆ÷¼ÆËãÎó²îºÜ´ó
+			// ä¸€å®šè¦å½’ä¸€åŒ–ï¼å¦åˆ™åˆ†ç±»å™¨è®¡ç®—è¯¯å·®å¾ˆå¤§
 			for (int i = 0; i <= 255; ++i)
 				featureOfCell[i] /= pixelCountOfCell;
 
@@ -183,30 +183,30 @@ void LBP::ComputeLBPFeatureVector_256_O_2(const Mat &srcImage, Size cellSize, Ma
 
 void LBP::ComputeLBPFeatureVector_256(const Mat &srcImage, Size cellSize, Mat &featureVector)
 {
-    // ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+    // å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
     CV_Assert(srcImage.depth() == CV_8U&&srcImage.channels() == 1);
 
-    // ¼ÆËãLBPÌØÕ÷Í¼
+    // è®¡ç®—LBPç‰¹å¾å›¾
     Mat LBPImage;
     ComputeLBPImage_256(srcImage,LBPImage);
 
-	// ¼ÆËãcell¸öÊı
+	// è®¡ç®—cellä¸ªæ•°
 	int widthOfCell = cellSize.width;
 	int heightOfCell = cellSize.height;
-	int numberOfCell_X = srcImage.cols / widthOfCell;// X·½ÏòcellµÄ¸öÊı
+	int numberOfCell_X = srcImage.cols / widthOfCell;// Xæ–¹å‘cellçš„ä¸ªæ•°
 	int numberOfCell_Y = srcImage.rows / heightOfCell;
 
-	// ÌØÕ÷ÏòÁ¿µÄ¸öÊı
+	// ç‰¹å¾å‘é‡çš„ä¸ªæ•°
 	int numberOfDimension = 256 * numberOfCell_X*numberOfCell_Y;
 	featureVector.create(1, numberOfDimension, CV_32FC1);
 	featureVector.setTo(Scalar(0));
 
-	// ¼ÆËãLBPÌØÕ÷ÏòÁ¿
+	// è®¡ç®—LBPç‰¹å¾å‘é‡
     int stepOfCell=srcImage.cols;
     int pixelCount = cellSize.width*cellSize.height;
     float *dataOfFeatureVector=(float *)featureVector.data;
 
-    // cellµÄÌØÕ÷ÏòÁ¿ÔÚ×îÖÕÌØÕ÷ÏòÁ¿ÖĞµÄÆğÊ¼Î»ÖÃ
+    // cellçš„ç‰¹å¾å‘é‡åœ¨æœ€ç»ˆç‰¹å¾å‘é‡ä¸­çš„èµ·å§‹ä½ç½®
     int index = -256;
 	for (int y = 0; y <= numberOfCell_Y - 1; ++y)
 	{
@@ -214,7 +214,7 @@ void LBP::ComputeLBPFeatureVector_256(const Mat &srcImage, Size cellSize, Mat &f
 		{
             index+=256;
 
-            // ¼ÆËãÃ¿¸öcellµÄLBPÖ±·½Í¼
+            // è®¡ç®—æ¯ä¸ªcellçš„LBPç›´æ–¹å›¾
             Mat cell = LBPImage(Rect(x * widthOfCell, y * heightOfCell, widthOfCell, heightOfCell));
             uchar *rowOfCell=cell.data;
             for(int y_Cell=0;y_Cell<=cell.rows-1;++y_Cell,rowOfCell+=stepOfCell)
@@ -226,7 +226,7 @@ void LBP::ComputeLBPFeatureVector_256(const Mat &srcImage, Size cellSize, Mat &f
                 }
             }
 
-            // Ò»¶¨Òª¹éÒ»»¯£¡·ñÔò·ÖÀàÆ÷¼ÆËãÎó²îºÜ´ó
+            // ä¸€å®šè¦å½’ä¸€åŒ–ï¼å¦åˆ™åˆ†ç±»å™¨è®¡ç®—è¯¯å·®å¾ˆå¤§
             for (int i = 0; i <= 255; ++i)
                 dataOfFeatureVector[index + i] /= pixelCount;
 
@@ -235,19 +235,19 @@ void LBP::ComputeLBPFeatureVector_256(const Mat &srcImage, Size cellSize, Mat &f
 
 }
 
-//srcImage:»Ò¶ÈÍ¼
-//LBPImage:LBPÍ¼
+//srcImage:ç°åº¦å›¾
+//LBPImage:LBPå›¾
 void LBP::ComputeLBPImage_256(const Mat &srcImage, Mat &LBPImage)
 {
-    // ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+    // å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
     CV_Assert(srcImage.depth() == CV_8U&&srcImage.channels() == 1);
     LBPImage.create(srcImage.size(), srcImage.type());
 
-    // À©³äÔ­Í¼Ïñ±ß½ç£¬±ãÓÚ±ß½ç´¦Àí
+    // æ‰©å……åŸå›¾åƒè¾¹ç•Œï¼Œä¾¿äºè¾¹ç•Œå¤„ç†
     Mat extendedImage;
     copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_DEFAULT);
 
-    // ¼ÆËãLBPÌØÕ÷Í¼
+    // è®¡ç®—LBPç‰¹å¾å›¾
     int heightOfExtendedImage = extendedImage.rows;
     int widthOfExtendedImage = extendedImage.cols;
     int widthOfLBP=LBPImage.cols;
@@ -255,12 +255,12 @@ void LBP::ComputeLBPImage_256(const Mat &srcImage, Mat &LBPImage)
     uchar *rowOfLBPImage = LBPImage.data;
     for (int y = 1; y <= heightOfExtendedImage - 2; ++y, rowOfExtendedImage += widthOfExtendedImage, rowOfLBPImage += widthOfLBP)
     {
-        // ÁĞ
+        // åˆ—
         uchar *colOfExtendedImage = rowOfExtendedImage;
         uchar *colOfLBPImage = rowOfLBPImage;
         for (int x = 1; x <= widthOfExtendedImage - 2; ++x,++colOfExtendedImage,++colOfLBPImage)
         {
-            // ¼ÆËãLBPÖµ
+            // è®¡ç®—LBPå€¼
             int LBPValue = 0;
             if (colOfExtendedImage[0 - widthOfExtendedImage - 1] >= colOfExtendedImage[0])
                 LBPValue += 128;
@@ -288,32 +288,32 @@ void LBP::ComputeLBPImage_256(const Mat &srcImage, Mat &LBPImage)
 
 }
 
-// cellSize:Ã¿¸öcellµÄ´óĞ¡,Èç16*16
+// cellSize:æ¯ä¸ªcellçš„å¤§å°,å¦‚16*16
 void LBP::ComputeLBPFeatureVector_Uniform(const Mat &srcImage, Size cellSize, Mat &featureVector)
 {
-    // ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+    // å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
     CV_Assert(srcImage.depth() == CV_8U&&srcImage.channels() == 1);
 
-    // ¼ÆËãLBPÌØÕ÷Í¼
+    // è®¡ç®—LBPç‰¹å¾å›¾
     Mat LBPImage;
     ComputeLBPImage_Uniform(srcImage,LBPImage);
 
-    // ¼ÆËãcell¸öÊı
+    // è®¡ç®—cellä¸ªæ•°
     int widthOfCell = cellSize.width;
     int heightOfCell = cellSize.height;
-    int numberOfCell_X = srcImage.cols / widthOfCell;// X·½ÏòcellµÄ¸öÊı
+    int numberOfCell_X = srcImage.cols / widthOfCell;// Xæ–¹å‘cellçš„ä¸ªæ•°
     int numberOfCell_Y = srcImage.rows / heightOfCell;
 
-    // ÌØÕ÷ÏòÁ¿µÄ¸öÊı
+    // ç‰¹å¾å‘é‡çš„ä¸ªæ•°
     int numberOfDimension = 58 * numberOfCell_X*numberOfCell_Y;
     featureVector.create(1, numberOfDimension, CV_32FC1);
     featureVector.setTo(Scalar(0));
 
-    // ¼ÆËãLBPÌØÕ÷ÏòÁ¿
+    // è®¡ç®—LBPç‰¹å¾å‘é‡
     int stepOfCell=srcImage.cols;
     float *dataOfFeatureVector=(float *)featureVector.data;
 
-	// cellµÄÌØÕ÷ÏòÁ¿ÔÚ×îÖÕÌØÕ÷ÏòÁ¿ÖĞµÄÆğÊ¼Î»ÖÃ
+	// cellçš„ç‰¹å¾å‘é‡åœ¨æœ€ç»ˆç‰¹å¾å‘é‡ä¸­çš„èµ·å§‹ä½ç½®
 	int index = -58;
     for (int y = 0; y <= numberOfCell_Y - 1; ++y)
     {
@@ -321,10 +321,10 @@ void LBP::ComputeLBPFeatureVector_Uniform(const Mat &srcImage, Size cellSize, Ma
         {
             index+=58;
 
-            // ¼ÆËãÃ¿¸öcellµÄLBPÖ±·½Í¼
+            // è®¡ç®—æ¯ä¸ªcellçš„LBPç›´æ–¹å›¾
             Mat cell = LBPImage(Rect(x * widthOfCell, y * heightOfCell, widthOfCell, heightOfCell));
             uchar *rowOfCell=cell.data;
-            int sum = 0; // Ã¿¸öcellµÄµÈ¼ÛÄ£Ê½×ÜÊı
+            int sum = 0; // æ¯ä¸ªcellçš„ç­‰ä»·æ¨¡å¼æ€»æ•°
             for(int y_Cell=0;y_Cell<=cell.rows-1;++y_Cell,rowOfCell+=stepOfCell)
             {
                 uchar *colOfCell=rowOfCell;
@@ -332,14 +332,14 @@ void LBP::ComputeLBPFeatureVector_Uniform(const Mat &srcImage, Size cellSize, Ma
                 {
                     if(colOfCell[0]!=0)
                     {
-                        // ÔÚÖ±·½Í¼ÖĞ×ª»¯Îª0~57£¬ËùÒÔÊÇcolOfCell[0] - 1
+                        // åœ¨ç›´æ–¹å›¾ä¸­è½¬åŒ–ä¸º0~57ï¼Œæ‰€ä»¥æ˜¯colOfCell[0] - 1
                         ++dataOfFeatureVector[index + colOfCell[0]-1];
                         ++sum;
                     }
                 }
             }
 
-            // Ò»¶¨Òª¹éÒ»»¯£¡·ñÔò·ÖÀàÆ÷¼ÆËãÎó²îºÜ´ó
+            // ä¸€å®šè¦å½’ä¸€åŒ–ï¼å¦åˆ™åˆ†ç±»å™¨è®¡ç®—è¯¯å·®å¾ˆå¤§
             for (int i = 0; i <= 57; ++i)
                 dataOfFeatureVector[index + i] /= sum;
 
@@ -349,14 +349,14 @@ void LBP::ComputeLBPFeatureVector_Uniform(const Mat &srcImage, Size cellSize, Ma
 
 void LBP::ComputeLBPFeatureVector_Uniform_O(const Mat &srcImage, Size cellSize, Mat &featureVector)
 {
-	// ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+	// å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
 	CV_Assert(srcImage.type() == CV_8UC1);
 
-	// ¼ÆËãLBPÌØÕ÷Í¼
+	// è®¡ç®—LBPç‰¹å¾å›¾
 	Mat LBPImage;
 	ComputeLBPImage_Uniform(srcImage, LBPImage);
 
-	// ¹¹½¨»¬¶¯´°¿ÚÏñËØ²éÕÒ±í,¼ÆËã»¬¶¯´°¿ÚÖĞÃ¿¸öÏñËØÔÚÔ­Í¼ÖĞÏà¶ÔÓÚ»¬¶¯´°¿ÚÖ¸ÕëÆ«ÒÆ
+	// æ„å»ºæ»‘åŠ¨çª—å£åƒç´ æŸ¥æ‰¾è¡¨,è®¡ç®—æ»‘åŠ¨çª—å£ä¸­æ¯ä¸ªåƒç´ åœ¨åŸå›¾ä¸­ç›¸å¯¹äºæ»‘åŠ¨çª—å£æŒ‡é’ˆåç§»
 	std::vector<int> pixelOffset;
 	int pixelCountOfCell = cellSize.height*cellSize.width;
 	pixelOffset.resize(pixelCountOfCell);
@@ -371,12 +371,12 @@ void LBP::ComputeLBPFeatureVector_Uniform_O(const Mat &srcImage, Size cellSize, 
 		}
 	}
 
-	// ¼ÆËãcellµÄ¸öÊı
+	// è®¡ç®—cellçš„ä¸ªæ•°
 	Size numberOfCells;
 	numberOfCells.width = LBPImage.cols / cellSize.width;
 	numberOfCells.height = LBPImage.rows / cellSize.height;
 
-	// ÌØÕ÷ÏòÁ¿
+	// ç‰¹å¾å‘é‡
 	int numberOfDimension = 58 * numberOfCells.width*numberOfCells.height;
 	featureVector.create(1, numberOfDimension, CV_32FC1);
 	featureVector.setTo(Scalar(0));
@@ -388,16 +388,16 @@ void LBP::ComputeLBPFeatureVector_Uniform_O(const Mat &srcImage, Size cellSize, 
 		int yOffset = y*cellSize.height;
 		for (int x = 0; x <= numberOfCells.width - 1; ++x)
 		{
-			// ¼ÆËãcellÔÚÔ­Í¼ÖĞµÄÆ«ÒÆ,²¢×ª»¯ÎªÖ¸Ïò¸Ã»¬¶¯´°¿ÚµÄÖ¸Õë
+			// è®¡ç®—cellåœ¨åŸå›¾ä¸­çš„åç§»,å¹¶è½¬åŒ–ä¸ºæŒ‡å‘è¯¥æ»‘åŠ¨çª—å£çš„æŒ‡é’ˆ
 			int xOffset = x*cellSize.width;
 			uchar *dataOfROI = LBPImage.data + yOffset*LBPImage.cols + xOffset;
 
-			// ¸ÃcellÌØÕ÷ÏòÁ¿ÔÚÕû¸öÌØÕ÷ÏòÁ¿ÖĞµÄÆ«ÒÆ,²¢×ª»¯ÎªÖ¸Õë
+			// è¯¥cellç‰¹å¾å‘é‡åœ¨æ•´ä¸ªç‰¹å¾å‘é‡ä¸­çš„åç§»,å¹¶è½¬åŒ–ä¸ºæŒ‡é’ˆ
 			index += 58;
 			float *featureOfCell = dataOfFeatureVector + index;
 
-			// ¼ÆËãcellµÄLBPÖ±·½Í¼
-			int sum = 0; // Ã¿¸öcellµÄµÈ¼ÛÄ£Ê½×ÜÊı
+			// è®¡ç®—cellçš„LBPç›´æ–¹å›¾
+			int sum = 0; // æ¯ä¸ªcellçš„ç­‰ä»·æ¨¡å¼æ€»æ•°
 			for (int i = 0; i < pixelOffset.size(); ++i)
 			{
 				int LBPValue = dataOfROI[pixelOffset[i]];
@@ -409,7 +409,7 @@ void LBP::ComputeLBPFeatureVector_Uniform_O(const Mat &srcImage, Size cellSize, 
 				
 			}
 
-			// Ò»¶¨Òª¹éÒ»»¯£¡·ñÔò·ÖÀàÆ÷¼ÆËãÎó²îºÜ´ó
+			// ä¸€å®šè¦å½’ä¸€åŒ–ï¼å¦åˆ™åˆ†ç±»å™¨è®¡ç®—è¯¯å·®å¾ˆå¤§
 			for (int i = 0; i <= 57; ++i)
 				featureOfCell[i] /= sum;
 
@@ -418,24 +418,24 @@ void LBP::ComputeLBPFeatureVector_Uniform_O(const Mat &srcImage, Size cellSize, 
 }
 
 
-// ¼ÆËãµÈ¼ÛÄ£Ê½LBPÌØÕ÷Í¼£¬ÎªÁË·½±ã±íÊ¾ÌØÕ÷Í¼£¬58ÖÖµÈ¼ÛÄ£Ê½±íÊ¾Îª1~58,µÚ59ÖÖ»ìºÏÄ£Ê½±íÊ¾Îª0
-// ×¢£ºÄã¿ÉÒÔ½«µÚ59Àà»ìºÏÄ£Ê½Ó³ÉäÎªÈÎÒâÊıÖµ£¬ÒòÎªÒªÍ»³öµÈ¼ÛÄ£Ê½ÌØÕ÷£¬ËùÒÔ·ÇµÈ¼ÛÄ£Ê½ÉèÖÃÎª0±È½ÏºÃ
+// è®¡ç®—ç­‰ä»·æ¨¡å¼LBPç‰¹å¾å›¾ï¼Œä¸ºäº†æ–¹ä¾¿è¡¨ç¤ºç‰¹å¾å›¾ï¼Œ58ç§ç­‰ä»·æ¨¡å¼è¡¨ç¤ºä¸º1~58,ç¬¬59ç§æ··åˆæ¨¡å¼è¡¨ç¤ºä¸º0
+// æ³¨ï¼šä½ å¯ä»¥å°†ç¬¬59ç±»æ··åˆæ¨¡å¼æ˜ å°„ä¸ºä»»æ„æ•°å€¼ï¼Œå› ä¸ºè¦çªå‡ºç­‰ä»·æ¨¡å¼ç‰¹å¾ï¼Œæ‰€ä»¥éç­‰ä»·æ¨¡å¼è®¾ç½®ä¸º0æ¯”è¾ƒå¥½
 void LBP::ComputeLBPImage_Uniform(const Mat &srcImage, Mat &LBPImage)
 {
-    // ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+    // å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
     CV_Assert(srcImage.depth() == CV_8U&&srcImage.channels() == 1);
     LBPImage.create(srcImage.size(), srcImage.type());
 
-    // ¼ÆËãLBPÍ¼
-    // À©³äÔ­Í¼Ïñ±ß½ç£¬±ãÓÚ±ß½ç´¦Àí
+    // è®¡ç®—LBPå›¾
+    // æ‰©å……åŸå›¾åƒè¾¹ç•Œï¼Œä¾¿äºè¾¹ç•Œå¤„ç†
     Mat extendedImage;
     copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_DEFAULT);
 
-    // ¹¹½¨LBP µÈ¼ÛÄ£Ê½²éÕÒ±í
+    // æ„å»ºLBP ç­‰ä»·æ¨¡å¼æŸ¥æ‰¾è¡¨
     //int table[256];
     //BuildUniformPatternTable(table);
 
-    // LUT(256ÖÖÃ¿Ò»ÖÖÄ£Ê½¶ÔÓ¦µÄµÈ¼ÛÄ£Ê½)
+    // LUT(256ç§æ¯ä¸€ç§æ¨¡å¼å¯¹åº”çš„ç­‰ä»·æ¨¡å¼)
     static const int table[256] = { 1, 2, 3, 4, 5, 0, 6, 7, 8, 0, 0, 0, 9, 0, 10, 11, 12, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 14, 0, 15, 16, 17, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 20, 0, 21, 22, 23, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25,
@@ -444,7 +444,7 @@ void LBP::ComputeLBPImage_Uniform(const Mat &srcImage, Mat &LBPImage)
         0, 0, 0, 0, 36, 37, 38, 0, 39, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 42
         , 43, 44, 0, 45, 0, 0, 0, 46, 0, 0, 0, 0, 0, 0, 0, 47, 48, 49, 0, 50, 0, 0, 0, 51, 52, 53, 0, 54, 55, 56, 57, 58 };
 
-    // ¼ÆËãLBP
+    // è®¡ç®—LBP
     int heightOfExtendedImage = extendedImage.rows;
     int widthOfExtendedImage = extendedImage.cols;
     int widthOfLBP=LBPImage.cols;
@@ -452,12 +452,12 @@ void LBP::ComputeLBPImage_Uniform(const Mat &srcImage, Mat &LBPImage)
     uchar *rowOfLBPImage = LBPImage.data;
     for (int y = 1; y <= heightOfExtendedImage - 2; ++y,rowOfExtendedImage += widthOfExtendedImage, rowOfLBPImage += widthOfLBP)
     {
-        // ÁĞ
+        // åˆ—
         uchar *colOfExtendedImage = rowOfExtendedImage;
         uchar *colOfLBPImage = rowOfLBPImage;
         for (int x = 1; x <= widthOfExtendedImage - 2; ++x, ++colOfExtendedImage, ++colOfLBPImage)
         {
-            // ¼ÆËãLBPÖµ
+            // è®¡ç®—LBPå€¼
             int LBPValue = 0;
             if (colOfExtendedImage[0 - widthOfExtendedImage - 1] >= colOfExtendedImage[0])
                 LBPValue += 128;
@@ -483,7 +483,7 @@ void LBP::ComputeLBPImage_Uniform(const Mat &srcImage, Mat &LBPImage)
     }// y
 }
 
-// ¼ÆËã9ÖÖµÈ¼ÛÄ£Ê½£¬µÈ¼ÛÄ£Ê½±àºÅÒ²ÊÇ´Ó1¿ªÊ¼£º1~9
+// è®¡ç®—9ç§ç­‰ä»·æ¨¡å¼ï¼Œç­‰ä»·æ¨¡å¼ç¼–å·ä¹Ÿæ˜¯ä»1å¼€å§‹ï¼š1~9
 int LBP::ComputeValue9(int value58)
 {
 	int value9 = 0;
@@ -539,10 +539,10 @@ int LBP::GetMinBinary(int binary)
 	return miniBinaryLUT[binary];
 }
 
-// »ñÈ¡Ñ­»·¶ş½øÖÆµÄ×îĞ¡¶ş½øÖÆÄ£Ê½
+// è·å–å¾ªç¯äºŒè¿›åˆ¶çš„æœ€å°äºŒè¿›åˆ¶æ¨¡å¼
 uchar LBP::GetMinBinary(uchar *binary)
 {
-	// ¼ÆËã8¸ö¶ş½øÖÆ
+	// è®¡ç®—8ä¸ªäºŒè¿›åˆ¶
 	uchar LBPValue[8] = { 0 };
 	for (int i = 0; i <= 7; ++i)
 	{
@@ -556,7 +556,7 @@ uchar LBP::GetMinBinary(uchar *binary)
 		LBPValue[7] += binary[(i + 1) % 8] << (7 - i);
 	}
 
-	// Ñ¡Ôñ×îĞ¡µÄ
+	// é€‰æ‹©æœ€å°çš„
 	uchar minValue = LBPValue[0];
 	for (int i = 1; i <= 7; ++i)
 	{
@@ -569,30 +569,30 @@ uchar LBP::GetMinBinary(uchar *binary)
 	return minValue;
 
 }
-// cellSize:Ã¿¸öcellµÄ´óĞ¡,Èç16*16
+// cellSize:æ¯ä¸ªcellçš„å¤§å°,å¦‚16*16
 void LBP::ComputeLBPFeatureVector_Rotation_Uniform(const Mat &srcImage, Size cellSize, Mat &featureVector)
 {
-    // ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+    // å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
     CV_Assert(srcImage.depth() == CV_8U&&srcImage.channels() == 1);
 
-	// ¼ÆËãLBPÌØÕ÷Í¼
+	// è®¡ç®—LBPç‰¹å¾å›¾
     Mat LBPImage;
     ComputeLBPImage_Rotation_Uniform(srcImage,LBPImage);
 
-    // ¼ÆËãcell¸öÊı
+    // è®¡ç®—cellä¸ªæ•°
     int widthOfCell = cellSize.width;
     int heightOfCell = cellSize.height;
-    int numberOfCell_X = srcImage.cols / widthOfCell;// X·½ÏòcellµÄ¸öÊı
+    int numberOfCell_X = srcImage.cols / widthOfCell;// Xæ–¹å‘cellçš„ä¸ªæ•°
     int numberOfCell_Y = srcImage.rows / heightOfCell;
 
-    // ÌØÕ÷ÏòÁ¿µÄ¸öÊı
+    // ç‰¹å¾å‘é‡çš„ä¸ªæ•°
     int numberOfDimension = 9 * numberOfCell_X*numberOfCell_Y;
     featureVector.create(1, numberOfDimension, CV_32FC1);
     featureVector.setTo(Scalar(0));
 
-    // ¼ÆËãLBPÌØÕ÷ÏòÁ¿
+    // è®¡ç®—LBPç‰¹å¾å‘é‡
     int stepOfCell=srcImage.cols;
-    int index = -9;// cellµÄÌØÕ÷ÏòÁ¿ÔÚ×îÖÕÌØÕ÷ÏòÁ¿ÖĞµÄÆğÊ¼Î»ÖÃ
+    int index = -9;// cellçš„ç‰¹å¾å‘é‡åœ¨æœ€ç»ˆç‰¹å¾å‘é‡ä¸­çš„èµ·å§‹ä½ç½®
     float *dataOfFeatureVector=(float *)featureVector.data;
     for (int y = 0; y <= numberOfCell_Y - 1; ++y)
     {
@@ -600,10 +600,10 @@ void LBP::ComputeLBPFeatureVector_Rotation_Uniform(const Mat &srcImage, Size cel
         {
             index+=9;
 
-            // ¼ÆËãÃ¿¸öcellµÄLBPÖ±·½Í¼
+            // è®¡ç®—æ¯ä¸ªcellçš„LBPç›´æ–¹å›¾
             Mat cell = LBPImage(Rect(x * widthOfCell, y * heightOfCell, widthOfCell, heightOfCell));
             uchar *rowOfCell=cell.data;
-            int sum = 0; // Ã¿¸öcellµÄµÈ¼ÛÄ£Ê½×ÜÊı
+            int sum = 0; // æ¯ä¸ªcellçš„ç­‰ä»·æ¨¡å¼æ€»æ•°
             for(int y_Cell=0;y_Cell<=cell.rows-1;++y_Cell,rowOfCell+=stepOfCell)
             {
                 uchar *colOfCell=rowOfCell;
@@ -611,14 +611,14 @@ void LBP::ComputeLBPFeatureVector_Rotation_Uniform(const Mat &srcImage, Size cel
                 {
                     if(colOfCell[0]!=0)
                     {
-                         // ÔÚÖ±·½Í¼ÖĞ×ª»¯Îª0~8£¬ËùÒÔÊÇcolOfCell[0] - 1
+                         // åœ¨ç›´æ–¹å›¾ä¸­è½¬åŒ–ä¸º0~8ï¼Œæ‰€ä»¥æ˜¯colOfCell[0] - 1
                         ++dataOfFeatureVector[index + colOfCell[0]-1];
                         ++sum;
                     }
                 }
             }
 
-            // Ö±·½Í¼¹éÒ»»¯
+            // ç›´æ–¹å›¾å½’ä¸€åŒ–
             for (int i = 0; i <= 8; ++i)
                 dataOfFeatureVector[index + i] /= sum;
 
@@ -628,19 +628,19 @@ void LBP::ComputeLBPFeatureVector_Rotation_Uniform(const Mat &srcImage, Size cel
 
 void LBP::ComputeLBPImage_Rotation_Uniform(const Mat &srcImage, Mat &LBPImage)
 {
-    // ²ÎÊı¼ì²é£¬ÄÚ´æ·ÖÅä
+    // å‚æ•°æ£€æŸ¥ï¼Œå†…å­˜åˆ†é…
     CV_Assert(srcImage.depth() == CV_8U&&srcImage.channels() == 1);
     LBPImage.create(srcImage.size(), srcImage.type());
 
-    // À©³äÍ¼Ïñ£¬´¦Àí±ß½çÇé¿ö
+    // æ‰©å……å›¾åƒï¼Œå¤„ç†è¾¹ç•Œæƒ…å†µ
     Mat extendedImage;
     copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_DEFAULT);
 
-    // ¹¹½¨LBP µÈ¼ÛÄ£Ê½²éÕÒ±í
+    // æ„å»ºLBP ç­‰ä»·æ¨¡å¼æŸ¥æ‰¾è¡¨
     //int table[256];
     //BuildUniformPatternTable(table);
 
-    // ²éÕÒ±í
+    // æŸ¥æ‰¾è¡¨
     static const int table[256] = { 1, 2, 3, 4, 5, 0, 6, 7, 8, 0, 0, 0, 9, 0, 10, 11, 12, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 14, 0, 15, 16, 17, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 19, 0, 0, 0, 20, 0, 21, 22, 23, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 25,
@@ -657,12 +657,12 @@ void LBP::ComputeLBPImage_Rotation_Uniform(const Mat &srcImage, Mat &LBPImage)
     uchar *rowOfLBPImage = LBPImage.data;
     for (int y = 1; y <= heigthOfExtendedImage - 2; ++y, rowOfExtendedImage += widthOfExtendedImage, rowOfLBPImage += widthOfLBPImage)
     {
-        // ÁĞ
+        // åˆ—
         uchar *colOfExtendedImage = rowOfExtendedImage;
         uchar *colOfLBPImage = rowOfLBPImage;
         for (int x = 1; x <= widthOfExtendedImage - 2; ++x, ++colOfExtendedImage, ++colOfLBPImage)
         {
-            // ¼ÆËãLBPÖµ
+            // è®¡ç®—LBPå€¼
             int LBPValue = 0;
             if (colOfExtendedImage[0 - widthOfExtendedImage - 1] >= colOfExtendedImage[0])
                 LBPValue += 128;
@@ -683,10 +683,10 @@ void LBP::ComputeLBPImage_Rotation_Uniform(const Mat &srcImage, Mat &LBPImage)
 
             int minValue = GetMinBinary(LBPValue);
 
-            // ¼ÆËã58ÖÖµÈ¼ÛÄ£Ê½LBP
+            // è®¡ç®—58ç§ç­‰ä»·æ¨¡å¼LBP
             int value58 = table[minValue];
 
-            // ¼ÆËã9ÖÖµÈ¼ÛÄ£Ê½
+            // è®¡ç®—9ç§ç­‰ä»·æ¨¡å¼
             colOfLBPImage[0] = ComputeValue9(value58);
         }
 
@@ -703,7 +703,7 @@ void LBP::Test()
 	int number[256] = { 0 };
 	int numberOfMinBinary = 0;
 
-	// Ğı×ª²»±ä
+	// æ—‹è½¬ä¸å˜
 	for (int i = 0; i < 256; ++i)
 	{
 		k = 7;
@@ -716,7 +716,7 @@ void LBP::Test()
 		}
 		int minBinary = lbp.GetMinBinary(LBPValue);
 
-		// ²éÕÒÓĞÎŞÖØ¸´µÄ
+		// æŸ¥æ‰¾æœ‰æ— é‡å¤çš„
 		for (j = 0; j <= numberOfMinBinary - 1; ++j)
 		{
 			if (number[j] == minBinary)
@@ -727,7 +727,7 @@ void LBP::Test()
 			number[numberOfMinBinary++] = minBinary;
 		}
 	}
-    printf("Ğı×ª²»±äÒ»¹²ÓĞ£º%d ÖÖ\n",numberOfMinBinary);
+    printf("æ—‹è½¬ä¸å˜ä¸€å…±æœ‰ï¼š%d ç§\n",numberOfMinBinary);
 
 	// LUT
 	static const int table[256] = { 1, 2, 3, 4, 5, 0, 6, 7, 8, 0, 0, 0, 9, 0, 10, 11, 12, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 14, 0, 15, 16, 17, 0, 0, 0,
@@ -740,7 +740,7 @@ void LBP::Test()
 	
 	for (int i = 0; i <= numberOfMinBinary - 1; ++i)
 	{
-        printf("Ğı×ª²»±äµÄLBP£º%d ¶ÔÓ¦µÄµÈ¼ÛÄ£Ê½£º%d\n",number[i],table[number[i]]);
+        printf("æ—‹è½¬ä¸å˜çš„LBPï¼š%d å¯¹åº”çš„ç­‰ä»·æ¨¡å¼ï¼š%d\n",number[i],table[number[i]]);
 	}
 
 }
@@ -754,7 +754,7 @@ void LBP::TestGetMinBinaryLUT()
 		int j = i;
 		while (j)
 		{
-			// ³ı2È¡Óà
+			// é™¤2å–ä½™
 			a[k] = j % 2;
 			j /= 2;
 			--k;

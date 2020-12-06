@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// ÀàĞÍ¶¨Òå
+// ç±»å‹å®šä¹‰
 // 2014-11-28,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -34,18 +34,18 @@ namespace QQ
 
 typedef unsigned char BYTE;
 
-//½Ç¶È×ª»»
-#define DEGREE2RADIAN(x) (x*CV_PI/180)//½Ç¶È×ª»¡¶È
-#define RADIAN2DEGREE(x) (x*180/CV_PI)//»¡¶È×ª½Ç¶È
+//è§’åº¦è½¬æ¢
+#define DEGREE2RADIAN(x) (x*CV_PI/180)//è§’åº¦è½¬å¼§åº¦
+#define RADIAN2DEGREE(x) (x*180/CV_PI)//å¼§åº¦è½¬è§’åº¦
 
-/* ¸ÃĞÎÊ½ÖĞxÎªÕûĞÍ
+/* è¯¥å½¢å¼ä¸­xä¸ºæ•´å‹
 printf("%d\n", SATURATE(1098)); // 255
 printf("%d\n", SATURATE(255)); // 255
 printf("%d\n", SATURATE(-89)); // 0
 */
-#define  SATURATE(x)   (uchar)(((x) & ~255) == 0 ? (x) : ~((x)>>31)) // min(max(x,0),255)£¬ÊÊÓÃÓÚxÎªÈÎÒâÀàĞÍ
+#define  SATURATE(x)   (uchar)(((x) & ~255) == 0 ? (x) : ~((x)>>31)) // min(max(x,0),255)ï¼Œé€‚ç”¨äºxä¸ºä»»æ„ç±»å‹
 
-// Â·¾¶·Ö¸ô·û(Linux:¡®/¡¯,Windows:¡¯\\¡¯)
+// è·¯å¾„åˆ†éš”ç¬¦(Linux:â€˜/â€™,Windows:â€™\\â€™)
 #ifdef _WIN32
 #define  PATH_SEPARATOR '\\'
 #else

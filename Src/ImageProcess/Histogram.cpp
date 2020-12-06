@@ -3,12 +3,12 @@
 
 namespace QQ
 {
-//²»Ö§³ÖROI
+//ä¸æ”¯æŒROI
 void GetHistogram(const Mat &image, int *histogram)
 {
 	memset(histogram, 0, 256 * sizeof(int));
 
-	//¼ÆËãÖ±·½Í¼
+	//è®¡ç®—ç›´æ–¹å›¾
 	int pixelCount = image.cols*image.rows;
 	uchar *imageData = image.data;
 	for (int i = 0; i <= pixelCount - 1; ++i)
@@ -19,7 +19,7 @@ void GetHistogram(const Mat &image, int *histogram)
 }
 void GetMedianValue(const Mat &image, int &medianValue)
 {
-	//»ñÈ¡Ö±·½Í¼
+	//è·å–ç›´æ–¹å›¾
 	int histogram[256];
 	GetHistogram(image, histogram);
 
@@ -29,7 +29,7 @@ void GetMedianValue(const Mat &image, int &medianValue)
 	{
 		//
 		sum += histogram[i];
-		if (2 * sum>pixelCount)//ÉÙÓÃ³ı·¨(sum>pixelCount/2)
+		if (2 * sum>pixelCount)//å°‘ç”¨é™¤æ³•(sum>pixelCount/2)
 		{
 			medianValue = i;
 			break;
@@ -39,7 +39,7 @@ void GetMedianValue(const Mat &image, int &medianValue)
 }
 void GetMedianValue_AndPixelCountLowerMedian(const Mat &image, int &medianValue, int &pixelCountLowerMedian)
 {
-	//»ñÈ¡Ö±·½Í¼
+	//è·å–ç›´æ–¹å›¾
 	int histogram[256];
 	GetHistogram(image, histogram);
 
@@ -49,7 +49,7 @@ void GetMedianValue_AndPixelCountLowerMedian(const Mat &image, int &medianValue,
 	{
 		//
 		pixelCountLowerMedian += histogram[i];
-		if (2 * pixelCountLowerMedian>pixelCount)//ÉÙÓÃ³ı·¨(sum>pixelCount/2)
+		if (2 * pixelCountLowerMedian>pixelCount)//å°‘ç”¨é™¤æ³•(sum>pixelCount/2)
 		{
 			medianValue = i;
 			break;
@@ -58,14 +58,14 @@ void GetMedianValue_AndPixelCountLowerMedian(const Mat &image, int &medianValue,
 
 }
 
-//¼ÆËãÍ¼Ïñ×î´óºÍ×îĞ¡ÁÁ¶È
-void GetMaxMinValue(const Mat &image, int &maxValue, int &minValue)//¼ÆËãÁÁ×î´óÁÁ¶ÈºÍ×îĞ¡ÁÁ¶È
+//è®¡ç®—å›¾åƒæœ€å¤§å’Œæœ€å°äº®åº¦
+void GetMaxMinValue(const Mat &image, int &maxValue, int &minValue)//è®¡ç®—äº®æœ€å¤§äº®åº¦å’Œæœ€å°äº®åº¦
 {
-	//»ñÈ¡Ö±·½Í¼
+	//è·å–ç›´æ–¹å›¾
 	int histogram[256];
 	GetHistogram(image, histogram);
 
-	//Çó×î´ó×îĞ¡
+	//æ±‚æœ€å¤§æœ€å°
 	for (int i=0;i<=255;++i)
 	{
 		if (histogram[i] != 0)
@@ -86,23 +86,23 @@ void GetMaxMinValue(const Mat &image, int &maxValue, int &minValue)//¼ÆËãÁÁ×î´óÁ
 
 
 
-//×¢Òâ£ºimage_HistogramµÄ¿í¶ÈÒª>=256
+//æ³¨æ„ï¼šimage_Histogramçš„å®½åº¦è¦>=256
 void DrawHistogram(const Mat &histogram, Mat &image_Historam)
 {
 	//
 	image_Historam.setTo(Scalar(255, 255, 255));
 
-	//»ñÈ¡Í¼ÏñµÄ²ÎÊı
+	//è·å–å›¾åƒçš„å‚æ•°
 	int width = image_Historam.cols;
 	int height = image_Historam.rows;
 
-	//Ö±·½Í¼¹éÒ»»¯
-	Mat hist_Normalize(histogram);//¿½±´¹¹Ôì
+	//ç›´æ–¹å›¾å½’ä¸€åŒ–
+	Mat hist_Normalize(histogram);//æ‹·è´æ„é€ 
 	normalize(histogram, hist_Normalize, 0, height, NORM_MINMAX, -1);
 
-	//¿ªÊ¼»­Í¼
+	//å¼€å§‹ç”»å›¾
 	float *data = (float *)hist_Normalize.data;
-	int step = width / 256; //Ã¿¸ö»Ò¶È¼¶µÄ¿í¶È
+	int step = width / 256; //æ¯ä¸ªç°åº¦çº§çš„å®½åº¦
 	for (int i = 0; i < 255; i++)
 	{
 		rectangle(image_Historam,

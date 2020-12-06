@@ -10,7 +10,7 @@ namespace QQ
 
 		CV_Assert(srcImage.depth() == CV_8U);
 
-		// ¼ÆËãfx,fy
+		// è®¡ç®—fx,fy
 		Mat fx(srcImage.size(), CV_32SC1);
 		Mat fy(srcImage.size(), CV_32SC1);
 
@@ -22,7 +22,7 @@ namespace QQ
 
 		float angleScale = signedGradient ?360 : 180;
 
-		// ¼ÆËãfx,fy
+		// è®¡ç®—fx,fy
 		int stepOfEnlargedImage = enlargedImage.cols*enlargedImage.channels();
 		int stepOfFx = fx.cols;
 		int numberOfChannels = enlargedImage.channels();
@@ -48,7 +48,7 @@ namespace QQ
 			{
 				if (numberOfChannels == 1)
 				{
-					// Ê¹ÓÃSobelÄ£°å
+					// ä½¿ç”¨Sobelæ¨¡æ¿
 					// fx
 					//colOfFx[0] = colOfEnlargedImage[1 - stepOfEnlargedImage] + 2 * colOfEnlargedImage[1] + colOfEnlargedImage[1 + stepOfEnlargedImage] -
 					//	colOfEnlargedImage[-1 - stepOfEnlargedImage] - 2 * colOfEnlargedImage[-1] - colOfEnlargedImage[-1 + stepOfEnlargedImage];
@@ -57,7 +57,7 @@ namespace QQ
 					//colOfFy[0] = colOfEnlargedImage[stepOfEnlargedImage - 1] + 2 * colOfEnlargedImage[stepOfEnlargedImage] + colOfEnlargedImage[stepOfEnlargedImage + 1] -
 					//	colOfEnlargedImage[-stepOfEnlargedImage - 1] - 2 * colOfEnlargedImage[-stepOfEnlargedImage] - colOfEnlargedImage[-stepOfEnlargedImage + 1];
 
-					// Ê¹ÓÃ×î¼òµ¥µÄ¶Ô³ÆÄ£°å[-1,0,1](HOGÖĞÊ¹ÓÃ)
+					// ä½¿ç”¨æœ€ç®€å•çš„å¯¹ç§°æ¨¡æ¿[-1,0,1](HOGä¸­ä½¿ç”¨)
 					colOfFx[0] = colOfEnlargedImage[1] - colOfEnlargedImage[-1];
 					colOfFy[0] = colOfEnlargedImage[stepOfEnlargedImage] - colOfEnlargedImage[-stepOfEnlargedImage];
 
@@ -68,7 +68,7 @@ namespace QQ
 					int maxFx = 0, maxFy = 0;
 					for (int k = 0; k <= numberOfChannels - 1; ++k)
 					{
-						// Ê¹ÓÃSobelÄ£°å
+						// ä½¿ç”¨Sobelæ¨¡æ¿
 						// fx
 						//int fx0 = colOfEnlargedImage[numberOfChannels - stepOfEnlargedImage + k] + 2 * colOfEnlargedImage[numberOfChannels + k] + colOfEnlargedImage[numberOfChannels + stepOfEnlargedImage + k] -
 						//	colOfEnlargedImage[-numberOfChannels - stepOfEnlargedImage + k] - 2 * colOfEnlargedImage[-numberOfChannels + k] - colOfEnlargedImage[-numberOfChannels + stepOfEnlargedImage + k];
@@ -77,13 +77,13 @@ namespace QQ
 						//int fy0 = colOfEnlargedImage[stepOfEnlargedImage - numberOfChannels + k] + 2 * colOfEnlargedImage[stepOfEnlargedImage + k] + colOfEnlargedImage[stepOfEnlargedImage + numberOfChannels + k] -
 						//	colOfEnlargedImage[-stepOfEnlargedImage - numberOfChannels + k] - 2 * colOfEnlargedImage[-stepOfEnlargedImage + k] - colOfEnlargedImage[-stepOfEnlargedImage + numberOfChannels + k];
 
-						// Ê¹ÓÃ×î¼òµ¥µÄ¶Ô³ÆÄ£°å[-1,0,1](HOGÖĞÊ¹ÓÃ)
+						// ä½¿ç”¨æœ€ç®€å•çš„å¯¹ç§°æ¨¡æ¿[-1,0,1](HOGä¸­ä½¿ç”¨)
 						int fx0 = colOfEnlargedImage[numberOfChannels+k] - colOfEnlargedImage[-numberOfChannels+k];
 						int fy0 = colOfEnlargedImage[stepOfEnlargedImage+k] - colOfEnlargedImage[-stepOfEnlargedImage+k];
 
 						int gradient = fx0*fx0 + fy0*fy0;
 
-						// È¡Ìİ¶È´óĞ¡×î´óµÄÄÇ¸öÍ¨µÀ
+						// å–æ¢¯åº¦å¤§å°æœ€å¤§çš„é‚£ä¸ªé€šé“
 						if (gradient > maxGraident)
 						{
 							maxGraident = gradient;
@@ -99,22 +99,22 @@ namespace QQ
 
 				}
 
-				// ¼ÆËãÌİ¶È´óĞ¡ºÍÌİ¶È·½Ïò
+				// è®¡ç®—æ¢¯åº¦å¤§å°å’Œæ¢¯åº¦æ–¹å‘
 				colOfGradient[0] = sqrt(colOfFx[0] * colOfFx[0] + colOfFy[0] * colOfFy[0]);
 
-				// ÊÇ·ñÓĞ·½Ïò
+				// æ˜¯å¦æœ‰æ–¹å‘
 				if (signedGradient)
 				{
-					// ×ª»¯Îª½Ç¶È
+					// è½¬åŒ–ä¸ºè§’åº¦
 					colOfGradientAngle[0] = cv::fastAtan2(colOfFy[0], colOfFx[0]);
 				}
 				else
 				{
-					// ×ª»¯Îª½Ç¶È
+					// è½¬åŒ–ä¸ºè§’åº¦
 					colOfGradientAngle[0] = cv::fastAtan2(colOfFy[0], colOfFx[0]) - 180.0*(colOfFy[0]<0);
 				}
 
-				// ×ª»¯ÎªbinµÄĞòºÅ
+				// è½¬åŒ–ä¸ºbinçš„åºå·
 				colOfGradientAngle[0] = colOfGradientAngle[0] / angleScale * numberOfBins;
 				if (colOfGradientAngle[0] >= numberOfBins)
 				{
@@ -136,7 +136,7 @@ namespace QQ
 
 		CV_Assert(srcImage.depth() == CV_8U);
 
-		// ¼ÆËãfx,fy
+		// è®¡ç®—fx,fy
 		Mat fx(srcImage.size(), CV_32SC1);
 		Mat fy(srcImage.size(), CV_32SC1);
 
@@ -148,7 +148,7 @@ namespace QQ
 
 		float angleScale = signedGradient ? (1.0*numberOfBins) / 360 : (1.0*numberOfBins)/180;
 
-		// ¼ÆËãfx,fy
+		// è®¡ç®—fx,fy
 		int stepOfEnlargedImage = enlargedImage.cols*enlargedImage.channels();
 		int stepOfFx = fx.cols;
 		int stepOfGradient = 2 * stepOfFx;
@@ -175,7 +175,7 @@ namespace QQ
 			{
 				if (numberOfChannels == 1)
 				{
-					// Ê¹ÓÃSobelÄ£°å
+					// ä½¿ç”¨Sobelæ¨¡æ¿
 					// fx
 					//colOfFx[0] = colOfEnlargedImage[1 - stepOfEnlargedImage] + 2 * colOfEnlargedImage[1] + colOfEnlargedImage[1 + stepOfEnlargedImage] -
 					//	colOfEnlargedImage[-1 - stepOfEnlargedImage] - 2 * colOfEnlargedImage[-1] - colOfEnlargedImage[-1 + stepOfEnlargedImage];
@@ -184,7 +184,7 @@ namespace QQ
 					//colOfFy[0] = colOfEnlargedImage[stepOfEnlargedImage - 1] + 2 * colOfEnlargedImage[stepOfEnlargedImage] + colOfEnlargedImage[stepOfEnlargedImage + 1] -
 					//	colOfEnlargedImage[-stepOfEnlargedImage - 1] - 2 * colOfEnlargedImage[-stepOfEnlargedImage] - colOfEnlargedImage[-stepOfEnlargedImage + 1];
 
-					// Ê¹ÓÃ×î¼òµ¥µÄ¶Ô³ÆÄ£°å[-1,0,1](HOGÖĞÊ¹ÓÃ)
+					// ä½¿ç”¨æœ€ç®€å•çš„å¯¹ç§°æ¨¡æ¿[-1,0,1](HOGä¸­ä½¿ç”¨)
 					colOfFx[0] = colOfEnlargedImage[1] - colOfEnlargedImage[-1];
 					colOfFy[0] = colOfEnlargedImage[stepOfEnlargedImage] - colOfEnlargedImage[-stepOfEnlargedImage];
 
@@ -195,7 +195,7 @@ namespace QQ
 					int maxFx = 0, maxFy = 0;
 					for (int k = 0; k <= numberOfChannels - 1; ++k)
 					{
-						// Ê¹ÓÃSobelÄ£°å
+						// ä½¿ç”¨Sobelæ¨¡æ¿
 						// fx
 						//int fx0 = colOfEnlargedImage[numberOfChannels - stepOfEnlargedImage + k] + 2 * colOfEnlargedImage[numberOfChannels + k] + colOfEnlargedImage[numberOfChannels + stepOfEnlargedImage + k] -
 						//	colOfEnlargedImage[-numberOfChannels - stepOfEnlargedImage + k] - 2 * colOfEnlargedImage[-numberOfChannels + k] - colOfEnlargedImage[-numberOfChannels + stepOfEnlargedImage + k];
@@ -204,13 +204,13 @@ namespace QQ
 						//int fy0 = colOfEnlargedImage[stepOfEnlargedImage - numberOfChannels + k] + 2 * colOfEnlargedImage[stepOfEnlargedImage + k] + colOfEnlargedImage[stepOfEnlargedImage + numberOfChannels + k] -
 						//	colOfEnlargedImage[-stepOfEnlargedImage - numberOfChannels + k] - 2 * colOfEnlargedImage[-stepOfEnlargedImage + k] - colOfEnlargedImage[-stepOfEnlargedImage + numberOfChannels + k];
 
-						// Ê¹ÓÃ×î¼òµ¥µÄ¶Ô³ÆÄ£°å[-1,0,1](HOGÖĞÊ¹ÓÃ)
+						// ä½¿ç”¨æœ€ç®€å•çš„å¯¹ç§°æ¨¡æ¿[-1,0,1](HOGä¸­ä½¿ç”¨)
 						int fx0 = colOfEnlargedImage[numberOfChannels + k] - colOfEnlargedImage[-numberOfChannels + k];
 						int fy0 = colOfEnlargedImage[stepOfEnlargedImage + k] - colOfEnlargedImage[-stepOfEnlargedImage + k];
 
 						int gradient = fx0*fx0 + fy0*fy0;
 
-						// È¡Ìİ¶È´óĞ¡×î´óµÄÄÇ¸öÍ¨µÀ
+						// å–æ¢¯åº¦å¤§å°æœ€å¤§çš„é‚£ä¸ªé€šé“
 						if (gradient > maxGraident)
 						{
 							maxGraident = gradient;
@@ -224,23 +224,23 @@ namespace QQ
 
 				}
 
-				// ¼ÆËãÌİ¶È´óĞ¡ºÍÌİ¶È·½Ïò
+				// è®¡ç®—æ¢¯åº¦å¤§å°å’Œæ¢¯åº¦æ–¹å‘
 				float magnitude= sqrt(colOfFx[0] * colOfFx[0] + colOfFy[0] * colOfFy[0]);
 
-				// ÊÇ·ñÓĞ·½Ïò
+				// æ˜¯å¦æœ‰æ–¹å‘
 				float angle;
 				if (signedGradient)
 				{
-					// ×ª»¯Îª½Ç¶È
+					// è½¬åŒ–ä¸ºè§’åº¦
 					angle = cv::fastAtan2(colOfFy[0], colOfFx[0]);
 				}
 				else
 				{
-					// ×ª»¯Îª½Ç¶È
+					// è½¬åŒ–ä¸ºè§’åº¦
 					angle = cv::fastAtan2(colOfFy[0], colOfFx[0]) - 180.0*(colOfFy[0]<0);
 				}
 
-				// ×ª»¯ÎªbinµÄĞòºÅ
+				// è½¬åŒ–ä¸ºbinçš„åºå·
 				angle = angle*angleScale - 0.5;
 				int indexOfFirstBin = cvFloor(angle);
 				float weightOfSecondBin = angle - indexOfFirstBin;
@@ -282,11 +282,11 @@ namespace QQ
 		Size gradsize(img.cols + paddingTL.width + paddingBR.width,
 			img.rows + paddingTL.height + paddingBR.height);
 
-		// ×¢ÒâÊÇË«Í¨µÀ£¬ĞèÒª¼ÇÂ¼ÏàÁÚÁ½¸öbinÒÔ¼°¶ÔÓ¦µÄÈ¨Öµ
+		// æ³¨æ„æ˜¯åŒé€šé“ï¼Œéœ€è¦è®°å½•ç›¸é‚»ä¸¤ä¸ªbinä»¥åŠå¯¹åº”çš„æƒå€¼
 		grad.create(gradsize, CV_32FC2);  // <magnitude*(1-alpha), magnitude*alpha>
 		qangle.create(gradsize, CV_8UC2); // [0..nbins-1] - quantized gradient orientation
 
-		// Èç¹ûimgÊÇROI£¬¼ÆËãÔ­Í¼ÏñµÄ´óĞ¡ÒÔ¼°ROIµÄÆğµã
+		// å¦‚æœimgæ˜¯ROIï¼Œè®¡ç®—åŸå›¾åƒçš„å¤§å°ä»¥åŠROIçš„èµ·ç‚¹
 		Size wholeSize;
 		Point roiofs;
 		img.locateROI(wholeSize, roiofs);
@@ -308,7 +308,7 @@ namespace QQ
 		int* xmap = (int*)mapbuf + 1;
 		int* ymap = xmap + gradsize.width + 2;
 
-		/*borderTypeÎª±ß½çÀ©³äºóËùÌî³äÏñËØµãµÄ·½Ê½
+		/*borderTypeä¸ºè¾¹ç•Œæ‰©å……åæ‰€å¡«å……åƒç´ ç‚¹çš„æ–¹å¼
 		Various border types, image boundaries are denoted with '|'
 
 		* BORDER_REPLICATE:     aaaaaa|abcdefgh|hhhhhhh
@@ -320,13 +320,13 @@ namespace QQ
 		const int borderType = (int)BORDER_REFLECT_101;
 
 		/*int borderInterpolate(int p, int len, int borderType)
-		ÆäÖĞ
-		p£ºÀ©³äÍ¼ÏñµÄÏñËØÔÚÔ­Í¼ÖĞµÄ×ø±ê£»
-		len£º¶ÔÓ¦Ô­Í¼ÏñµÄÒ»¸ö×ø±êÖáµÄ³¤¶È£»
-		borderType£ºÀ©³äÀàĞÍ
-		±ÈÈç£¬Èç¹ûÒª¼ÆËãÀ©³äÍ¼Ïñx·½ÏòÃ¿¸öÏñËØµÄ×ø±ê¶ÔÓ¦µÄÔ­Í¼ÖĞµÄ×ø±ê£¬ÄÇÃ´p¾ÍÊÇÀ©³äºóµÄÍ¼ÏñµÄÃ¿¸öÏñËØÔÚÔ­Í¼µÄ×ø±ê£¬¶ølen¾ÍÊÇÔ­Í¼µÄ¿í
-		ËùÒÔÕâ¸öº¯ÊıµÄ×÷ÓÃÊÇ¼ÆËãÀ©³äÍ¼ÏñµÄÏñËØµãÔÚÔ­Í¼ÖĞµÄ×ø±ê
-		Èç¹ûimg²»ÊÇROI,ÄÇÃ´xmapºÍymap¾ÍÊÇÔ­Í¼µÄ×ø±ê
+		å…¶ä¸­
+		pï¼šæ‰©å……å›¾åƒçš„åƒç´ åœ¨åŸå›¾ä¸­çš„åæ ‡ï¼›
+		lenï¼šå¯¹åº”åŸå›¾åƒçš„ä¸€ä¸ªåæ ‡è½´çš„é•¿åº¦ï¼›
+		borderTypeï¼šæ‰©å……ç±»å‹
+		æ¯”å¦‚ï¼Œå¦‚æœè¦è®¡ç®—æ‰©å……å›¾åƒxæ–¹å‘æ¯ä¸ªåƒç´ çš„åæ ‡å¯¹åº”çš„åŸå›¾ä¸­çš„åæ ‡ï¼Œé‚£ä¹ˆpå°±æ˜¯æ‰©å……åçš„å›¾åƒçš„æ¯ä¸ªåƒç´ åœ¨åŸå›¾çš„åæ ‡ï¼Œè€Œlenå°±æ˜¯åŸå›¾çš„å®½
+		æ‰€ä»¥è¿™ä¸ªå‡½æ•°çš„ä½œç”¨æ˜¯è®¡ç®—æ‰©å……å›¾åƒçš„åƒç´ ç‚¹åœ¨åŸå›¾ä¸­çš„åæ ‡
+		å¦‚æœimgä¸æ˜¯ROI,é‚£ä¹ˆxmapå’Œymapå°±æ˜¯åŸå›¾çš„åæ ‡
 		*/
 		for (x = -1; x < gradsize.width + 1; x++)
 		{
@@ -352,7 +352,7 @@ namespace QQ
 		AutoBuffer<float> _dbuf(width * 4);
 		float* dbuf = _dbuf;
 
-		// Ã¿Ò»ĞĞµÄDx,Dy,Mag,Angle.×¢Òâ£¬ÕâËÄ¸ö¶ÔÏóÄÚ´æÊÇÁ¬ĞøµÄ
+		// æ¯ä¸€è¡Œçš„Dx,Dy,Mag,Angle.æ³¨æ„ï¼Œè¿™å››ä¸ªå¯¹è±¡å†…å­˜æ˜¯è¿ç»­çš„
 		Mat Dx(1, width, CV_32F, dbuf);
 		Mat Dy(1, width, CV_32F, dbuf + width);
 		Mat Mag(1, width, CV_32F, dbuf + width * 2);
@@ -360,15 +360,15 @@ namespace QQ
 
 		int _nbins = nbins;
 
-		// ×îĞÂµÄ3.2Ô´Âë,Çø·ÖÓĞ·ûºÅ»¹ÊÇÎŞ·ûºÅ£¬ÕâÀïÄ¬ÈÏÎªÎŞ·ûºÅ
-		// ÓĞ·ûºÅÓ¦¸Ã¼ÆËã½Ç¶ÈÕ¼¾İ360µÄ±ÈÀı£¬¶øÎŞ·ûºÅÓ¦¸Ã¼ÆËã½Ç¶ÈÕ¼¾İ180µÄ±ÈÀı
+		// æœ€æ–°çš„3.2æºç ,åŒºåˆ†æœ‰ç¬¦å·è¿˜æ˜¯æ— ç¬¦å·ï¼Œè¿™é‡Œé»˜è®¤ä¸ºæ— ç¬¦å·
+		// æœ‰ç¬¦å·åº”è¯¥è®¡ç®—è§’åº¦å æ®360çš„æ¯”ä¾‹ï¼Œè€Œæ— ç¬¦å·åº”è¯¥è®¡ç®—è§’åº¦å æ®180çš„æ¯”ä¾‹
 		float angleScale = signedGradient ? (float)(nbins/(2.0*CV_PI)) : (float)(nbins/CV_PI); 
 		//float angleScale = (float)(_nbins / CV_PI);
 
 		// debug
 		//std::ofstream outFile11("gradient_HOG.txt", ios::out);
 
-		// ¼ÆËãÃ¿ĞĞ£¬Ã¿¸öÏñËØµÄÌİ¶È´óĞ¡ºÍ·½Ïò£¬Ê¹ÓÃµÄÄ£°åÊÇ[-1,0,1](Ò²ÊÇHOGÂÛÎÄÖĞ²ÉÓÃµÄÄ£°å)
+		// è®¡ç®—æ¯è¡Œï¼Œæ¯ä¸ªåƒç´ çš„æ¢¯åº¦å¤§å°å’Œæ–¹å‘ï¼Œä½¿ç”¨çš„æ¨¡æ¿æ˜¯[-1,0,1](ä¹Ÿæ˜¯HOGè®ºæ–‡ä¸­é‡‡ç”¨çš„æ¨¡æ¿)
 		for (y = 0; y < gradsize.height; y++)
 		{
 			const uchar* imgPtr = img.data + img.step*ymap[y];
@@ -435,61 +435,61 @@ namespace QQ
 			for (x = 0; x < width; x++)
 			{
 
-				/* Ê×ÏÈ¼ÆËãÌİ¶È´óĞ¡ÔÚÌİ¶È·½ÏòÉÏµÄ²åÖµ£¨Ìİ¶È·½ÏòÓëÏàÁÚÁ½¸öbinÖĞĞÄµÄ¾àÀë£©
-				qangle¼ÇÂ¼¸Ãµã¶ÔÓ¦µÄÁ½¸öµÄbin,grad¼ÇÂ¼ÁË¸Ãµã¶ÔÓ¦µÄÁ½¸öbin¶ÔÓ¦µÄÈ¨Öµ(Ã¿¸öbinÓ¦¸Ã¼Ó¶àÉÙÈ¨Öµ)
-				ÈçºÎ¼ÆËã¸ÃÏñËØÌİ¶È·½ÏòËùÔÚµÄÁ½¸öbinºÍ¶ÔÓ¦µÄÈ¨ÖµÄØ?
-				ÓÉÓÚÊÇÓëÁ½¸öbinµÄÖĞµã±È½Ï£¬ÕâÀï¿ÉÒÔÇÉÃîµÄÔËÓÃÒ»¸ö¼¼ÇÉ£º
-				Ê×ÏÈ½«Ô­Ê¼½Ç¶È¼õÈ¥0.5£¬¾Í¿ÉÒÔµÃµ½µÚÒ»¸öbin£¬´ËÊ±¸Ã½Ç¶ÈÓëµÚÒ»¸öbinµÄ¾àÀë¾ÍÊÇµÚ¶ş¸öbinµÄÈ¨Öµ£¬Ò²¾Í¿ÉÒÔ¼ÆËã³ö¶ÔµÚÒ»¸öbinµÄÈ¨Öµ(1-x)
-				Í¬Ê±ÎÒÃÇÒ²¾ÍµÃµ½ÁË¶ÔÓ¦µÄbin£¬µ«ÊÇÕâÀïĞèÒª×¢ÒâÁ½¸öÌØÊâÇé¿ö£º
-				¶ÔÓÚ½Ç¶È·¶Î§Îª[0,0.5]Ö®¼äµÄÖµ£¬µÚÒ»¸öbinÊÇ¸ö-1£¬ËµÃ÷µÚÒ»¸öbinÊÇ×îºóÒ»¸öbin
-				¶ÔÓÚ½Ç¶È·¶Î§Îª[8.5,9]Ö®¼äµÄÖµ£¬µÚ¶ş¸öbinÔ½½çÁË£¬ËµÃ÷µÚ¶ş¸öbin¾ÍÊÇµÚÒ»¸öbin
+				/* é¦–å…ˆè®¡ç®—æ¢¯åº¦å¤§å°åœ¨æ¢¯åº¦æ–¹å‘ä¸Šçš„æ’å€¼ï¼ˆæ¢¯åº¦æ–¹å‘ä¸ç›¸é‚»ä¸¤ä¸ªbinä¸­å¿ƒçš„è·ç¦»ï¼‰
+				qangleè®°å½•è¯¥ç‚¹å¯¹åº”çš„ä¸¤ä¸ªçš„bin,gradè®°å½•äº†è¯¥ç‚¹å¯¹åº”çš„ä¸¤ä¸ªbinå¯¹åº”çš„æƒå€¼(æ¯ä¸ªbinåº”è¯¥åŠ å¤šå°‘æƒå€¼)
+				å¦‚ä½•è®¡ç®—è¯¥åƒç´ æ¢¯åº¦æ–¹å‘æ‰€åœ¨çš„ä¸¤ä¸ªbinå’Œå¯¹åº”çš„æƒå€¼å‘¢?
+				ç”±äºæ˜¯ä¸ä¸¤ä¸ªbinçš„ä¸­ç‚¹æ¯”è¾ƒï¼Œè¿™é‡Œå¯ä»¥å·§å¦™çš„è¿ç”¨ä¸€ä¸ªæŠ€å·§ï¼š
+				é¦–å…ˆå°†åŸå§‹è§’åº¦å‡å»0.5ï¼Œå°±å¯ä»¥å¾—åˆ°ç¬¬ä¸€ä¸ªbinï¼Œæ­¤æ—¶è¯¥è§’åº¦ä¸ç¬¬ä¸€ä¸ªbinçš„è·ç¦»å°±æ˜¯ç¬¬äºŒä¸ªbinçš„æƒå€¼ï¼Œä¹Ÿå°±å¯ä»¥è®¡ç®—å‡ºå¯¹ç¬¬ä¸€ä¸ªbinçš„æƒå€¼(1-x)
+				åŒæ—¶æˆ‘ä»¬ä¹Ÿå°±å¾—åˆ°äº†å¯¹åº”çš„binï¼Œä½†æ˜¯è¿™é‡Œéœ€è¦æ³¨æ„ä¸¤ä¸ªç‰¹æ®Šæƒ…å†µï¼š
+				å¯¹äºè§’åº¦èŒƒå›´ä¸º[0,0.5]ä¹‹é—´çš„å€¼ï¼Œç¬¬ä¸€ä¸ªbinæ˜¯ä¸ª-1ï¼Œè¯´æ˜ç¬¬ä¸€ä¸ªbinæ˜¯æœ€åä¸€ä¸ªbin
+				å¯¹äºè§’åº¦èŒƒå›´ä¸º[8.5,9]ä¹‹é—´çš„å€¼ï¼Œç¬¬äºŒä¸ªbinè¶Šç•Œäº†ï¼Œè¯´æ˜ç¬¬äºŒä¸ªbinå°±æ˜¯ç¬¬ä¸€ä¸ªbin
 
-				ÎªÊ²Ã´Ìİ¶È·½ÏòÒª¼õÈ¥0.5ÄØ£¿
-				ÒòÎªÌİ¶È·½ÏòÊÇ°´ÕÕ¸ÃµãÌİ¶È·½ÏòÓëÁ½¸öbinÖĞµã¾àÀë½øĞĞ²åÖµ£¬½«½Ç¶È¼õÈ¥0.5
-				ÎªÁË½«¸Ã½Ç¶ÈÒÆ¶¯µ½µÚÒ»¸öbinÖĞ£¬ÇÒ´ËÊ±¸Ã½Ç¶ÈÓëµÚÒ»¸öbinµÄ¾àÀë¾ÍÊÇ¶ÔµÚ¶ş¸öbinµÄÈ¨Öµ
+				ä¸ºä»€ä¹ˆæ¢¯åº¦æ–¹å‘è¦å‡å»0.5å‘¢ï¼Ÿ
+				å› ä¸ºæ¢¯åº¦æ–¹å‘æ˜¯æŒ‰ç…§è¯¥ç‚¹æ¢¯åº¦æ–¹å‘ä¸ä¸¤ä¸ªbinä¸­ç‚¹è·ç¦»è¿›è¡Œæ’å€¼ï¼Œå°†è§’åº¦å‡å»0.5
+				ä¸ºäº†å°†è¯¥è§’åº¦ç§»åŠ¨åˆ°ç¬¬ä¸€ä¸ªbinä¸­ï¼Œä¸”æ­¤æ—¶è¯¥è§’åº¦ä¸ç¬¬ä¸€ä¸ªbinçš„è·ç¦»å°±æ˜¯å¯¹ç¬¬äºŒä¸ªbinçš„æƒå€¼
 
-				¼ÆËãÊ¾Àı£º
-				¼ÙÉèÔ­Ê¼½Ç¶È1.3,¼õÈ¥0.5ºóangle=0.8,hidx=0
+				è®¡ç®—ç¤ºä¾‹ï¼š
+				å‡è®¾åŸå§‹è§’åº¦1.3,å‡å»0.5åangle=0.8,hidx=0
 				angle=0.8
 				gradPtr[x*2]->(1-angle)=0.2
 				gradPtr[x*2+1]->angle=0.8
 				qanglePtr[x*2]->0
 				qanglePtr[x*2+1]->1
-				¼ÙÉèÔ­Ê¼½Ç¶ÈÎª1.8£¬¼õÈ¥0.5ºóangle=1.3,hidx=1
+				å‡è®¾åŸå§‹è§’åº¦ä¸º1.8ï¼Œå‡å»0.5åangle=1.3,hidx=1
 				angle=0.3
 				gradPtr[x*2]->(1-angle)=0.7
 				gradPtr[x*2+1]->angle=0.3
 				qanglePtr[x*2]->1
 				qanglePtr[x*2+1]->2
-				!¼ÙÉèÔ­Ê¼½Ç¶ÈÎª0.3£¬¼õÈ¥0.5ºóangle=-0.2,hidx=-1
+				!å‡è®¾åŸå§‹è§’åº¦ä¸º0.3ï¼Œå‡å»0.5åangle=-0.2,hidx=-1
 				angle=0.8
 				gradPtr[x*2]->(1-angle)=0.2
 				gradPtr[x*2+1]->angle=0.8
 				qanglePtr[x*2]->8
 				qanglePtr[x*2+1]->0
-				!¼ÙÉèÔ­Ê¼½Ç¶ÈÎª8.8£¬¼õÈ¥0.5ºóangle=8.3,hidx=8
+				!å‡è®¾åŸå§‹è§’åº¦ä¸º8.8ï¼Œå‡å»0.5åangle=8.3,hidx=8
 				angle=0.3
 				gradPtr[x*2]->(1-angle)=0.7
 				gradPtr[x*2+1]->angle=0.3
 				qanglePtr[x*2]->8
 				qanglePtr[x*2+1]->0
-				¶ÔÓÚ0.5,1.5ÕâÑùµÄÁÙ½çÖµ£¬¶¼Ö»¶ÔÒ»¸öbinÓĞ¹±Ï×£¬ÁíÒ»¸öbin¹±Ï×¶ÈÎª0
+				å¯¹äº0.5,1.5è¿™æ ·çš„ä¸´ç•Œå€¼ï¼Œéƒ½åªå¯¹ä¸€ä¸ªbinæœ‰è´¡çŒ®ï¼Œå¦ä¸€ä¸ªbinè´¡çŒ®åº¦ä¸º0
 
-				ÕâÀïÒª×¢Òâ£º
-				Èç¹ûÊÇÎŞ·ûºÅ½Ç¶È£¬¼ÆËãangle = dbuf[x + width * 3] * angleScale - 0.5f,Èç¹û½Ç¶È´óÓÚ180£¬»á³¬¹ınbin,ËùÒÔºóÃæĞèÒª
+				è¿™é‡Œè¦æ³¨æ„ï¼š
+				å¦‚æœæ˜¯æ— ç¬¦å·è§’åº¦ï¼Œè®¡ç®—angle = dbuf[x + width * 3] * angleScale - 0.5f,å¦‚æœè§’åº¦å¤§äº180ï¼Œä¼šè¶…è¿‡nbin,æ‰€ä»¥åé¢éœ€è¦
 				if (hidx >= _nbins)
 					hidx -= _nbins
-				Èç¹ûÏëÒªangle¼ÆËã³öÀ´¾ÍÊÇÕæÊµµÄÖµ£¬Ó¦¸Ãangle = (dbuf[x + width * 3] - CV_PI*(dbuf[x + width]<0))* angleScale - 0.5f
+				å¦‚æœæƒ³è¦angleè®¡ç®—å‡ºæ¥å°±æ˜¯çœŸå®çš„å€¼ï¼Œåº”è¯¥angle = (dbuf[x + width * 3] - CV_PI*(dbuf[x + width]<0))* angleScale - 0.5f
 				*/
 				float mag = dbuf[x + width * 2], angle = dbuf[x + width * 3] * angleScale - 0.5f;
-				int hidx = cvFloor(angle); // cvFloor()·µ»Ø²»´óÓÚ²ÎÊıµÄ×î´óÕûÊı
+				int hidx = cvFloor(angle); // cvFloor()è¿”å›ä¸å¤§äºå‚æ•°çš„æœ€å¤§æ•´æ•°
 				angle -= hidx;
 				gradPtr[x * 2] = mag*(1.f - angle);
 				gradPtr[x * 2 + 1] = mag*angle;
 
-				// ¶ÔÓÚ½Ç¶È·¶Î§Îª[0,0.5]Ö®¼äµÄÖµ£¬¸ÃÏñËØ¶ÔÓ¦µÄÌİ¶È·½ÏòµÄµÚÒ»¸öbin¾ÍÊÇ×îºóÒ»¸öbin
-				// ¶ÔÓÚ½Ç¶È·¶Î§Îª[8.5,9]Ö®¼äµÄÖµ£¬¸ÃÏñËØ¶ÔÓ¦µÄÌİ¶È·½ÏòµÄµÚ¶ş¸öbin¾ÍÊÇµÚÒ»¸öbin
-				// Èç¹ûhindexÎª-1£¬hidxÉèÖÃÎª8
+				// å¯¹äºè§’åº¦èŒƒå›´ä¸º[0,0.5]ä¹‹é—´çš„å€¼ï¼Œè¯¥åƒç´ å¯¹åº”çš„æ¢¯åº¦æ–¹å‘çš„ç¬¬ä¸€ä¸ªbinå°±æ˜¯æœ€åä¸€ä¸ªbin
+				// å¯¹äºè§’åº¦èŒƒå›´ä¸º[8.5,9]ä¹‹é—´çš„å€¼ï¼Œè¯¥åƒç´ å¯¹åº”çš„æ¢¯åº¦æ–¹å‘çš„ç¬¬äºŒä¸ªbinå°±æ˜¯ç¬¬ä¸€ä¸ªbin
+				// å¦‚æœhindexä¸º-1ï¼Œhidxè®¾ç½®ä¸º8
 				if (hidx < 0)
 					hidx += _nbins; // 8
 				else if (hidx >= _nbins)
@@ -500,15 +500,15 @@ namespace QQ
 				hidx++; // 9
 
 				//
-				//-1ÔÚ²¹ÂëÖĞµÄ±íÊ¾Îª11111111,Óë-1ÏàÓëµÄ»°¾ÍÊÇ×Ô¼º±¾ÉíÁË
-				// 0ÔÚ²¹ÂëÖĞµÄ±íÊ¾Îª00000000,Óë0ÏàÓëµÄ½á¹û¾ÍÊÇ0ÁË
+				//-1åœ¨è¡¥ç ä¸­çš„è¡¨ç¤ºä¸º11111111,ä¸-1ç›¸ä¸çš„è¯å°±æ˜¯è‡ªå·±æœ¬èº«äº†
+				// 0åœ¨è¡¥ç ä¸­çš„è¡¨ç¤ºä¸º00000000,ä¸0ç›¸ä¸çš„ç»“æœå°±æ˜¯0äº†
 				hidx &= hidx < _nbins ? -1 : 0; // 0
 				qanglePtr[x * 2 + 1] = (uchar)hidx; // 0
 
 				//// debug
-				// dbuf[x + width * 3]ÊÇÊµ¼ÊµÄ½Ç¶È(»¡¶È)
-				// ¶ÔÓÚÎŞ·ûºÅ½Ç¶È(dbuf[x + width * 3] - CV_PI*(dbuf[x + width]<0))* angleScale ²ÅÊÇÊµ¼ÊµÄbinµÄĞòºÅ
-				// ¶ÔÓÚÓĞ·ûºÅ½Ç¶È (dbuf[x + width * 3])* angleScale
+				// dbuf[x + width * 3]æ˜¯å®é™…çš„è§’åº¦(å¼§åº¦)
+				// å¯¹äºæ— ç¬¦å·è§’åº¦(dbuf[x + width * 3] - CV_PI*(dbuf[x + width]<0))* angleScale æ‰æ˜¯å®é™…çš„binçš„åºå·
+				// å¯¹äºæœ‰ç¬¦å·è§’åº¦ (dbuf[x + width * 3])* angleScale
 				//outFile11 << (float)dbuf[x] << " " << (float)dbuf[x + width] << " " << (float)gradPtr[x * 2] << " " << (float)gradPtr[x * 2 + 1] << " " << (int)qanglePtr[x * 2] << " " << (int)qanglePtr[x * 2+1] << endl;
 				
 			}

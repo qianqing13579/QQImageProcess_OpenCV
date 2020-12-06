@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// Í¶Ó°Í¼
+// æŠ•å½±å›¾
 // 2014-11-28,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -20,21 +20,21 @@ namespace QQ
 {
 
 
-///////////////////////////Í¶Ó°///////////////////////////////////////////////
-void ProjectX(const Mat &srcImage,int height_ProjectXImage);//´¹Ö±Í¶Ó°(ÏòXÖá·½ÏòÍ¶Ó°)
-void ProjectY(const Mat &srcImage,int width_ProjectYImage);//Ë®Æ½Í¶Ó°(ÏòYÖá·½ÏòÍ¶Ó°)
+///////////////////////////æŠ•å½±///////////////////////////////////////////////
+void ProjectX(const Mat &srcImage,int height_ProjectXImage);//å‚ç›´æŠ•å½±(å‘Xè½´æ–¹å‘æŠ•å½±)
+void ProjectY(const Mat &srcImage,int width_ProjectYImage);//æ°´å¹³æŠ•å½±(å‘Yè½´æ–¹å‘æŠ•å½±)
 
 
-/////////////////////////»­Í¶Ó°Í¼/////////////////////////////////////////////////
-//»­´¹Ö±Í¶Ó°Í¼(ÏòXÖá·½ÏòÍ¶Ó°)
+/////////////////////////ç”»æŠ•å½±å›¾/////////////////////////////////////////////////
+//ç”»å‚ç›´æŠ•å½±å›¾(å‘Xè½´æ–¹å‘æŠ•å½±)
 DLL_EXPORTS void DrawProjectXImage(Mat &image_ProjectX,int height_ProjectXImage,int *projectX,int projectXSize);
-//»­Ë®Æ½Í¶Ó°(ÏòYÖá·½ÏòÍ¶Ó°)
+//ç”»æ°´å¹³æŠ•å½±(å‘Yè½´æ–¹å‘æŠ•å½±)
 DLL_EXPORTS void DrawProjectYImage(Mat &image_ProjectY,int width_ProjectYImage,int *projectY,int projectYSize);
 
 
-/////////////////////////////Æ´½ÓÍ¼Ïñ/////////////////////////////////////////////
-DLL_EXPORTS void ConnectTwoImage_UpDown(const Mat &srcImage1,const Mat &srcImage2,Mat &image_Dst);//×İÏòÆ´½ÓÁ½·ùÍ¼Ïñ
-DLL_EXPORTS void ConnectTwoImage_LeftRight(const Mat &srcImage1,const Mat &srcImage2,Mat &image_Dst);//ºáÏòÆ´½ÓÁ½·ùÍ¼Ïñ
+/////////////////////////////æ‹¼æ¥å›¾åƒ/////////////////////////////////////////////
+DLL_EXPORTS void ConnectTwoImage_UpDown(const Mat &srcImage1,const Mat &srcImage2,Mat &image_Dst);//çºµå‘æ‹¼æ¥ä¸¤å¹…å›¾åƒ
+DLL_EXPORTS void ConnectTwoImage_LeftRight(const Mat &srcImage1,const Mat &srcImage2,Mat &image_Dst);//æ¨ªå‘æ‹¼æ¥ä¸¤å¹…å›¾åƒ
 
 
 }//end of namespace QQ

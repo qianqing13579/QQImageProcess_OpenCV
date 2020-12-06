@@ -8,38 +8,38 @@ namespace QQ
 {
 
 //2015-3-5 15:33:20,by QQ
-//×î½üÁÚ²åÖµ
+//æœ€è¿‘é‚»æ’å€¼
 void NearestInterpolation(const Mat &image_Src,Mat &image_Dst,Size size_Dst)
 {
-	//ÖØĞÂ·ÖÅä
+	//é‡æ–°åˆ†é…
 	image_Dst.create(size_Dst,CV_8UC1);
 	
 	//
 	int height=size_Dst.height;
 	int width=size_Dst.width;
 
-	//Ëõ·ÅµÄ±¶Êı
-	//1.²»ÒªÍüÁË£¬·ñÔò¾ÍÊÇÕûĞÍÁË
+	//ç¼©æ”¾çš„å€æ•°
+	//1.ä¸è¦å¿˜äº†ï¼Œå¦åˆ™å°±æ˜¯æ•´å‹äº†
 	float ratioX=1.*image_Src.cols/image_Dst.cols;
 	float ratioY=1.*image_Src.rows/image_Dst.rows;
 
 	//
 	for(int y=0;y<=height-1;++y)
 	{
-		//¶ÔÓ¦Ô­Í¼×ø±ê(¸¡µã×ø±ê)
+		//å¯¹åº”åŸå›¾åæ ‡(æµ®ç‚¹åæ ‡)
 		float y1=y*ratioY;
 		
-		//È¡ÕûµÃµ½×î½üÁÚÏñËØ
+		//å–æ•´å¾—åˆ°æœ€è¿‘é‚»åƒç´ 
 		int y2=(int)y1;
 		
 		for (int x=0;x<=width-1;++x)
 		{
-			//¶ÔÓ¦µÄÔ­Í¼×ø±ê
-			//×î½üÁÚÓëË«ÏßĞÔµÄÇø±ğ¾ÍÊÇ£¬Ë«ÏßĞÔ²åÖµÔÚ»ñµÃÔ­Í¼µÄ¸¡µã×ø±êºó£¬ÀûÓÃÖÜÎ§
-			//4¸öµã×ø±ê£¬¶ø×î½üÁÚÖ±½Ó°Ñ¸¡µãÊı×ø±êÈ¡Õû£¬»ñµÃ×î½üÁÚÏñËØ
+			//å¯¹åº”çš„åŸå›¾åæ ‡
+			//æœ€è¿‘é‚»ä¸åŒçº¿æ€§çš„åŒºåˆ«å°±æ˜¯ï¼ŒåŒçº¿æ€§æ’å€¼åœ¨è·å¾—åŸå›¾çš„æµ®ç‚¹åæ ‡åï¼Œåˆ©ç”¨å‘¨å›´
+			//4ä¸ªç‚¹åæ ‡ï¼Œè€Œæœ€è¿‘é‚»ç›´æ¥æŠŠæµ®ç‚¹æ•°åæ ‡å–æ•´ï¼Œè·å¾—æœ€è¿‘é‚»åƒç´ 
 			float x1=x*ratioX;
 			
-			//È¡ÕûµÃµ½×î½üÁÚÏñËØ
+			//å–æ•´å¾—åˆ°æœ€è¿‘é‚»åƒç´ 
 			int x2=(int)x1;
 			image_Dst.at<uchar>(y,x)=image_Src.at<uchar>(y2,x2);
 
@@ -50,57 +50,57 @@ void NearestInterpolation(const Mat &image_Src,Mat &image_Dst,Size size_Dst)
 
 
 //2015-3-5 13:27:24,by QQ
-// Ë«ÏßĞÔ²åÖµ
-// size_Dst:Ä¿±êÍ¼ÏñµÄ´óĞ¡
+// åŒçº¿æ€§æ’å€¼
+// size_Dst:ç›®æ ‡å›¾åƒçš„å¤§å°
 void BilinearInterpolation(const Mat &image_Src,Mat &image_Dst,Size size_Dst)
 {
-	// ÖØĞÂ·ÖÅä
+	// é‡æ–°åˆ†é…
 	image_Dst.create(size_Dst,CV_8UC1);
 
-	// Ô­Í¼·Å´ó£¬±ãÓÚ´¦Àí±ß½ç
+	// åŸå›¾æ”¾å¤§ï¼Œä¾¿äºå¤„ç†è¾¹ç•Œ
 	Mat image_Extend;
 	copyMakeBorder(image_Src,image_Extend,1,1,1,1,BORDER_DEFAULT);
 
 	int height=size_Dst.height;
 	int width=size_Dst.width;
 
-	//Ëõ·ÅµÄ±¶Êı
-	//1.²»ÒªÍüÁË,·ñÔò¾ÍÊÇÕûĞÍÁË
-	float ratioX=1.*image_Src.cols/image_Dst.cols;//×î½üÁÚºÍË«ÏßĞÔ¶¼ÊÇÍ¨¹ıËõ·ÅµÄ±¶Êı
+	//ç¼©æ”¾çš„å€æ•°
+	//1.ä¸è¦å¿˜äº†,å¦åˆ™å°±æ˜¯æ•´å‹äº†
+	float ratioX=1.*image_Src.cols/image_Dst.cols;//æœ€è¿‘é‚»å’ŒåŒçº¿æ€§éƒ½æ˜¯é€šè¿‡ç¼©æ”¾çš„å€æ•°
 	float ratioY=1.*image_Src.rows/image_Dst.rows;
 	
 	//
 	for(int y=0;y<=height-1;++y)
 	{
-		//¶ÔÓ¦Ô­Í¼µÄ×ø±ê(¸¡µãÊı×ø±ê)
+		//å¯¹åº”åŸå›¾çš„åæ ‡(æµ®ç‚¹æ•°åæ ‡)
 		float y1=y*ratioY;
 
-		// ÔÚÀ©³äÍ¼ÖĞµÄ×ø±ê
+		// åœ¨æ‰©å……å›¾ä¸­çš„åæ ‡
 		y1++;
 
-		//È¡Õû,Ò²¾ÍÊÇ×î½üÁÚµÄÏñËØ
-		//×î½üÁÚÓëË«ÏßĞÔµÄÇø±ğ¾ÍÊÇ£¬Ë«ÏßĞÔ²åÖµÔÚ»ñµÃÔ­Í¼µÄ¸¡µã×ø±êºó£¬ÀûÓÃÖÜÎ§
-		//4¸öµã×ø±ê£¬¶ø×î½üÁÚÖ±½Ó°Ñ¸¡µãÊı×ø±êÈ¡Õû£¬»ñµÃ×î½üÁÚÏñËØ
+		//å–æ•´,ä¹Ÿå°±æ˜¯æœ€è¿‘é‚»çš„åƒç´ 
+		//æœ€è¿‘é‚»ä¸åŒçº¿æ€§çš„åŒºåˆ«å°±æ˜¯ï¼ŒåŒçº¿æ€§æ’å€¼åœ¨è·å¾—åŸå›¾çš„æµ®ç‚¹åæ ‡åï¼Œåˆ©ç”¨å‘¨å›´
+		//4ä¸ªç‚¹åæ ‡ï¼Œè€Œæœ€è¿‘é‚»ç›´æ¥æŠŠæµ®ç‚¹æ•°åæ ‡å–æ•´ï¼Œè·å¾—æœ€è¿‘é‚»åƒç´ 
 		int y2=(int)y1;
 
-		// ²îÖµ
+		// å·®å€¼
 		int dy=(y1-y2)*(1 << SHIFT);
 		for (int x=0;x<=width-1;++x)
 		{
-			//¶ÔÓ¦µÄÔ­Í¼×ø±ê
+			//å¯¹åº”çš„åŸå›¾åæ ‡
 			float x1 = x*ratioX;
 
-			// ÔÚÀ©³äÍ¼ÖĞµÄ×ø±ê 
+			// åœ¨æ‰©å……å›¾ä¸­çš„åæ ‡ 
 			x1++;
 
-			//È¡Õû,Ò²¾ÍÊÇ×î½üÁÚµÄÏñËØ
+			//å–æ•´,ä¹Ÿå°±æ˜¯æœ€è¿‘é‚»çš„åƒç´ 
 			int x2=(int)x1;
 
-			// ²îÖµ
+			// å·®å€¼
 			int dx=(x1-x2)*(1 << SHIFT);
 
-			//ÖÜÎ§4¸öµã
-			//a¾ÍÊÇ×î½üÁÚÏñËØ
+			//å‘¨å›´4ä¸ªç‚¹
+			//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 			//a   b
 			//  p
 			//c   d
@@ -109,8 +109,8 @@ void BilinearInterpolation(const Mat &image_Src,Mat &image_Dst,Size size_Dst)
 			uchar c=image_Extend.at<uchar>(y2+1,x2);
 			uchar d=image_Extend.at<uchar>(y2+1,x2+1);
 			
-			// Ë«ÏßĞÔ²åÖµ
-			// ²»Òª×ö³ı·¨
+			// åŒçº¿æ€§æ’å€¼
+			// ä¸è¦åšé™¤æ³•
 			//int p = (a*((1 << SHIFT) - dx)*((1 << SHIFT) - dy) + b*dx*((1 << SHIFT) - dy) + c*((1 << SHIFT) - dx)*dy + d*dx*dy)/(1<<(2*SHIFT));
 			int p=a*((1 << SHIFT) -dx)*((1 << SHIFT) -dy)+b*dx*((1 << SHIFT) -dy)+c*((1 << SHIFT)-dx)*dy+d*dx*dy;
 			p = DESCALE(p, 2 * SHIFT);
@@ -124,11 +124,11 @@ void BilinearInterpolation(const Mat &image_Src,Mat &image_Dst,Size size_Dst)
 // Updated:2016-5-17 11:38:14,by QQ
 void VerticalFlip(const Mat &srcImage, Mat &dstImage)
 {
-	// ·ÖÅäÄÚ´æ
+	// åˆ†é…å†…å­˜
 	CV_Assert(srcImage.depth() == CV_8U);
 	dstImage.create(srcImage.size(), srcImage.type());
 
-	// ´¹Ö±·­×ª
+	// å‚ç›´ç¿»è½¬
 	int width = srcImage.cols;
 	int height = srcImage.rows;
 	int widthStep = srcImage.cols*srcImage.channels();
@@ -138,7 +138,7 @@ void VerticalFlip(const Mat &srcImage, Mat &dstImage)
 	int limit = (height - 1) / 2;
 	for (int y = 0; y <= height - 1; ++y,dataOfSrc+=widthStep,dataOfDst-=widthStep)
 	{
-		// ¿½±´Ò»ĞĞ
+		// æ‹·è´ä¸€è¡Œ
 		memcpy(dataOfDst, dataOfSrc, widthStep);
 	}
 }
@@ -146,11 +146,11 @@ void VerticalFlip(const Mat &srcImage, Mat &dstImage)
 // 2016-5-17 11:40:18,by QQ
 void HorizontalFlip(const Mat &srcImage, Mat &dstImage)
 {
-	// ·ÖÅäÄÚ´æ
+	// åˆ†é…å†…å­˜
 	CV_Assert(srcImage.depth() == CV_8U);
 	dstImage.create(srcImage.size(), srcImage.type());
 
-	// Ã¿Ò»ĞĞ½¨Á¢²éÕÒ±í(¶ÔÃ¿Ò»¸öÍ¨µÀ½¨Á¢Ë÷Òı)
+	// æ¯ä¸€è¡Œå»ºç«‹æŸ¥æ‰¾è¡¨(å¯¹æ¯ä¸€ä¸ªé€šé“å»ºç«‹ç´¢å¼•)
 	int width = srcImage.cols;
 	int channelCount = srcImage.channels();
 	int widthStep = width*channelCount;
@@ -166,7 +166,7 @@ void HorizontalFlip(const Mat &srcImage, Mat &dstImage)
 	
 	uchar *dataOfSrc = srcImage.data;
 	uchar *dataOfDst = dstImage.data;
-	int limit = ((width + 1) >>1)*channelCount; // ×¢ÒâÔËËã·ûÓÅÏÈ¼¶,ÎªÊ²Ã´((width - 1) >>1)*channelCount ²»¶Ô£¿ÌáÊ¾:ÒòÎª¶àÍ¨µÀµÄÔ­Òò£¬¶Ô°ëÊ¹ÓÃ(x+1)/2
+	int limit = ((width + 1) >>1)*channelCount; // æ³¨æ„è¿ç®—ç¬¦ä¼˜å…ˆçº§,ä¸ºä»€ä¹ˆ((width - 1) >>1)*channelCount ä¸å¯¹ï¼Ÿæç¤º:å› ä¸ºå¤šé€šé“çš„åŸå› ï¼Œå¯¹åŠä½¿ç”¨(x+1)/2
 	for (int y = 0; y <= srcImage.rows - 1; ++y, dataOfSrc += widthStep, dataOfDst += widthStep)
 	{
 		for (int x = 0; x <= limit; ++x)
@@ -182,22 +182,22 @@ void HorizontalFlip(const Mat &srcImage, Mat &dstImage)
 }
 
 // 2016-8-11 15:49:14,by QQ
-/*	center:Ô­Í¼ÏñµÄĞı×ªÖĞĞÄ
-	dstSize:Ğı×ªºóÍ¼ÏñµÄ´óĞ¡
-	theta:Ğı×ª½Ç¶È£¬µ¥Î»»¡¶È£¬Ë³Ê±ÕëÎªÕı
-	scale:Ëõ·Å£¬scale>1±íÊ¾·Å´ó  <1±íÊ¾ËõĞ¡
+/*	center:åŸå›¾åƒçš„æ—‹è½¬ä¸­å¿ƒ
+	dstSize:æ—‹è½¬åå›¾åƒçš„å¤§å°
+	theta:æ—‹è½¬è§’åº¦ï¼Œå•ä½å¼§åº¦ï¼Œé¡ºæ—¶é’ˆä¸ºæ­£
+	scale:ç¼©æ”¾ï¼Œscale>1è¡¨ç¤ºæ”¾å¤§  <1è¡¨ç¤ºç¼©å°
 */ 
 void Rotate_Nearest(const Mat &srcImage, Point center, double theta, double scale, Size dstSize, Mat &dstImage)
 {
 	CV_Assert(srcImage.depth() == CV_8U);
 	dstImage.create(dstSize, srcImage.type());
 
-	// Ô­Í¼ÏñµÄĞı×ªÖĞĞÄ
+	// åŸå›¾åƒçš„æ—‹è½¬ä¸­å¿ƒ
 	int x0 = center.x;
 	int y0 = center.y;
 	theta = DEGREE2RADIAN(theta);
 
-	// dx,dy¾ÍÊÇdstImageÖĞĞÄµãÓësrcImageµÄĞı×ªÖĞĞÄµÄ¾àÀë£¬Ò²¾ÍÊÇÆ½ÒÆµÄ¾àÀë
+	// dx,dyå°±æ˜¯dstImageä¸­å¿ƒç‚¹ä¸srcImageçš„æ—‹è½¬ä¸­å¿ƒçš„è·ç¦»ï¼Œä¹Ÿå°±æ˜¯å¹³ç§»çš„è·ç¦»
 	int dx = dstImage.cols / 2 - x0;
 	int dy = dstImage.rows / 2 - y0;
 	int numberOfChannels = srcImage.channels();
@@ -223,7 +223,7 @@ void Rotate_Nearest(const Mat &srcImage, Point center, double theta, double scal
 				}
 				else
 				{
-					// Ô½½ç¸³Öµ0
+					// è¶Šç•Œèµ‹å€¼0
 					dstImage.at<uchar>(y, x) = 0;
 				}
 			}
@@ -250,12 +250,12 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 	dstImage.create(dstSize, srcImage.type());
 	dstImage.setTo(Scalar(0, 0, 0));
 
-	// Ô­Í¼ÏñµÄĞı×ªÖĞĞÄ
+	// åŸå›¾åƒçš„æ—‹è½¬ä¸­å¿ƒ
 	int x0 = center.x;
 	int y0 = center.y;
 	theta = DEGREE2RADIAN(theta);
 
-	// dx,dy¾ÍÊÇdstImageÖĞĞÄµãÓësrcImageµÄĞı×ªÖĞĞÄµÄ¾àÀë£¬Ò²¾ÍÊÇÆ½ÒÆµÄ¾àÀë
+	// dx,dyå°±æ˜¯dstImageä¸­å¿ƒç‚¹ä¸srcImageçš„æ—‹è½¬ä¸­å¿ƒçš„è·ç¦»ï¼Œä¹Ÿå°±æ˜¯å¹³ç§»çš„è·ç¦»
 	int dx = dstImage.cols / 2 - x0;
 	int dy = dstImage.rows / 2 - y0;
 	int numberOfChannels = srcImage.channels();
@@ -264,17 +264,17 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 	int heightOfDst = dstImage.rows;
 
 	Mat extendedImage;
-	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // Ê¹ÓÃ0Ìî³ä±ß½ç
+	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // ä½¿ç”¨0å¡«å……è¾¹ç•Œ
 
 	for (int y = 0; y <= heightOfDst - 1; ++y)
 	{
 		for (int x = 0; x <= widthOfDst - 1; ++x)
 		{
-			// °´ÕÕÔ­À´µÄ·½Ê½¼ÆËãÔ­Í¼×ø±ê
+			// æŒ‰ç…§åŸæ¥çš„æ–¹å¼è®¡ç®—åŸå›¾åæ ‡
 			float srcX = ((x - x0 - dx)*cos(theta) + (y - y0 - dy)*sin(theta)) / scale + x0;
 			float srcY = ((x0 + dx - x)*sin(theta) + (y - y0 - dy)*cos(theta)) / scale + y0;
 			
-			// ¼Ó1,µÃµ½ÔÚextendedImageÖĞµÄ×ø±ê
+			// åŠ 1,å¾—åˆ°åœ¨extendedImageä¸­çš„åæ ‡
 			srcX++; 
 			srcY++;
 			 
@@ -282,18 +282,18 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 			int x1 = (int)(srcX); 
 			int y1 = (int)(srcY);
 
-			// ¸¡µã×ª»¯ÎªÕûÊı
+			// æµ®ç‚¹è½¬åŒ–ä¸ºæ•´æ•°
 			int dx1 = (srcX - x1)*(1<< SHIFT);
 			int dy1 = (srcY - y1)*(1<< SHIFT);
 
 			if (numberOfChannels == 1)
 			{
-				// !£¡£¡×¢ÒâÕâÀïµÄ·¶Î§£¬ÔÚextendedImageÖĞ£¬Ô­Í¼µÄ·¶Î§¾ÍÊÇ1~cols - 2ÁË
+				// !ï¼ï¼æ³¨æ„è¿™é‡Œçš„èŒƒå›´ï¼Œåœ¨extendedImageä¸­ï¼ŒåŸå›¾çš„èŒƒå›´å°±æ˜¯1~cols - 2äº†
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{	
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -302,7 +302,7 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 					uchar c = extendedImage.at<uchar>(y1 + 1, x1);
 					uchar d = extendedImage.at<uchar>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					//int p = (a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1)/(1<<(2* SHIFT));
 					
 					int p = a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1;
@@ -312,7 +312,7 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 				}
 				else
 				{
-					// Ô½½ç¸³Öµ0
+					// è¶Šç•Œèµ‹å€¼0
 					dstImage.at<uchar>(y, x) = 0;
 				}
 			}
@@ -320,9 +320,9 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 			{
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -331,7 +331,7 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 					Vec3b c = extendedImage.at<Vec3b>(y1 + 1, x1);
 					Vec3b d = extendedImage.at<Vec3b>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					/*int p1 = (a[0] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[0] * dx1*((1 << SHIFT) - dy1) + c[0] * ((1 << SHIFT) - dx1)*dy1 + d[0] * dx1*dy1)/(1<<(2*SHIFT));
 					int p2 = (a[1] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[1] * dx1*((1 << SHIFT) - dy1) + c[1] * ((1 << SHIFT) - dx1)*dy1 + d[1] * dx1*dy1)/ (1 << (2 * SHIFT));
 					int p3 = (a[2] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[2] * dx1*((1 << SHIFT) - dy1) + c[2] * ((1 << SHIFT) - dx1)*dy1 + d[2] * dx1*dy1)/ (1 << (2 * SHIFT));*/
@@ -357,19 +357,19 @@ void Rotate_Bilinear(const Mat &srcImage, Point center, double theta, double sca
 }
 
 // 2016-8-14 16:16:20,by QQ
-// ÓÅ»¯£º1. ½«Rotate_BilinearÑ­»·ÄÚµÄ²»±äÁ¿ÌáÈ¡³öÀ´
+// ä¼˜åŒ–ï¼š1. å°†Rotate_Bilinearå¾ªç¯å†…çš„ä¸å˜é‡æå–å‡ºæ¥
 void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double scale, Size dstSize, Mat &dstImage)
 {
 	CV_Assert(srcImage.depth() == CV_8U);
 	dstImage.create(dstSize, srcImage.type());
 	dstImage.setTo(Scalar(0, 0, 0));
 
-	// Ô­Í¼ÏñµÄĞı×ªÖĞĞÄ
+	// åŸå›¾åƒçš„æ—‹è½¬ä¸­å¿ƒ
 	int x0 = center.x;
 	int y0 = center.y;
 	theta = DEGREE2RADIAN(theta);
 
-	// dx,dy¾ÍÊÇdstImageÖĞĞÄµãÓësrcImageµÄĞı×ªÖĞĞÄµÄ¾àÀë£¬Ò²¾ÍÊÇÆ½ÒÆµÄ¾àÀë
+	// dx,dyå°±æ˜¯dstImageä¸­å¿ƒç‚¹ä¸srcImageçš„æ—‹è½¬ä¸­å¿ƒçš„è·ç¦»ï¼Œä¹Ÿå°±æ˜¯å¹³ç§»çš„è·ç¦»
 	int dx = dstImage.cols / 2 - x0;
 	int dy = dstImage.rows / 2 - y0;
 	int numberOfChannels = srcImage.channels();
@@ -378,27 +378,27 @@ void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double sc
 	int heightOfDst = dstImage.rows;
 
 	Mat extendedImage;
-	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // Ê¹ÓÃ0Ìî³ä±ß½ç
+	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // ä½¿ç”¨0å¡«å……è¾¹ç•Œ
 
-	////////////////////////////////// ÓÅ»¯²¿·Ö/////////////////////////////
-	// ½«Ñ­»·ÄÚµÄ²»±äÁ¿ÌáÈ¡³öÀ´
+	////////////////////////////////// ä¼˜åŒ–éƒ¨åˆ†/////////////////////////////
+	// å°†å¾ªç¯å†…çš„ä¸å˜é‡æå–å‡ºæ¥
 	double sinTheta = sin(theta);
 	double cosTheta = cos(theta);
 	scale = 1.0 / scale;
 	
 	for (int y = 0; y <= heightOfDst - 1; ++y)
 	{
-		// ½«ÄÚ²¿Ñ­»·²»±äÁ¿ÌáÈ¡³öÀ´
+		// å°†å†…éƒ¨å¾ªç¯ä¸å˜é‡æå–å‡ºæ¥
 		double temp1 = (y - y0 - dy)*sinTheta;
 		double temp2 = (y - y0 - dy)*cosTheta;
 
 		for (int x = 0; x <= widthOfDst - 1; ++x)
 		{
-			// °´ÕÕÔ­À´µÄ·½Ê½¼ÆËãÔ­Í¼×ø±ê
+			// æŒ‰ç…§åŸæ¥çš„æ–¹å¼è®¡ç®—åŸå›¾åæ ‡
 			double srcX =  ((x - x0 - dx)*cosTheta + temp1)*scale + x0;
 			double srcY = (-(x-x0 - dx)*sinTheta + temp2)*scale + y0;
 
-			// ¼Ó1,µÃµ½ÔÚextendedImageÖĞµÄ×ø±ê
+			// åŠ 1,å¾—åˆ°åœ¨extendedImageä¸­çš„åæ ‡
 			srcX++;
 			srcY++;
 
@@ -406,18 +406,18 @@ void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double sc
 			int x1 = (int)(srcX);
 			int y1 = (int)(srcY);
 
-			// ¸¡µã×ª»¯Îª¶¨µãÊı
+			// æµ®ç‚¹è½¬åŒ–ä¸ºå®šç‚¹æ•°
 			int dx1 = (srcX - x1)*(1 << SHIFT);
 			int dy1 = (srcY - y1)*(1 << SHIFT);
 
 			if (numberOfChannels == 1)
 			{
-				// !£¡£¡×¢ÒâÕâÀïµÄ·¶Î§£¬ÔÚextendedImageÖĞ£¬Ô­Í¼µÄ·¶Î§¾ÍÊÇ1~cols - 2ÁË
+				// !ï¼ï¼æ³¨æ„è¿™é‡Œçš„èŒƒå›´ï¼Œåœ¨extendedImageä¸­ï¼ŒåŸå›¾çš„èŒƒå›´å°±æ˜¯1~cols - 2äº†
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -426,7 +426,7 @@ void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double sc
 					uchar c = extendedImage.at<uchar>(y1 + 1, x1);
 					uchar d = extendedImage.at<uchar>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					//int p = (a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1)/(1<<(2* SHIFT));
 
 					int p = a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1;
@@ -436,7 +436,7 @@ void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double sc
 				}
 				else
 				{
-					// Ô½½ç¸³Öµ0
+					// è¶Šç•Œèµ‹å€¼0
 					dstImage.at<uchar>(y, x) = 0;
 				}
 			}
@@ -444,9 +444,9 @@ void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double sc
 			{
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -455,7 +455,7 @@ void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double sc
 					Vec3b c = extendedImage.at<Vec3b>(y1 + 1, x1);
 					Vec3b d = extendedImage.at<Vec3b>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					/*int p1 = (a[0] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[0] * dx1*((1 << SHIFT) - dy1) + c[0] * ((1 << SHIFT) - dx1)*dy1 + d[0] * dx1*dy1)/(1<<(2*SHIFT));
 					int p2 = (a[1] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[1] * dx1*((1 << SHIFT) - dy1) + c[1] * ((1 << SHIFT) - dx1)*dy1 + d[1] * dx1*dy1)/ (1 << (2 * SHIFT));
 					int p3 = (a[2] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[2] * dx1*((1 << SHIFT) - dy1) + c[2] * ((1 << SHIFT) - dx1)*dy1 + d[2] * dx1*dy1)/ (1 << (2 * SHIFT));*/
@@ -480,19 +480,19 @@ void Rotate_Bilinear1(const Mat &srcImage, Point center, double theta, double sc
 	}
 }
 // 2016-8-14 16:41:51,by QQ
-//  ÓÅ»¯£ºÔÚRotate_Bilinear1µÄ»ù´¡ÉÏ£¬½øÒ»²½ÌáÈ¡²»±äÁ¿£¬¸Ä±äÑ­»·±äÁ¿×ÔÔö·½Ê½
+//  ä¼˜åŒ–ï¼šåœ¨Rotate_Bilinear1çš„åŸºç¡€ä¸Šï¼Œè¿›ä¸€æ­¥æå–ä¸å˜é‡ï¼Œæ”¹å˜å¾ªç¯å˜é‡è‡ªå¢æ–¹å¼
 void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double scale, Size dstSize, Mat &dstImage)
 {
 	CV_Assert(srcImage.depth() == CV_8U);
 	dstImage.create(dstSize, srcImage.type());
 	dstImage.setTo(Scalar(0, 0, 0));
 
-	// Ô­Í¼ÏñµÄĞı×ªÖĞĞÄ
+	// åŸå›¾åƒçš„æ—‹è½¬ä¸­å¿ƒ
 	int x0 = center.x;
 	int y0 = center.y;
 	theta = DEGREE2RADIAN(theta);
 
-	// dx,dy¾ÍÊÇdstImageÖĞĞÄµãÓësrcImageµÄĞı×ªÖĞĞÄµÄ¾àÀë£¬Ò²¾ÍÊÇÆ½ÒÆµÄ¾àÀë
+	// dx,dyå°±æ˜¯dstImageä¸­å¿ƒç‚¹ä¸srcImageçš„æ—‹è½¬ä¸­å¿ƒçš„è·ç¦»ï¼Œä¹Ÿå°±æ˜¯å¹³ç§»çš„è·ç¦»
 	int dx = dstImage.cols / 2 - x0;
 	int dy = dstImage.rows / 2 - y0;
 	int numberOfChannels = srcImage.channels();
@@ -501,15 +501,15 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 	int heightOfDst = dstImage.rows;
 
 	Mat extendedImage;
-	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // Ê¹ÓÃ0Ìî³ä±ß½ç
+	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // ä½¿ç”¨0å¡«å……è¾¹ç•Œ
 
-	////////////////////////////////// ÓÅ»¯²¿·Ö/////////////////////////////
-	// ½«Ñ­»·ÄÚµÄ²»±äÁ¿ÌáÈ¡³öÀ´
+	////////////////////////////////// ä¼˜åŒ–éƒ¨åˆ†/////////////////////////////
+	// å°†å¾ªç¯å†…çš„ä¸å˜é‡æå–å‡ºæ¥
 	double sinTheta = sin(theta);
 	double cosTheta = cos(theta);
 	scale = 1.0 / scale;
 
-	// ¸Ä±äÁËÑ­»·ÄÚ²¿ÔöÁ¿µÄ·½Ê½
+	// æ”¹å˜äº†å¾ªç¯å†…éƒ¨å¢é‡çš„æ–¹å¼
 	double temp1= (0 - y0 - dy)*sinTheta;
 	double temp2 = (0 - y0 - dy)*cosTheta;
 	double dtemp1 = sinTheta;
@@ -517,18 +517,18 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 
 	for (int y = 0; y <= heightOfDst - 1; ++y,temp1+=dtemp1,temp2+=dtemp2)
 	{
-		// ¸Ä±äÁËÑ­»·ÄÚ²¿ÔöÁ¿µÄ·½Ê½
+		// æ”¹å˜äº†å¾ªç¯å†…éƒ¨å¢é‡çš„æ–¹å¼
 		double temp3= ((0 - x0 - dx)*cosTheta + temp1)*scale + x0;
 		double temp4= (-(0 - x0 - dx)*sinTheta + temp2)*scale + y0;
 		double dtemp3 = (cosTheta)*scale;
 		double dtemp4= (-sinTheta)*scale;
 		for (int x = 0; x <= widthOfDst - 1; ++x,temp3+=dtemp3,temp4+=dtemp4)
 		{
-			// ¼ÆËãÔ­Í¼×ø±ê
+			// è®¡ç®—åŸå›¾åæ ‡
 			double srcX = temp3;
 			double srcY = temp4;
 
-			// ¼Ó1,µÃµ½ÔÚextendedImageÖĞµÄ×ø±ê
+			// åŠ 1,å¾—åˆ°åœ¨extendedImageä¸­çš„åæ ‡
 			srcX++;
 			srcY++;
 
@@ -536,18 +536,18 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 			int x1 = (int)(srcX);
 			int y1 = (int)(srcY);
 
-			// ¸¡µã×ª»¯ÎªÕûÊı
+			// æµ®ç‚¹è½¬åŒ–ä¸ºæ•´æ•°
 			int dx1 = (srcX - x1)*(1 << SHIFT);
 			int dy1 = (srcY - y1)*(1 << SHIFT);
 
 			if (numberOfChannels == 1)
 			{
-				// !£¡£¡×¢ÒâÕâÀïµÄ·¶Î§£¬ÔÚextendedImageÖĞ£¬Ô­Í¼µÄ·¶Î§¾ÍÊÇ1~cols - 2ÁË
+				// !ï¼ï¼æ³¨æ„è¿™é‡Œçš„èŒƒå›´ï¼Œåœ¨extendedImageä¸­ï¼ŒåŸå›¾çš„èŒƒå›´å°±æ˜¯1~cols - 2äº†
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -556,7 +556,7 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 					uchar c = extendedImage.at<uchar>(y1 + 1, x1);
 					uchar d = extendedImage.at<uchar>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					//int p = (a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1)/(1<<(2* SHIFT));
 
 					int p = a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1;
@@ -566,7 +566,7 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 				}
 				else
 				{
-					// Ô½½ç¸³Öµ0
+					// è¶Šç•Œèµ‹å€¼0
 					dstImage.at<uchar>(y, x) = 0;
 				}
 			}
@@ -574,9 +574,9 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 			{
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -585,7 +585,7 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 					Vec3b c = extendedImage.at<Vec3b>(y1 + 1, x1);
 					Vec3b d = extendedImage.at<Vec3b>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					/*int p1 = (a[0] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[0] * dx1*((1 << SHIFT) - dy1) + c[0] * ((1 << SHIFT) - dx1)*dy1 + d[0] * dx1*dy1)/(1<<(2*SHIFT));
 					int p2 = (a[1] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[1] * dx1*((1 << SHIFT) - dy1) + c[1] * ((1 << SHIFT) - dx1)*dy1 + d[1] * dx1*dy1)/ (1 << (2 * SHIFT));
 					int p3 = (a[2] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[2] * dx1*((1 << SHIFT) - dy1) + c[2] * ((1 << SHIFT) - dx1)*dy1 + d[2] * dx1*dy1)/ (1 << (2 * SHIFT));*/
@@ -611,19 +611,19 @@ void Rotate_Bilinear2(const Mat &srcImage, Point center, double theta, double sc
 } // Rotate_Bilinear2
 
   // 2016-9-11 15:57:13,by QQ
-  //  ÓÅ»¯£ºÔÚRotate_Bilinear2µÄ»ù´¡ÉÏ£¬½øÒ»²½ÌáÈ¡²»±äÁ¿,ÖÁ´ËÑ­»·ÌåÄÚÑ­»·±äÁ¿µÄ×ÔÔöÒÑ¾­Ã»ÓĞ³Ë·¨
+  //  ä¼˜åŒ–ï¼šåœ¨Rotate_Bilinear2çš„åŸºç¡€ä¸Šï¼Œè¿›ä¸€æ­¥æå–ä¸å˜é‡,è‡³æ­¤å¾ªç¯ä½“å†…å¾ªç¯å˜é‡çš„è‡ªå¢å·²ç»æ²¡æœ‰ä¹˜æ³•
 void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double scale, Size dstSize, Mat &dstImage)
 {
 	CV_Assert(srcImage.depth() == CV_8U);
 	dstImage.create(dstSize, srcImage.type());
 	dstImage.setTo(Scalar(0, 0, 0));
 
-	// Ô­Í¼ÏñµÄĞı×ªÖĞĞÄ
+	// åŸå›¾åƒçš„æ—‹è½¬ä¸­å¿ƒ
 	int x0 = center.x;
 	int y0 = center.y;
 	theta = DEGREE2RADIAN(theta);
 
-	// dx,dy¾ÍÊÇdstImageÖĞĞÄµãÓësrcImageµÄĞı×ªÖĞĞÄµÄ¾àÀë£¬Ò²¾ÍÊÇÆ½ÒÆµÄ¾àÀë
+	// dx,dyå°±æ˜¯dstImageä¸­å¿ƒç‚¹ä¸srcImageçš„æ—‹è½¬ä¸­å¿ƒçš„è·ç¦»ï¼Œä¹Ÿå°±æ˜¯å¹³ç§»çš„è·ç¦»
 	int dx = dstImage.cols / 2 - x0;
 	int dy = dstImage.rows / 2 - y0;
 	int numberOfChannels = srcImage.channels();
@@ -632,15 +632,15 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 	int heightOfDst = dstImage.rows;
 
 	Mat extendedImage;
-	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // Ê¹ÓÃ0Ìî³ä±ß½ç
+	copyMakeBorder(srcImage, extendedImage, 1, 1, 1, 1, BORDER_CONSTANT, Scalar(0, 0, 0)); // ä½¿ç”¨0å¡«å……è¾¹ç•Œ
 
-	////////////////////////////////// ÓÅ»¯²¿·Ö/////////////////////////////
-	// ½«Ñ­»·ÄÚµÄ²»±äÁ¿ÌáÈ¡³öÀ´
+	////////////////////////////////// ä¼˜åŒ–éƒ¨åˆ†/////////////////////////////
+	// å°†å¾ªç¯å†…çš„ä¸å˜é‡æå–å‡ºæ¥
 	double sinTheta = sin(theta);
 	double cosTheta = cos(theta);
 	scale = 1.0 / scale;
 
-	// ¸Ä±äÁËÑ­»·ÄÚ²¿ÔöÁ¿µÄ·½Ê½
+	// æ”¹å˜äº†å¾ªç¯å†…éƒ¨å¢é‡çš„æ–¹å¼
 	double temp1 = (0 - y0 - dy)*sinTheta;
 	double temp2 = (0 - y0 - dy)*cosTheta;
 	double dtemp1 = sinTheta;
@@ -649,7 +649,7 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 	double dtemp3 = (cosTheta)*scale;
 	double dtemp4 = (-sinTheta)*scale;
 
-	// ¸Ä±äÁËÑ­»·ÄÚ²¿ÔöÁ¿µÄ·½Ê½
+	// æ”¹å˜äº†å¾ªç¯å†…éƒ¨å¢é‡çš„æ–¹å¼
 	double temp3 = ((0 - x0 - dx)*cosTheta + temp1)*scale + x0- (dtemp1*scale);
 	double temp4 = (-(0 - x0 - dx)*sinTheta + temp2)*scale + y0- (dtemp2*scale);
 
@@ -657,22 +657,22 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 	double dtemp6 = (dtemp2*scale);
 	for (int y = 0; y <= heightOfDst - 1; ++y)
 	{
-		// ¸Ä±äÁËÑ­»·ÄÚ²¿ÔöÁ¿µÄ·½Ê½
+		// æ”¹å˜äº†å¾ªç¯å†…éƒ¨å¢é‡çš„æ–¹å¼
 		//double temp3 = ((0 - x0 - dx)*cosTheta + temp1)*scale + x0;
 		//double temp4 = (-(0 - x0 - dx)*sinTheta + temp2)*scale + y0;
 		temp3 += dtemp5;
 		temp4 += dtemp6;
 		
-		// ×¢ÒâÕâÀïÒ»¶¨Òª´´½¨ÁÙÊ±±äÁ¿£¬Èç¹ûÖ±½ÓÊ¹ÓÃtemp3,temp4¾Í´íÎóÁË£¬ÒòÎªtemp3ºÍtemp4ÔÚÄÚÑ­»·ÖĞÖµ±»ĞŞ¸ÄÁË
+		// æ³¨æ„è¿™é‡Œä¸€å®šè¦åˆ›å»ºä¸´æ—¶å˜é‡ï¼Œå¦‚æœç›´æ¥ä½¿ç”¨temp3,temp4å°±é”™è¯¯äº†ï¼Œå› ä¸ºtemp3å’Œtemp4åœ¨å†…å¾ªç¯ä¸­å€¼è¢«ä¿®æ”¹äº†
 		double temp5 = temp3;
 		double temp6 = temp4;
 		for (int x = 0; x <= widthOfDst - 1; ++x, temp5 += dtemp3, temp6 += dtemp4)
 		{
-			// ¼ÆËãÔ­Í¼×ø±ê
+			// è®¡ç®—åŸå›¾åæ ‡
 			double srcX = temp5;
 			double srcY = temp6;
 
-			// ¼Ó1,µÃµ½ÔÚextendedImageÖĞµÄ×ø±ê
+			// åŠ 1,å¾—åˆ°åœ¨extendedImageä¸­çš„åæ ‡
 			srcX++;
 			srcY++;
 
@@ -680,18 +680,18 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 			int x1 = (int)(srcX);
 			int y1 = (int)(srcY);
 
-			// ¸¡µã×ª»¯ÎªÕûÊı
+			// æµ®ç‚¹è½¬åŒ–ä¸ºæ•´æ•°
 			int dx1 = (srcX - x1)*(1 << SHIFT);
 			int dy1 = (srcY - y1)*(1 << SHIFT);
 
 			if (numberOfChannels == 1)
 			{
-				// !£¡£¡×¢ÒâÕâÀïµÄ·¶Î§£¬ÔÚextendedImageÖĞ£¬Ô­Í¼µÄ·¶Î§¾ÍÊÇ1~cols - 2ÁË
+				// !ï¼ï¼æ³¨æ„è¿™é‡Œçš„èŒƒå›´ï¼Œåœ¨extendedImageä¸­ï¼ŒåŸå›¾çš„èŒƒå›´å°±æ˜¯1~cols - 2äº†
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -700,7 +700,7 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 					uchar c = extendedImage.at<uchar>(y1 + 1, x1);
 					uchar d = extendedImage.at<uchar>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					//int p = (a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1)/(1<<(2* SHIFT));
 
 					int p = a*((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b*dx1*((1 << SHIFT) - dy1) + c*((1 << SHIFT) - dx1)*dy1 + d*dx1*dy1;
@@ -710,7 +710,7 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 				}
 				else
 				{
-					// Ô½½ç¸³Öµ0
+					// è¶Šç•Œèµ‹å€¼0
 					dstImage.at<uchar>(y, x) = 0;
 				}
 			}
@@ -718,9 +718,9 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 			{
 				if ((x1 >= 1 && x1 <= extendedImage.cols - 2) && (y1 >= 1 && y1 <= extendedImage.rows - 2))
 				{
-					//Ë«ÏßĞÔ²åÖµ
-					//ÖÜÎ§4¸öµã
-					//a¾ÍÊÇ×î½üÁÚÏñËØ
+					//åŒçº¿æ€§æ’å€¼
+					//å‘¨å›´4ä¸ªç‚¹
+					//aå°±æ˜¯æœ€è¿‘é‚»åƒç´ 
 					//a   b
 					//  p
 					//c   d
@@ -729,7 +729,7 @@ void Rotate_Bilinear3(const Mat &srcImage, Point center, double theta, double sc
 					Vec3b c = extendedImage.at<Vec3b>(y1 + 1, x1);
 					Vec3b d = extendedImage.at<Vec3b>(y1 + 1, x1 + 1);
 
-					// ²»Òª×ö³ı·¨
+					// ä¸è¦åšé™¤æ³•
 					/*int p1 = (a[0] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[0] * dx1*((1 << SHIFT) - dy1) + c[0] * ((1 << SHIFT) - dx1)*dy1 + d[0] * dx1*dy1)/(1<<(2*SHIFT));
 					int p2 = (a[1] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[1] * dx1*((1 << SHIFT) - dy1) + c[1] * ((1 << SHIFT) - dx1)*dy1 + d[1] * dx1*dy1)/ (1 << (2 * SHIFT));
 					int p3 = (a[2] * ((1 << SHIFT) - dx1)*((1 << SHIFT) - dy1) + b[2] * dx1*((1 << SHIFT) - dy1) + c[2] * ((1 << SHIFT) - dx1)*dy1 + d[2] * dx1*dy1)/ (1 << (2 * SHIFT));*/

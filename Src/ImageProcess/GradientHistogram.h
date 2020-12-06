@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// Ìİ¶ÈÖ±·½Í¼
+// æ¢¯åº¦ç›´æ–¹å›¾
 // 2017-8-3,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -20,33 +20,33 @@ using namespace std;
 namespace QQ
 {
 
-/*¼ÆËãÌİ¶ÈÍ¼ºÍÌİ¶È·½ÏòÍ¼(Ìİ¶È´óĞ¡²»ÔÚÌİ¶È·½Ïò×ö²åÖµ)
- Èç¹ûÊÇ²ÊÉ«Í¼£¬ÔòÈ¡Ìİ¶È´óĞ¡×î´óµÄÄÇ¸öÍ¨µÀ
- gradient:Ìİ¶ÈÍ¼(Ç¿¶ÈÍ¼)
- gradientAngle:Ìİ¶È·½ÏòÍ¼
- numberOfBins:binµÄ¸öÊı
- signedGradient:ÊÇ·ñ²ÉÓÃÓĞ·ûºÅÌİ¶È·½Ïò
+/*è®¡ç®—æ¢¯åº¦å›¾å’Œæ¢¯åº¦æ–¹å‘å›¾(æ¢¯åº¦å¤§å°ä¸åœ¨æ¢¯åº¦æ–¹å‘åšæ’å€¼)
+ å¦‚æœæ˜¯å½©è‰²å›¾ï¼Œåˆ™å–æ¢¯åº¦å¤§å°æœ€å¤§çš„é‚£ä¸ªé€šé“
+ gradient:æ¢¯åº¦å›¾(å¼ºåº¦å›¾)
+ gradientAngle:æ¢¯åº¦æ–¹å‘å›¾
+ numberOfBins:binçš„ä¸ªæ•°
+ signedGradient:æ˜¯å¦é‡‡ç”¨æœ‰ç¬¦å·æ¢¯åº¦æ–¹å‘
  
- ÎªÊ²Ã´ComputeGradientÓëComputeGradient_HOGÔÚ¼ÆËã3Í¨µÀÍ¼ÏñµÄÊ±ºò£¬¸ö±ğÏñËØ»áÓĞ²îÒì£¿
- ÒòÎªÔÚ¼ÆËãÄÄ¸öÍ¨´ïÌİ¶È´óĞ¡×î´óµÄÊ±ºò£¬ComputeGradientÊÇ´ÓµÚ1µ½µÚ3±È½Ï£¬¶øComputeGradient_HOGÊÇ´ÓµÚ3µ½µÚ1±È½Ï£¬ÕâÊÇ²»ÎÈ¶¨µÄ±È½Ï·½Ê½£¬Èç¹ûµÚ1¸öºÍ
- µÚ3¸öÌİ¶È´óĞ¡ÏàÍ¬£¬ÄÇÃ´ComputeGradient¾Í»áÈ¡µÚ1¸öÍ¨µÀ£¬¶øComputeGradient_HOG¾Í»áÈ¡µÚ3¸öÍ¨µÀ£¬¶øÕâÁ½¸öÍ¨µÀÖ»ÄÜ±£Ö¤fx0*fx0 + fy0*fy0ÏàÍ¬£¬²¢²»ÄÜ±£Ö¤
- fx0Óëfy0ÊÇÏàÍ¬µÄ£¬ËùÒÔ»áÂÔÓĞ²î±ğ£¬µ«ÊÇ²¢²»Ó°ÏìÊ¹ÓÃ
+ ä¸ºä»€ä¹ˆComputeGradientä¸ComputeGradient_HOGåœ¨è®¡ç®—3é€šé“å›¾åƒçš„æ—¶å€™ï¼Œä¸ªåˆ«åƒç´ ä¼šæœ‰å·®å¼‚ï¼Ÿ
+ å› ä¸ºåœ¨è®¡ç®—å“ªä¸ªé€šè¾¾æ¢¯åº¦å¤§å°æœ€å¤§çš„æ—¶å€™ï¼ŒComputeGradientæ˜¯ä»ç¬¬1åˆ°ç¬¬3æ¯”è¾ƒï¼Œè€ŒComputeGradient_HOGæ˜¯ä»ç¬¬3åˆ°ç¬¬1æ¯”è¾ƒï¼Œè¿™æ˜¯ä¸ç¨³å®šçš„æ¯”è¾ƒæ–¹å¼ï¼Œå¦‚æœç¬¬1ä¸ªå’Œ
+ ç¬¬3ä¸ªæ¢¯åº¦å¤§å°ç›¸åŒï¼Œé‚£ä¹ˆComputeGradientå°±ä¼šå–ç¬¬1ä¸ªé€šé“ï¼Œè€ŒComputeGradient_HOGå°±ä¼šå–ç¬¬3ä¸ªé€šé“ï¼Œè€Œè¿™ä¸¤ä¸ªé€šé“åªèƒ½ä¿è¯fx0*fx0 + fy0*fy0ç›¸åŒï¼Œå¹¶ä¸èƒ½ä¿è¯
+ fx0ä¸fy0æ˜¯ç›¸åŒçš„ï¼Œæ‰€ä»¥ä¼šç•¥æœ‰å·®åˆ«ï¼Œä½†æ˜¯å¹¶ä¸å½±å“ä½¿ç”¨
 */
 DLL_EXPORTS	void ComputeGradient(const Mat &srcImage, Mat &gradient, Mat &gradientAngle, const int numberOfBins, bool signedGradient=false);
 
 
-/* ¼ÆËãÌİ¶ÈÍ¼ºÍÌİ¶È·½ÏòÍ¼(Ìİ¶È´óĞ¡ÔÚÌİ¶È·½Ïò×öÁË²åÖµ)
-gradient:Ìİ¶ÈÍ¼£¬Ë«Í¨µÀ(·Ö±ğ´æ·ÅÃ¿¸öÏñËØµã¶ÔÓ¦µÄÁ½¸öbinµÄÈ¨Öµ)
-gradientAngle£ºÌİ¶È·½ÏòÍ¼£¬Ë«Í¨µÀ(·Ö±ğ´æ·ÅÃ¿¸öÏñËØµã¶ÔÓ¦µÄÁ½¸öbin)
+/* è®¡ç®—æ¢¯åº¦å›¾å’Œæ¢¯åº¦æ–¹å‘å›¾(æ¢¯åº¦å¤§å°åœ¨æ¢¯åº¦æ–¹å‘åšäº†æ’å€¼)
+gradient:æ¢¯åº¦å›¾ï¼ŒåŒé€šé“(åˆ†åˆ«å­˜æ”¾æ¯ä¸ªåƒç´ ç‚¹å¯¹åº”çš„ä¸¤ä¸ªbinçš„æƒå€¼)
+gradientAngleï¼šæ¢¯åº¦æ–¹å‘å›¾ï¼ŒåŒé€šé“(åˆ†åˆ«å­˜æ”¾æ¯ä¸ªåƒç´ ç‚¹å¯¹åº”çš„ä¸¤ä¸ªbin)
 
-¾­¹ı²âÊÔ£ºComputeGradient2ÓëComputeGradient_HOG½á¹ûÒ»ÖÂ
+ç»è¿‡æµ‹è¯•ï¼šComputeGradient2ä¸ComputeGradient_HOGç»“æœä¸€è‡´
 */
 DLL_EXPORTS	void ComputeGradient2(const Mat &srcImage, Mat &gradient, Mat &gradientAngle, const int numberOfBins, bool signedGradient = false);
 
 
-/*HOGÖĞ¼ÆËãÌİ¶È·½ÏòÖ±·½Í¼º¯Êı
-* ÆäÖĞÌİ¶È´óĞ¡ÔÚÌİ¶È·½ÏòÉÏ×öÁË²åÖµ
-* paddingTL,paddingBRÄ¬ÈÏÎª¿Õ(ÓÃ×÷À©³äÍ¼Ïñ)
+/*HOGä¸­è®¡ç®—æ¢¯åº¦æ–¹å‘ç›´æ–¹å›¾å‡½æ•°
+* å…¶ä¸­æ¢¯åº¦å¤§å°åœ¨æ¢¯åº¦æ–¹å‘ä¸Šåšäº†æ’å€¼
+* paddingTL,paddingBRé»˜è®¤ä¸ºç©º(ç”¨ä½œæ‰©å……å›¾åƒ)
 */
 DLL_EXPORTS void ComputeGradient_HOG(const Mat& img, Mat& grad, Mat& qangle, int nbins, bool signedGradient=false,bool gammaCorrection = false, Size paddingTL=Size(), Size paddingBR=Size());
 

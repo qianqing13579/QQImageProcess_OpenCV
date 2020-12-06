@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// »ı·ÖÍ¼
+// ç§¯åˆ†å›¾
 // 2014-12-1,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -19,22 +19,22 @@ using namespace cv;
 namespace QQ
 {
 
-/////////////////////////////»ı·ÖÍ¼/////////////////////////////////////////////
+/////////////////////////////ç§¯åˆ†å›¾/////////////////////////////////////////////
 /*V3.0
 
-»ı·ÖÍ¼»¹¿ÉÒÔÕâÃ´¼ÆËã£º
-1. »ı·ÖÍ¼ÉÏÃæÁôÒ»ĞĞ£¬È«²¿¸³ÖµÎª0£¬ÕâÑù¾ÍÍ³Ò»²Ù×÷£º»ı·ÖÍ¼µ±Ç°ÏñËØÖµ=µ±Ç°ĞĞÀÛ¼ÓºÍ+ÉÏÒ»ĞĞ¶ÔÓ¦ÏñËØµÄÖµ¡£
-2. »ı·ÖÍ¼ÉÏÃæºÍ×ó±ß¶¼ÁôÒ»ĞĞ(OpenCVµÄ×ö·¨)£¬ÕâÑù²Ù×÷Ò²Í³Ò»£º»ı·ÖÍ¼µ±Ç°ÏñËØµÄÖµ=Ç°ÃæÒ»¸öÏñËØµÄÖµ+¸ÃÏñËØµÄÖµ+ÉÏÃæÏñËØµÄÖµ¡£
+ç§¯åˆ†å›¾è¿˜å¯ä»¥è¿™ä¹ˆè®¡ç®—ï¼š
+1. ç§¯åˆ†å›¾ä¸Šé¢ç•™ä¸€è¡Œï¼Œå…¨éƒ¨èµ‹å€¼ä¸º0ï¼Œè¿™æ ·å°±ç»Ÿä¸€æ“ä½œï¼šç§¯åˆ†å›¾å½“å‰åƒç´ å€¼=å½“å‰è¡Œç´¯åŠ å’Œ+ä¸Šä¸€è¡Œå¯¹åº”åƒç´ çš„å€¼ã€‚
+2. ç§¯åˆ†å›¾ä¸Šé¢å’Œå·¦è¾¹éƒ½ç•™ä¸€è¡Œ(OpenCVçš„åšæ³•)ï¼Œè¿™æ ·æ“ä½œä¹Ÿç»Ÿä¸€ï¼šç§¯åˆ†å›¾å½“å‰åƒç´ çš„å€¼=å‰é¢ä¸€ä¸ªåƒç´ çš„å€¼+è¯¥åƒç´ çš„å€¼+ä¸Šé¢åƒç´ çš„å€¼ã€‚
 
 */
-DLL_EXPORTS void CalculateIntegralImage_Old(const Mat &srcImage, Mat &image_Integral);//Ô­Ê¼·½·¨
-DLL_EXPORTS void CalculateIntegralImage(const Mat &srcImage,Mat &image_Integral);//¸Ä½øµÄ·½·¨
+DLL_EXPORTS void CalculateIntegralImage_Old(const Mat &srcImage, Mat &image_Integral);//åŸå§‹æ–¹æ³•
+DLL_EXPORTS void CalculateIntegralImage(const Mat &srcImage,Mat &image_Integral);//æ”¹è¿›çš„æ–¹æ³•
 
-//ÏÂÃæÁ½ÖÖ·½Ê½·Ç³£µÍĞ§
+//ä¸‹é¢ä¸¤ç§æ–¹å¼éå¸¸ä½æ•ˆ
 //V2.0
-void CalculateIntegralImage_2(const Mat &srcImage,Mat &image_Integral);//²ÉÓÃĞĞÁĞµØÖ·+[]²Ù×÷·û¹¹Ôì»ı·ÖÍ¼
+void CalculateIntegralImage_2(const Mat &srcImage,Mat &image_Integral);//é‡‡ç”¨è¡Œåˆ—åœ°å€+[]æ“ä½œç¬¦æ„é€ ç§¯åˆ†å›¾
 //V1.0
-void CalculateIntegralImage_1(const Mat &srcImage,Mat &image_Integral);//²ÉÓÃat·½·¨¹¹Ôì»ı·ÖÍ¼
+void CalculateIntegralImage_1(const Mat &srcImage,Mat &image_Integral);//é‡‡ç”¨atæ–¹æ³•æ„é€ ç§¯åˆ†å›¾
 
 
 

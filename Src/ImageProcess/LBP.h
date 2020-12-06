@@ -7,9 +7,9 @@
 //		Email:654393155@qq.com
 //		Blog:http://blog.csdn.net/qianqing13579
 //////////////////////////////////////////////////////////////////////////
-// Updated 2016-12-12 01:12:55 by QQ, LBP 1.1,GetMinBinary()º¯ÊıĞŞ¸ÄÎª²éÕÒ±í£¬Ìá¸ßÁË¼ÆËãËÙ¶È
-// Updated 2016-12-13 14:41:58 by QQ, LBP 2.0,ÏÈ¼ÆËãÕû·ùÍ¼ÏñµÄLBPÌØÕ÷Í¼£¬È»ºó¼ÆËãÃ¿¸öcellµÄLBPÖ±·½Í¼
-// Updated 2017-7-29 by QQ,add ¶ÔComputeLBPFeatureVector_256ºÍComputeLBPFeatureVector_Uniform½øĞĞÁËÓÅ»¯:Ìí¼ÓÁË»¬¶¯´°¿ÚÏñËØ²éÕÒ±í
+// Updated 2016-12-12 01:12:55 by QQ, LBP 1.1,GetMinBinary()å‡½æ•°ä¿®æ”¹ä¸ºæŸ¥æ‰¾è¡¨ï¼Œæé«˜äº†è®¡ç®—é€Ÿåº¦
+// Updated 2016-12-13 14:41:58 by QQ, LBP 2.0,å…ˆè®¡ç®—æ•´å¹…å›¾åƒçš„LBPç‰¹å¾å›¾ï¼Œç„¶åè®¡ç®—æ¯ä¸ªcellçš„LBPç›´æ–¹å›¾
+// Updated 2017-7-29 by QQ,add å¯¹ComputeLBPFeatureVector_256å’ŒComputeLBPFeatureVector_Uniformè¿›è¡Œäº†ä¼˜åŒ–:æ·»åŠ äº†æ»‘åŠ¨çª—å£åƒç´ æŸ¥æ‰¾è¡¨
 
 #ifndef __LBP_H__
 #define __LBP_H__
@@ -23,39 +23,39 @@ namespace QQ
 {
 
 /*
-ÈıÖÖLBPÌØÕ÷µÄ¼ÆËã²½Öè»ù±¾Ò»ÖÂ£ºÏÈ¼ÆËãLBPÌØÕ÷Í¼£¬È»ºó¶ÔÃ¿¸öcell¼ÆËãÌØÕ÷ÏòÁ¿
+ä¸‰ç§LBPç‰¹å¾çš„è®¡ç®—æ­¥éª¤åŸºæœ¬ä¸€è‡´ï¼šå…ˆè®¡ç®—LBPç‰¹å¾å›¾ï¼Œç„¶åå¯¹æ¯ä¸ªcellè®¡ç®—ç‰¹å¾å‘é‡
 
 */
 class DLL_EXPORTS LBP
 {
 public:
 
-	//////////////////////////////////// ¼ÆËã»ù±¾µÄ256Î¬LBPÌØÕ÷ÏòÁ¿ ////////////////////////////////////
+	//////////////////////////////////// è®¡ç®—åŸºæœ¬çš„256ç»´LBPç‰¹å¾å‘é‡ ////////////////////////////////////
 	void ComputeLBPFeatureVector_256(const Mat &srcImage, Size cellSize,Mat &featureVector);
-	void ComputeLBPImage_256(const Mat &srcImage, Mat &LBPImage);// ¼ÆËã256Î¬LBPÌØÕ÷Í¼
-    void ComputeLBPFeatureVector_256_O(const Mat &srcImage, Size cellSize, Mat &featureVector);// ¶ÔComputeLBPFeatureVector_256ÓÅ»¯£¬¹¹½¨»¬¶¯´°¿ÚÏñËØ²éÕÒ±í
-    void ComputeLBPFeatureVector_256_O_2(const Mat &srcImage, Size cellSize, Mat &featureVector);// ¶ÔComputeLBPFeatureVector_256_OµÄÓÅ»¯£¬Ö÷ÒªÓÅ»¯µôÑ­»·ÖĞµÄ³Ë·¨
+	void ComputeLBPImage_256(const Mat &srcImage, Mat &LBPImage);// è®¡ç®—256ç»´LBPç‰¹å¾å›¾
+    void ComputeLBPFeatureVector_256_O(const Mat &srcImage, Size cellSize, Mat &featureVector);// å¯¹ComputeLBPFeatureVector_256ä¼˜åŒ–ï¼Œæ„å»ºæ»‘åŠ¨çª—å£åƒç´ æŸ¥æ‰¾è¡¨
+    void ComputeLBPFeatureVector_256_O_2(const Mat &srcImage, Size cellSize, Mat &featureVector);// å¯¹ComputeLBPFeatureVector_256_Oçš„ä¼˜åŒ–ï¼Œä¸»è¦ä¼˜åŒ–æ‰å¾ªç¯ä¸­çš„ä¹˜æ³•
 	
 
-	//////////////////////////////////// ¼ÆËã»Ò¶È²»±ä+µÈ¼ÛÄ£Ê½LBPÌØÕ÷ÏòÁ¿(58ÖÖÄ£Ê½) ////////////////////////////////////
+	//////////////////////////////////// è®¡ç®—ç°åº¦ä¸å˜+ç­‰ä»·æ¨¡å¼LBPç‰¹å¾å‘é‡(58ç§æ¨¡å¼) ////////////////////////////////////
 	void ComputeLBPFeatureVector_Uniform(const Mat &srcImage, Size cellSize, Mat &featureVector);
-    void ComputeLBPImage_Uniform(const Mat &srcImage, Mat &LBPImage);// ¼ÆËãµÈ¼ÛÄ£Ê½LBPÌØÕ÷Í¼
-    void ComputeLBPFeatureVector_Uniform_O(const Mat &srcImage, Size cellSize, Mat &featureVector);// ¶ÔComputeLBPFeatureVector_UniformÓÅ»¯£¬¹¹½¨»¬¶¯´°¿ÚÏñËØ²éÕÒ±í
+    void ComputeLBPImage_Uniform(const Mat &srcImage, Mat &LBPImage);// è®¡ç®—ç­‰ä»·æ¨¡å¼LBPç‰¹å¾å›¾
+    void ComputeLBPFeatureVector_Uniform_O(const Mat &srcImage, Size cellSize, Mat &featureVector);// å¯¹ComputeLBPFeatureVector_Uniformä¼˜åŒ–ï¼Œæ„å»ºæ»‘åŠ¨çª—å£åƒç´ æŸ¥æ‰¾è¡¨
 
 
-	//////////////////////////////////// ¼ÆËã»Ò¶È²»±ä+Ğı×ª²»±ä+µÈ¼ÛÄ£Ê½LBPÌØÕ÷ÏòÁ¿(9ÖÖÄ£Ê½) ////////////////////////////////////
+	//////////////////////////////////// è®¡ç®—ç°åº¦ä¸å˜+æ—‹è½¬ä¸å˜+ç­‰ä»·æ¨¡å¼LBPç‰¹å¾å‘é‡(9ç§æ¨¡å¼) ////////////////////////////////////
 	void ComputeLBPFeatureVector_Rotation_Uniform(const Mat &srcImage, Size cellSize, Mat &featureVector);
-    void ComputeLBPImage_Rotation_Uniform(const Mat &srcImage, Mat &LBPImage); // ¼ÆËã»Ò¶È²»±ä+Ğı×ª²»±ä+µÈ¼ÛÄ£Ê½LBPÌØÕ÷Í¼,Ê¹ÓÃ²éÕÒ±í
+    void ComputeLBPImage_Rotation_Uniform(const Mat &srcImage, Mat &LBPImage); // è®¡ç®—ç°åº¦ä¸å˜+æ—‹è½¬ä¸å˜+ç­‰ä»·æ¨¡å¼LBPç‰¹å¾å›¾,ä½¿ç”¨æŸ¥æ‰¾è¡¨
 
 private:
-	void BuildUniformPatternTable(int *table); // ¼ÆËãµÈ¼ÛÄ£Ê½²éÕÒ±í
-	int GetHopCount(int i);// »ñÈ¡iÖĞ0,1µÄÌø±ä´ÎÊı
-	int ComputeValue9(int value58);// ¼ÆËã9ÖÖµÈ¼ÛÄ£Ê½
-	int GetMinBinary(int binary);// Í¨¹ıLUT¼ÆËã×îĞ¡¶ş½øÖÆ
-	uchar GetMinBinary(uchar *binary); // ¼ÆËãµÃµ½×îĞ¡¶ş½øÖÆ
+	void BuildUniformPatternTable(int *table); // è®¡ç®—ç­‰ä»·æ¨¡å¼æŸ¥æ‰¾è¡¨
+	int GetHopCount(int i);// è·å–iä¸­0,1çš„è·³å˜æ¬¡æ•°
+	int ComputeValue9(int value58);// è®¡ç®—9ç§ç­‰ä»·æ¨¡å¼
+	int GetMinBinary(int binary);// é€šè¿‡LUTè®¡ç®—æœ€å°äºŒè¿›åˆ¶
+	uchar GetMinBinary(uchar *binary); // è®¡ç®—å¾—åˆ°æœ€å°äºŒè¿›åˆ¶
 
     // Test
-    void Test();// ÑéÖ¤»Ò¶È²»±ä+Ğı×ª²»±ä+µÈ¼ÛÄ£Ê½ÖÖÀà
+    void Test();// éªŒè¯ç°åº¦ä¸å˜+æ—‹è½¬ä¸å˜+ç­‰ä»·æ¨¡å¼ç§ç±»
     void TestGetMinBinaryLUT();
 	
 };

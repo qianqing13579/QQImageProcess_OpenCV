@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// ²âÊÔÀà ImageProcessTest.h
+// æµ‹è¯•ç±» ImageProcessTest.h
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -10,31 +10,31 @@
 class ImageProcessTest
 {
 public:
-	// ¼òµ¥µÄ²âÊÔËã·¨µÄÆ½¾ùÊ±¼ä
+	// ç®€å•çš„æµ‹è¯•ç®—æ³•çš„å¹³å‡æ—¶é—´
 	void TestMeanTime();
 
-	void TestAccessImage();//²âÊÔ·ÃÎÊÍ¼ÏñµÄ¸÷ÖÖ·½·¨
-	void TestConnectImage();//²âÊÔÆ´½ÓÍ¼Ïñ
-	void TestProject();//²âÊÔÍ¶Ó°
-	void TestMat_IplImage4ALigned();//²âÊÔMatºÍIplImageÊÇ·ñ4×Ö½Ú¶ÔÆë
-	void TestDrawHist();//²âÊÔ»­Ö±·½Í¼
-	void TestImageMedianMinMax();//²âÊÔÍ¼ÏñµÄÁÁ¶ÈÖĞÖµ£¬×î´óÖµ£¬×îĞ¡Öµ
-	void TestSmooth();//²âÊÔ×Ô¼ºµÄÂË²¨Æ÷
-	void TestConvolution();// ²âÊÔ¾í»ı
-	void TestEdge();//²âÊÔ±ßÔµ¼ì²â
+	void TestAccessImage();//æµ‹è¯•è®¿é—®å›¾åƒçš„å„ç§æ–¹æ³•
+	void TestConnectImage();//æµ‹è¯•æ‹¼æ¥å›¾åƒ
+	void TestProject();//æµ‹è¯•æŠ•å½±
+	void TestMat_IplImage4ALigned();//æµ‹è¯•Matå’ŒIplImageæ˜¯å¦4å­—èŠ‚å¯¹é½
+	void TestDrawHist();//æµ‹è¯•ç”»ç›´æ–¹å›¾
+	void TestImageMedianMinMax();//æµ‹è¯•å›¾åƒçš„äº®åº¦ä¸­å€¼ï¼Œæœ€å¤§å€¼ï¼Œæœ€å°å€¼
+	void TestSmooth();//æµ‹è¯•è‡ªå·±çš„æ»¤æ³¢å™¨
+	void TestConvolution();// æµ‹è¯•å·ç§¯
+	void TestEdge();//æµ‹è¯•è¾¹ç¼˜æ£€æµ‹
 	void TestCanny();
-	void TestGeometryTransformation();//²âÊÔ¼¸ºÎ±ä»»
+	void TestGeometryTransformation();//æµ‹è¯•å‡ ä½•å˜æ¢
 	void TestRotate();
-	void TestCvtColor(); // ²âÊÔ»Ò¶È±ä»»
+	void TestCvtColor(); // æµ‹è¯•ç°åº¦å˜æ¢
 	void TestEqualiz();
 	void TestThin();
 	void TestGaussianBlur();
 	void TestGradientHist();
 
-	// LBPµÄ²âÊÔ
-	void LBP_Uniform_SVM(); // LBPµÈ¼ÛÄ£Ê½
-	void LBP_Rotation_Uniform_SVM(); // LBPĞı×ª²»±ä£¬µÈ¼ÛÄ£Ê½
-	void TestLBP(); // ²âÊÔLBPÌØÕ÷
+	// LBPçš„æµ‹è¯•
+	void LBP_Uniform_SVM(); // LBPç­‰ä»·æ¨¡å¼
+	void LBP_Rotation_Uniform_SVM(); // LBPæ—‹è½¬ä¸å˜ï¼Œç­‰ä»·æ¨¡å¼
+	void TestLBP(); // æµ‹è¯•LBPç‰¹å¾
 
 };
 

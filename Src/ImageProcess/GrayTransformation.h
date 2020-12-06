@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// 灰度变换
+// 鐏板害鍙樻崲
 // 2016-7-9,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -21,7 +21,7 @@ namespace QQ
 DLL_EXPORTS void RGB2Gray(const Mat &srcImage, Mat &dstImage);
 DLL_EXPORTS void GammaCorrection(const Mat &srcImage, Mat &dstImage, float gamma);
 
-// 直方图均衡化
+// 鐩存柟鍥惧潎琛″寲
 DLL_EXPORTS void EqualizeHistogram(const Mat &srcImage, Mat &dstImage);
 
 

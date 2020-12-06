@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// ÂË²¨
+// æ»¤æ³¢
 // 2014-12-8,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -18,48 +18,48 @@ using namespace cv;
 namespace QQ
 {
 
-/////////////////////////////////¾ùÖµÂË²¨/////////////////////////////////////////
+/////////////////////////////////å‡å€¼æ»¤æ³¢/////////////////////////////////////////
 //V1.0
 DLL_EXPORTS void Blur_1(const Mat &srcImage, Mat &dstImage, Size size_Aperture);
 
-//V2.0 ¸ßĞ§¾ùÖµÂË²¨(Í¼ÏñµÄ¸ßĞ§±à³ÌÒªµãÖ®Îå),Ã»ÓĞ´¦Àí±ß½ç
+//V2.0 é«˜æ•ˆå‡å€¼æ»¤æ³¢(å›¾åƒçš„é«˜æ•ˆç¼–ç¨‹è¦ç‚¹ä¹‹äº”),æ²¡æœ‰å¤„ç†è¾¹ç•Œ
 DLL_EXPORTS void Blur_2(const Mat &srcImage, Mat &dstImage, Size size_Aperture);
 
-//V3.0 ¸ßĞ§¾ùÖµÂË²¨£¬¼ÓÈë¶Ô±ß½çµÄ´¦Àí£¬Ã»ÓĞÊ¹ÓÃcopyMakeBorder()À©³äÔ­Í¼
+//V3.0 é«˜æ•ˆå‡å€¼æ»¤æ³¢ï¼ŒåŠ å…¥å¯¹è¾¹ç•Œçš„å¤„ç†ï¼Œæ²¡æœ‰ä½¿ç”¨copyMakeBorder()æ‰©å……åŸå›¾
 DLL_EXPORTS void Blur_3(const Mat &srcImage, Mat &dstImage, Size size_Aperture);
 
-//V4.0 ¸ßĞ§¾ùÖµÂË²¨£¬¼ÓÈë¶Ô±ß½çµÄ´¦Àí,Ê¹ÓÃcopyMakeBorder()À©³äÔ­Í¼
+//V4.0 é«˜æ•ˆå‡å€¼æ»¤æ³¢ï¼ŒåŠ å…¥å¯¹è¾¹ç•Œçš„å¤„ç†,ä½¿ç”¨copyMakeBorder()æ‰©å……åŸå›¾
 DLL_EXPORTS void Blur(const Mat &srcImage, Mat &dstImage, Size size_Aperture);
 
 
-/////////////////////////////////ÖĞÖµÂË²¨/////////////////////////////////////////
-//V2.0 ÆÕÍ¨ÖĞÖµÂË²¨
-//±ß½çÃ»ÓĞ´¦Àí
-//3.0ÒÑ²»Ö§³Öº¯ÊıÖĞµÄ»¬¶¯´°¿ÚÌáÈ¡·½Ê½£¬¸Ãº¯Êı²»ÄÜÓÃÁË
-DLL_EXPORTS void MedianBlur(const Mat &srcImage, Mat &dstImage, int width_Aperture);//ÖĞÖµÂË²¨
+/////////////////////////////////ä¸­å€¼æ»¤æ³¢/////////////////////////////////////////
+//V2.0 æ™®é€šä¸­å€¼æ»¤æ³¢
+//è¾¹ç•Œæ²¡æœ‰å¤„ç†
+//3.0å·²ä¸æ”¯æŒå‡½æ•°ä¸­çš„æ»‘åŠ¨çª—å£æå–æ–¹å¼ï¼Œè¯¥å‡½æ•°ä¸èƒ½ç”¨äº†
+DLL_EXPORTS void MedianBlur(const Mat &srcImage, Mat &dstImage, int width_Aperture);//ä¸­å€¼æ»¤æ³¢
 
-//V3.0 ¸ßĞ§ÖĞÖµÂË²¨(Í¼ÏñµÄ¸ßĞ§±à³ÌÒªµãÖ®ËÄ)
-//±ß½çÃ»ÓĞ´¦Àí
-DLL_EXPORTS void FastMedianBlur_1(const Mat &srcImage, Mat &dstImage, int width_Aperture);//ÖĞÖµÂË²¨
+//V3.0 é«˜æ•ˆä¸­å€¼æ»¤æ³¢(å›¾åƒçš„é«˜æ•ˆç¼–ç¨‹è¦ç‚¹ä¹‹å››)
+//è¾¹ç•Œæ²¡æœ‰å¤„ç†
+DLL_EXPORTS void FastMedianBlur_1(const Mat &srcImage, Mat &dstImage, int width_Aperture);//ä¸­å€¼æ»¤æ³¢
 
-//V4.0 ¸ßĞ§ÖĞÖµÂË²¨(Í¼ÏñµÄ¸ßĞ§±à³ÌÒªµãÖ®ËÄ)
-//¸Ä½øµÄ¸ßĞ§ÖĞÖµÂË²¨£º²»²ÉÓÃOpenCVµÄÖ±·½Í¼
+//V4.0 é«˜æ•ˆä¸­å€¼æ»¤æ³¢(å›¾åƒçš„é«˜æ•ˆç¼–ç¨‹è¦ç‚¹ä¹‹å››)
+//æ”¹è¿›çš„é«˜æ•ˆä¸­å€¼æ»¤æ³¢ï¼šä¸é‡‡ç”¨OpenCVçš„ç›´æ–¹å›¾
 DLL_EXPORTS void FastMedianBlur(const Mat &srcImage, Mat &dstImage, int width_Aperture);
 
 
 
-/////////////////////////////////¸ßË¹ÂË²¨/////////////////////////////////////////
+/////////////////////////////////é«˜æ–¯æ»¤æ³¢/////////////////////////////////////////
 DLL_EXPORTS void GaussianBlur(const Mat &srcImage, Mat &dstImage, double sigma);
 
 
-//////////////////////////////»¬¶¯´°¿Ú¾í»ıÔËËãµÄÁ½ÖÖ·½Ê½///////////////////////////////////////////////////////////
-// ¾í»ıÔËËã·½Ê½1£ºÊ¹ÓÃcaffeÖĞµÄ¾í»ıÔËËã·½Ê½
+//////////////////////////////æ»‘åŠ¨çª—å£å·ç§¯è¿ç®—çš„ä¸¤ç§æ–¹å¼///////////////////////////////////////////////////////////
+// å·ç§¯è¿ç®—æ–¹å¼1ï¼šä½¿ç”¨caffeä¸­çš„å·ç§¯è¿ç®—æ–¹å¼
 DLL_EXPORTS void Convolution1(const Mat &srcImage,const Mat &kernel, Mat &dstImage);
-DLL_EXPORTS void Convolution12(const Mat &srcImage, const Mat &kernel, Mat &dstImage);// Convolution1µÄÓÅ»¯°æ±¾1 
+DLL_EXPORTS void Convolution12(const Mat &srcImage, const Mat &kernel, Mat &dstImage);// Convolution1çš„ä¼˜åŒ–ç‰ˆæœ¬1 
 
-//  ¾í»ıÔËËã·½Ê½2£º¶ÔÃ¿¸ö»¬¶¯´°¿Ú²Ù×÷,¸Ã·½·¨¿ÉÒÔÓÃÀ´×öpooling,Ö»Ö§³Öµ¥Í¨µÀ
+//  å·ç§¯è¿ç®—æ–¹å¼2ï¼šå¯¹æ¯ä¸ªæ»‘åŠ¨çª—å£æ“ä½œ,è¯¥æ–¹æ³•å¯ä»¥ç”¨æ¥åšpooling,åªæ”¯æŒå•é€šé“
 DLL_EXPORTS void Convolution2(const Mat &srcImage,const Mat &kernel, Mat &dstImage);
-DLL_EXPORTS void Convolution22(const Mat &srcImage, const Mat &kernel, Mat &dstImage); // Í¨¹ı²éÕÒ±íÓÅ»¯Convolution2
+DLL_EXPORTS void Convolution22(const Mat &srcImage, const Mat &kernel, Mat &dstImage); // é€šè¿‡æŸ¥æ‰¾è¡¨ä¼˜åŒ–Convolution2
 
 
 

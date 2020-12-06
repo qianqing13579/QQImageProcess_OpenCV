@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// ֱ��ͼ
+// 直方图
 // 2014-12-1,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -17,13 +17,13 @@ using namespace cv;
 
 namespace QQ
 {
-//ֱ��ͼ
+//直方图
 DLL_EXPORTS void GetHistogram(const Mat &image, int *histogram);
 DLL_EXPORTS void GetMedianValue(const Mat &image, int &medianValue);
 DLL_EXPORTS void GetMedianValue_AndPixelCountLowerMedian(const Mat &image, int &medianValue, int &pixelCountLowerMedian);
 DLL_EXPORTS void GetMaxMinValue(const Mat &image, int &maxValue, int &minValue);
 
-//��ֱ��ͼ
+//画直方图
 DLL_EXPORTS void DrawHistogram(const Mat &histogram,Mat &image_Historam);
 
 

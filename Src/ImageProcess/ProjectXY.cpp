@@ -7,15 +7,15 @@ using namespace std;
 namespace QQ
 {
 
-#define RESULT	"D:/Image/Projects/WuHu/Result/"
+#define RESULT	"D:/Image/Result/"
 
 //2015-3-4 16:36:18,by QQ
-//´¹Ö±Í¶Ó°(ÏòXÖá·½ÏòÍ¶Ó°)
-//height_ProjectYImage:´¹Ö±Í¶Ó°Í¼µÄ¸ß¶È
+//å‚ç›´æŠ•å½±(å‘Xè½´æ–¹å‘æŠ•å½±)
+//height_ProjectYImage:å‚ç›´æŠ•å½±å›¾çš„é«˜åº¦
 void ProjectX(const Mat &srcImage,int height_ProjectXImage)
 {
 
-	////////////////////////³õÊ¼»¯Y·½ÏòÍ¶Ó°Êı×é//////////////////////////////////////////////////
+	////////////////////////åˆå§‹åŒ–Yæ–¹å‘æŠ•å½±æ•°ç»„//////////////////////////////////////////////////
 	int width_Src=srcImage.cols;
 	int height_Src=srcImage.rows;
 
@@ -24,31 +24,31 @@ void ProjectX(const Mat &srcImage,int height_ProjectXImage)
 
 	double time1=getTickCount();
 #ifndef INTEGRALIMAGE
-	/////////////////////////Í¶Ó°,±éÀúÍ¼ÏñµÄ·½Ê½(±È»ı·ÖÍ¼·½Ê½Ğ§ÂÊ¸ß)/////////////////////////////////////////////////
+	/////////////////////////æŠ•å½±,éå†å›¾åƒçš„æ–¹å¼(æ¯”ç§¯åˆ†å›¾æ–¹å¼æ•ˆç‡é«˜)/////////////////////////////////////////////////
 	int widthStep=width_Src*srcImage.channels();
-	//µÚÒ»ĞĞ
+	//ç¬¬ä¸€è¡Œ
 	uchar *row=srcImage.data;
 	for (int y=0;y<=height_Src-1;++y)
 	{
-		//ÁĞ
+		//åˆ—
 		uchar *col=row;
 		for (int x=0;x<=width_Src-1;++x)
 		{
-			//ÁĞ
-			//Í³¼ÆÍ¶Ó°Êı×é
+			//åˆ—
+			//ç»Ÿè®¡æŠ•å½±æ•°ç»„
 			projectY[x]+=col[0];
 
-			//ÏÂÒ»¸öÏñËØ
+			//ä¸‹ä¸€ä¸ªåƒç´ 
 			col++;
 
 		}
-		//ÏÂÒ»ĞĞ
+		//ä¸‹ä¸€è¡Œ
 		row+=widthStep;
 
 	}
 
 #else
-	////////////////////////Í¶Ó°,Ê¹ÓÃ»ı·ÖÍ¼//////////////////////////////////////////////////
+	////////////////////////æŠ•å½±,ä½¿ç”¨ç§¯åˆ†å›¾//////////////////////////////////////////////////
 	Mat image_Sum;
 	CalculateIntegralImage(srcImage,image_Sum);
 	for (int x=0;x<=width_Src-1;++x)
@@ -65,29 +65,29 @@ void ProjectX(const Mat &srcImage,int height_ProjectXImage)
 #endif
 	double time2=getTickCount();
 	
-	//¼ÆËãÊ±¼äº¯Êı£¬±Èclock()¸ü¼Ó×¼È·
-	double executeTime_ms=(time2-time1)*1000./getTickFrequency();//µ¥Î»ºÁÃë
+	//è®¡ç®—æ—¶é—´å‡½æ•°ï¼Œæ¯”clock()æ›´åŠ å‡†ç¡®
+	double executeTime_ms=(time2-time1)*1000./getTickFrequency();//å•ä½æ¯«ç§’
 	cout<<"time:"<<executeTime_ms<<endl;
 
 
-	////////////////////////»­´¹Ö±·½ÏòÍ¶Ó°Í¼//////////////////////////////////////////////////
+	////////////////////////ç”»å‚ç›´æ–¹å‘æŠ•å½±å›¾//////////////////////////////////////////////////
 	Mat image_ProjectY;
 	DrawProjectYImage(image_ProjectY,height_ProjectXImage,projectY,width_Src);
 	
 	
-	////////////////////////Æ´½Ó²¢±£´æ//////////////////////////////////////////////////
+	////////////////////////æ‹¼æ¥å¹¶ä¿å­˜//////////////////////////////////////////////////
 	Mat image_Connect;
 	ConnectTwoImage_UpDown(srcImage,image_ProjectY,image_Connect);
 	imwrite(string(RESULT)+"ProjectY.bmp",image_Connect);
 }
 
 //2015-3-4 16:27:21,by QQ
-//Ë®Æ½Í¶Ó°(°´ĞĞÏòYÖá·½ÏòÍ¶Ó°)
-//width_ProjectXImage:Í¶Ó°Í¼µÄ¿í¶È
+//æ°´å¹³æŠ•å½±(æŒ‰è¡Œå‘Yè½´æ–¹å‘æŠ•å½±)
+//width_ProjectXImage:æŠ•å½±å›¾çš„å®½åº¦
 void ProjectY(const Mat &srcImage,int width_ProjectYImage)
 {
 
-	/////////////////////////³õÊ¼»¯X·½ÏòÍ¶Ó°Êı×é/////////////////////////////////////////////////
+	/////////////////////////åˆå§‹åŒ–Xæ–¹å‘æŠ•å½±æ•°ç»„/////////////////////////////////////////////////
 	int width_Src=srcImage.cols;
 	int height_Src=srcImage.rows;
 	int *projectX=new int[height_Src];
@@ -96,29 +96,29 @@ void ProjectY(const Mat &srcImage,int width_ProjectYImage)
 	double time1=getTickCount();
 
 #ifndef INTEGRALIMAGE
-	/////////////////////////Í¶Ó°,±éÀúÍ¼ÏñµÄ·½Ê½/////////////////////////////////////////////////
+	/////////////////////////æŠ•å½±,éå†å›¾åƒçš„æ–¹å¼/////////////////////////////////////////////////
 	int widthStep=width_Src*srcImage.channels();
 
-	//µÚÒ»ĞĞ
+	//ç¬¬ä¸€è¡Œ
 	uchar *row=srcImage.data;
 	for (int y=0;y<=height_Src-1;++y)
 	{
-		//ÁĞ
+		//åˆ—
 		uchar *col=row;
 		for (int x=0;x<=width_Src-1;++x)
 		{
-			//Í³¼ÆÍ¶Ó°Êı×é
+			//ç»Ÿè®¡æŠ•å½±æ•°ç»„
 			projectX[y]+=col[0];
 
-			//ÏÂÒ»¸öÏñËØ
+			//ä¸‹ä¸€ä¸ªåƒç´ 
 			col++;
 		}
-		//ÏÂÒ»ĞĞ
+		//ä¸‹ä¸€è¡Œ
 		row+=widthStep;
 	}
 #else
 
-	/////////////////////Í¶Ó°,Ê¹ÓÃ»ı·ÖÍ¼/////////////////////////////////////////////////////
+	/////////////////////æŠ•å½±,ä½¿ç”¨ç§¯åˆ†å›¾/////////////////////////////////////////////////////
 	Mat image_Sum(srcImage.size(),CV_32SC1,Scalar(0));
 	CalculateIntegralImage(srcImage,image_Sum);
 	for (int y=0;y<=height_Src-1;++y)
@@ -134,134 +134,134 @@ void ProjectY(const Mat &srcImage,int width_ProjectYImage)
 	}
 #endif
 	double time2=getTickCount();
-	double executeTime_ms=(time2-time1)*1000./getTickFrequency();//µ¥Î»ºÁÃë
+	double executeTime_ms=(time2-time1)*1000./getTickFrequency();//å•ä½æ¯«ç§’
 	cout<<"time:"<<executeTime_ms<<endl;
 
 
-	////////////////////////»­Í¶Ó°Í¼//////////////////////////////////////////////////
+	////////////////////////ç”»æŠ•å½±å›¾//////////////////////////////////////////////////
 	Mat image_ProjectX;
 	DrawProjectXImage(image_ProjectX,width_ProjectYImage,projectX,height_Src);
 
 
-	////////////////////////Æ´½Ó²¢±£´æ//////////////////////////////////////////////
+	////////////////////////æ‹¼æ¥å¹¶ä¿å­˜//////////////////////////////////////////////
 	Mat image_Connect;
 	ConnectTwoImage_LeftRight(srcImage,image_ProjectX,image_Connect);
 	imwrite(string(RESULT)+"ProjectX.bmp",image_Connect);
 
 }
 //2015-3-4 17:46:55,by QQ
-//»­´¹Ö±Í¶Ó°Í¼
-//height_ProjectYImage:´¹Ö±Í¶Ó°Í¼¸ß¶È
+//ç”»å‚ç›´æŠ•å½±å›¾
+//height_ProjectYImage:å‚ç›´æŠ•å½±å›¾é«˜åº¦
 void DrawProjectXImage(Mat &image_ProjectX,int height_ProjectXImage,int *projectX,int projectXSize)
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst=projectXSize;
 	int height_Dst=height_ProjectXImage;
-	image_ProjectX.create(Size(width_Dst,height_Dst),CV_8UC1);//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_ProjectX.create(Size(width_Dst,height_Dst),CV_8UC1);//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 	image_ProjectX.setTo(Scalar(0));
 	
 
-	/////////////////////////////step 2.´´½¨Í¶Ó°Êı×éMat/////////////////////////////////////////////
+	/////////////////////////////step 2.åˆ›å»ºæŠ•å½±æ•°ç»„Mat/////////////////////////////////////////////
 	Mat mat_ProjectY(1,projectXSize,CV_32SC1,Scalar(0));
 	
-	//½«Í¶Ó°Êı×éprojectY¸³Öµ¸ømat_ProjectY
+	//å°†æŠ•å½±æ•°ç»„projectYèµ‹å€¼ç»™mat_ProjectY
 	int *data=(int*)mat_ProjectY.data;
 	for (int i=0;i<=projectXSize-1;++i)
 	{
 		data[0]=projectX[i];
 		
-		//ÏÂÒ»¸öÔªËØ
+		//ä¸‹ä¸€ä¸ªå…ƒç´ 
 		data++;
 	}
 
 
-	///////////////////////////////step 2.¹éÒ»»¯///////////////////////////////////////////
+	///////////////////////////////step 2.å½’ä¸€åŒ–///////////////////////////////////////////
 	normalize(mat_ProjectY,mat_ProjectY,0,height_ProjectXImage,NORM_MINMAX,-1);//
 
 
-	//////////////////////////step 3.¿ªÊ¼»­Í¼////////////////////////////////////////////////
-	int channelCount=image_ProjectX.step1(1);//Ã¿¸öÔªËØÍ¨µÀÊı£¬ÒÆ¶¯ÁĞÖ¸Õë
-	int widthStep=image_ProjectX.step1(0);//Ã¿ĞĞÍ¨µÀÊı£¬ÒÆ¶¯ĞĞÖ¸Õë
+	//////////////////////////step 3.å¼€å§‹ç”»å›¾////////////////////////////////////////////////
+	int channelCount=image_ProjectX.step1(1);//æ¯ä¸ªå…ƒç´ é€šé“æ•°ï¼Œç§»åŠ¨åˆ—æŒ‡é’ˆ
+	int widthStep=image_ProjectX.step1(0);//æ¯è¡Œé€šé“æ•°ï¼Œç§»åŠ¨è¡ŒæŒ‡é’ˆ
 	
-	//×îºóÒ»ĞĞ
+	//æœ€åä¸€è¡Œ
 	uchar *row_Project=image_ProjectX.data+(image_ProjectX.rows-1)*widthStep;
 	
-	//Í¶Ó°Êı×éµÚÒ»¸öÔªËØ
+	//æŠ•å½±æ•°ç»„ç¬¬ä¸€ä¸ªå…ƒç´ 
 	int *row_MatProject=(int *)mat_ProjectY.data;
 	for(int y=height_Dst-1;y>=0;--y)
 	{
-		//ÁĞ
+		//åˆ—
 		uchar *col_Project=row_Project;
 		int *col_MatProject=row_MatProject;
 		for (int x=0;x<=width_Dst-1;++x)
 		{
 			
-			//Ã»ÓĞ°×É«ÏñËØµã,Ö±½ÓÌø¹ı
+			//æ²¡æœ‰ç™½è‰²åƒç´ ç‚¹,ç›´æ¥è·³è¿‡
 			if (col_MatProject[x]!=0)
 			{
-				//Èç¹ûÍ¶Ó°Êı×é²»ÎªÁã£¬¾Í»­µã
+				//å¦‚æœæŠ•å½±æ•°ç»„ä¸ä¸ºé›¶ï¼Œå°±ç”»ç‚¹
 				col_Project[0]=255;
 				col_MatProject[x]--;
 			}
-			//ÏÂÒ»¸öÏñËØ
+			//ä¸‹ä¸€ä¸ªåƒç´ 
 			col_Project++;
 
 		}
-		//ÉÏÒ»ĞĞ
+		//ä¸Šä¸€è¡Œ
 		row_Project-=widthStep;
 
 	}
 	
 }
 //2015-3-4 17:47:06,by QQ
-//»­Ë®Æ½Í¶Ó°Í¼
+//ç”»æ°´å¹³æŠ•å½±å›¾
 //
 void DrawProjectYImage(Mat &image_ProjectY,int width_ProjectYImage,int *projectY,int projectYSize)
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst = width_ProjectYImage;
 	int height_Dst = projectYSize;
-	image_ProjectY.create(Size(width_Dst, height_Dst), CV_8UC1);//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_ProjectY.create(Size(width_Dst, height_Dst), CV_8UC1);//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 
-	// OpenCV4.0Ö®ºó²»Ö§³ÖIplImage
+	// OpenCV4.0ä¹‹åä¸æ”¯æŒIplImage
 	// IplImage iplImage = image_ProjectY;
 	// cvSetZero(&iplImage);
 
 
-	/////////////////////////////step 2.´´½¨Í¶Ó°Êı×éMat/////////////////////////////////////////////
+	/////////////////////////////step 2.åˆ›å»ºæŠ•å½±æ•°ç»„Mat/////////////////////////////////////////////
 	//Mat mat_ProjectX(projectXSize,1,CV_32SC1,Scalar(0));
 	Mat mat_ProjectX(1, projectYSize, CV_32SC1, Scalar(0));
 
-	//½«Í¶Ó°Êı×éprojectX¸³Öµ¸ømat_ProjectX
+	//å°†æŠ•å½±æ•°ç»„projectXèµ‹å€¼ç»™mat_ProjectX
 	int *data=(int*)mat_ProjectX.data;
 	for (int i = 0; i <= projectYSize - 1; ++i)
 	{
 		data[i] = projectY[i];
 	}
 
-	///////////////////////////////step 2.¹éÒ»»¯///////////////////////////////////////////
+	///////////////////////////////step 2.å½’ä¸€åŒ–///////////////////////////////////////////
 	normalize(mat_ProjectX, mat_ProjectX, 0, width_ProjectYImage, 32, -1);//
 
-	//////////////////////////step 3.¿ªÊ¼»­Í¼////////////////////////////////////////////////
-	//Ã¿¸öÔªËØÍ¨µÀÊı£¬ÒÆ¶¯ÁĞÖ¸Õë
+	//////////////////////////step 3.å¼€å§‹ç”»å›¾////////////////////////////////////////////////
+	//æ¯ä¸ªå…ƒç´ é€šé“æ•°ï¼Œç§»åŠ¨åˆ—æŒ‡é’ˆ
 	int channelCount = image_ProjectY.channels();
 	
-	//Ã¿ĞĞÍ¨µÀÊı£¬ÒÆ¶¯ĞĞÖ¸Õë
+	//æ¯è¡Œé€šé“æ•°ï¼Œç§»åŠ¨è¡ŒæŒ‡é’ˆ
 	int widthStep=channelCount*width_Dst;
 	
-	//µÚÒ»ĞĞ
+	//ç¬¬ä¸€è¡Œ
 	uchar *row_Project = image_ProjectY.data;
 	int *data_MatProjectY=(int *)mat_ProjectX.data;
 	
-	//°´ĞĞ±éÀú
+	//æŒ‰è¡Œéå†
 	for(int y=0;y<=height_Dst-1;++y)
 	{
-		//Èç¹û¸ÃĞĞÎª0£¬Ö±½ÓÏÂÒ»ĞĞ
+		//å¦‚æœè¯¥è¡Œä¸º0ï¼Œç›´æ¥ä¸‹ä¸€è¡Œ
 		if (data_MatProjectY[y]!=0)
 		{
-			//×îºóÒ»ÁĞ
+			//æœ€åä¸€åˆ—
 			uchar *col_ProjectY=row_Project+widthStep-1;
 			for (int x=width_Dst-1;x>=0;--x)
 			{
@@ -269,14 +269,14 @@ void DrawProjectYImage(Mat &image_ProjectY,int width_ProjectYImage,int *projectY
 				{
 					col_ProjectY[0]=255;
 					data_MatProjectY[y]--;
-					//ÏÂÒ»¸öÏñËØ
+					//ä¸‹ä¸€ä¸ªåƒç´ 
 					col_ProjectY--;
 				}
 				else
 					break;
 			}
 		}
-		//ÏÂÒ»ĞĞ
+		//ä¸‹ä¸€è¡Œ
 		row_Project+=widthStep;
 	}
 	
@@ -284,150 +284,150 @@ void DrawProjectYImage(Mat &image_ProjectY,int width_ProjectYImage,int *projectY
 }
 
 
-//½«Á½·ù¿í¶ÈÏàÍ¬µÄÍ¼Æ¬£¬ÉÏÏÂÆ´½Ó
-//Ë³Ğò±éÀú
+//å°†ä¸¤å¹…å®½åº¦ç›¸åŒçš„å›¾ç‰‡ï¼Œä¸Šä¸‹æ‹¼æ¥
+//é¡ºåºéå†
 void ConnectTwoImage_UpDown(const Mat &srcImage1,const Mat &srcImage2,Mat &image_Dst)
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst=srcImage1.cols;
 	int height_Dst=srcImage1.rows+srcImage2.rows;
-	image_Dst.create(Size(width_Dst,height_Dst),srcImage1.type());//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_Dst.create(Size(width_Dst,height_Dst),srcImage1.type());//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 
 
-	//////////////////////////////step 2.¿½±´Í¼Ïñ1////////////////////////////////////////////
-	//²ÎÊı
-	//ÏñËØµã¸öÊı
+	//////////////////////////////step 2.æ‹·è´å›¾åƒ1////////////////////////////////////////////
+	//å‚æ•°
+	//åƒç´ ç‚¹ä¸ªæ•°
 	int pixelCount_Src1=srcImage1.rows*srcImage1.cols;
 	
-	//Ã¿¸öÔªËØÍ¨µÀÊı£¬ÒÆ¶¯ÁĞÖ¸Õë
+	//æ¯ä¸ªå…ƒç´ é€šé“æ•°ï¼Œç§»åŠ¨åˆ—æŒ‡é’ˆ
 	int channelCount_Src1=srcImage1.step1(1);
 	int channelCount_Dst=image_Dst.step1(1);
 	
-	//µÚÒ»¸öÏñËØ
+	//ç¬¬ä¸€ä¸ªåƒç´ 
 	uchar *imageData_Src1=srcImage1.data;
 	uchar *imageData_Dst=image_Dst.data;
 	for (int i=0;i<=pixelCount_Src1-1;++i)
 	{
-		//´¦ÀíÃ¿¸öÏñËØµã
+		//å¤„ç†æ¯ä¸ªåƒç´ ç‚¹
 		for (int k=0;k<=channelCount_Src1-1;++k)
 		{
 			imageData_Dst[k]=imageData_Src1[k];
 
 		}
 
-		//ÏÂÒ»¸öÏñËØµã
+		//ä¸‹ä¸€ä¸ªåƒç´ ç‚¹
 		imageData_Src1+=channelCount_Src1;
 		imageData_Dst+=channelCount_Dst;
 	}
 
-	//////////////////////////////step 3.¿½±´Í¼Ïñ2////////////////////////////////////////////
-	//²ÎÊı
-	//ÏñËØµã¸öÊı
+	//////////////////////////////step 3.æ‹·è´å›¾åƒ2////////////////////////////////////////////
+	//å‚æ•°
+	//åƒç´ ç‚¹ä¸ªæ•°
 	int pixelCount_Src2=srcImage2.rows*srcImage2.cols;
 	
-	//Ã¿¸öÔªËØµÄÍ¨µÀÊı£¬ÒÆ¶¯ÁĞÖ¸Õë
+	//æ¯ä¸ªå…ƒç´ çš„é€šé“æ•°ï¼Œç§»åŠ¨åˆ—æŒ‡é’ˆ
 	int channelCount_Src2=srcImage2.step1(1);
 	
-	//µÚÒ»¸öÏñËØ
+	//ç¬¬ä¸€ä¸ªåƒç´ 
 	uchar *imageData_Src2=srcImage2.data;
 	uchar *imageData_Dst2=image_Dst.data+pixelCount_Src1*channelCount_Src1;
 	for (int i=0;i<=pixelCount_Src2-1;++i)
 	{
-		//´¦ÀíÃ¿¸öÏñËØµã
+		//å¤„ç†æ¯ä¸ªåƒç´ ç‚¹
 		for (int k=0;k<=channelCount_Src2-1;++k)
 		{
 			imageData_Dst2[k]=imageData_Src2[k];
 
 		}
 
-		//ÏÂÒ»¸öÏñËØµã
+		//ä¸‹ä¸€ä¸ªåƒç´ ç‚¹
 		imageData_Src2+=channelCount_Src2;
 		imageData_Dst2+=channelCount_Dst;
 	}
 }
-//²»ÄÜË³Ğò±éÀú
-void ConnectTwoImage_LeftRight(const Mat &srcImage1,const Mat &srcImage2,Mat &image_Dst)//ºáÏòÆ´½ÓÁ½·ùÍ¼Ïñ
+//ä¸èƒ½é¡ºåºéå†
+void ConnectTwoImage_LeftRight(const Mat &srcImage1,const Mat &srcImage2,Mat &image_Dst)//æ¨ªå‘æ‹¼æ¥ä¸¤å¹…å›¾åƒ
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst=srcImage1.cols+srcImage2.cols;
 	int height_Dst=srcImage1.rows;
-	image_Dst.create(Size(width_Dst,height_Dst),srcImage1.type());//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_Dst.create(Size(width_Dst,height_Dst),srcImage1.type());//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 	
 
-	/////////////////////////////step 2.¿½±´Í¼Æ¬1/////////////////////////////////////////////
-	//²ÎÊı
-	//Ã¿ĞĞÍ¨µÀÊı£¬ÒÆ¶¯ĞĞÖ¸Õë
+	/////////////////////////////step 2.æ‹·è´å›¾ç‰‡1/////////////////////////////////////////////
+	//å‚æ•°
+	//æ¯è¡Œé€šé“æ•°ï¼Œç§»åŠ¨è¡ŒæŒ‡é’ˆ
 	int widthStep_Src=srcImage1.step1(0);
 	int widthStep_Dst=image_Dst.step1(0);
 	
-	//Ã¿¸öÔªËØÍ¨µÀÊı£¬ÒÆ¶¯ÁĞÖ¸Õë
+	//æ¯ä¸ªå…ƒç´ é€šé“æ•°ï¼Œç§»åŠ¨åˆ—æŒ‡é’ˆ
 	int channelCount_Src=srcImage1.step1(1);
 	int channelCount_Dst=image_Dst.step1(1);
 	
-	//µÚÒ»ĞĞ
+	//ç¬¬ä¸€è¡Œ
 	uchar *row_Src1=srcImage1.data;
 	uchar *row_Dst=image_Dst.data;
 	for (int y=0;y<=srcImage1.rows-1;++y)
 	{
-		//ÁĞ
+		//åˆ—
 		uchar *col_Src1=row_Src1;
 		uchar *col_Dst=row_Dst;
 		for (int x=0;x<=srcImage1.cols-1;++x)
 		{
 			
-			//±éÀúÃ¿¸öÍ¨µÀ
+			//éå†æ¯ä¸ªé€šé“
 			for (int k=0;k<=channelCount_Src-1;++k)
 			{
 				col_Dst[k]=col_Src1[k];
 
 			}
-			//ÏÂÒ»¸öÏñËØ
+			//ä¸‹ä¸€ä¸ªåƒç´ 
 			col_Src1+=channelCount_Src;
 			col_Dst+=channelCount_Dst;
 
 		}
 
-		//ÏÂÒ»ĞĞ
+		//ä¸‹ä¸€è¡Œ
 		row_Src1+=widthStep_Src;
 		row_Dst+=widthStep_Dst;
 	}
 
 
-	/////////////////////////////step 3.¿½±´Í¼Æ¬2/////////////////////////////////////////////
+	/////////////////////////////step 3.æ‹·è´å›¾ç‰‡2/////////////////////////////////////////////
 	
-	//²ÎÊı
-	//Ã¿ĞĞÍ¨µÀÊı£¬ÒÆ¶¯ĞĞÖ¸Õë
+	//å‚æ•°
+	//æ¯è¡Œé€šé“æ•°ï¼Œç§»åŠ¨è¡ŒæŒ‡é’ˆ
 	int widthStep_Src2=srcImage2.step1(0);
 	
-	//Ã¿¸öÔªËØÍ¨µÀÊı£¬ÒÆ¶¯ÁĞÖ¸Õë
+	//æ¯ä¸ªå…ƒç´ é€šé“æ•°ï¼Œç§»åŠ¨åˆ—æŒ‡é’ˆ
 	int channelCount_Src2=srcImage2.step1(1);
 	
-	//µÚÒ»ĞĞ
+	//ç¬¬ä¸€è¡Œ
 	uchar *row_Src2=srcImage2.data;
 	uchar *row_Dst2=image_Dst.data+widthStep_Src;
 	for (int y=0;y<=srcImage2.rows-1;++y)
 	{
-		//ÁĞ
+		//åˆ—
 		uchar *col_Src2=row_Src2;
 		uchar *col_Dst=row_Dst2;
 		for (int x=0;x<=srcImage2.cols-1;++x)
 		{
 
-			//±éÀúÃ¿¸öÍ¨µÀ
+			//éå†æ¯ä¸ªé€šé“
 			for (int k=0;k<=channelCount_Src2-1;++k)
 			{
 				col_Dst[k]=col_Src2[k];
 
 			}
-			//ÏÂÒ»¸öÏñËØ
+			//ä¸‹ä¸€ä¸ªåƒç´ 
 			col_Src2+=channelCount_Src2;
 			col_Dst+=channelCount_Dst;
 
 		}
 
-		//ÏÂÒ»ĞĞ
+		//ä¸‹ä¸€è¡Œ
 		row_Src2+=widthStep_Src2;
 		row_Dst2+=widthStep_Dst;
 	}

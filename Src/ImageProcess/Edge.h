@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////
-// ±ßÔµ¼ì²â
+// è¾¹ç¼˜æ£€æµ‹
 // 2014-12-17,by QQ
 //
 // Please contact me if you find any bugs, or have any suggestions.
@@ -20,24 +20,24 @@ using namespace std;
 namespace QQ
 {
 typedef unsigned char BYTE;
-void SetImageBoundary(Mat &srcImage, int color);//±ß½ç´¦Àí
-void Robert(const Mat &srcImage, Mat &image_Robert);//Ìİ¶ÈÂŞ²®ÌØ
-void Sobel(const Mat &srcImage, Mat &image_Sobel);//Ìİ¶ÈË÷²®
-void ShenJun(const Mat &srcImage, Mat &image_ShenJun);// Éò¿¡Ëã×Ó
+void SetImageBoundary(Mat &srcImage, int color);//è¾¹ç•Œå¤„ç†
+void Robert(const Mat &srcImage, Mat &image_Robert);//æ¢¯åº¦ç½—ä¼¯ç‰¹
+void Sobel(const Mat &srcImage, Mat &image_Sobel);//æ¢¯åº¦ç´¢ä¼¯
+void ShenJun(const Mat &srcImage, Mat &image_ShenJun);// æ²ˆä¿Šç®—å­
 void RmwShenJunEdge(BYTE *pGryImg, BYTE *pTmpImg, int width, int height, double alpha, BYTE *pResImg);
 
-// 1.0°æ
+// 1.0ç‰ˆ
 DLL_EXPORTS void Canny1(const Mat &srcImage, Mat &dstImage, double lowThreshold, double highThreshold, int sizeOfAperture = 3, bool L2 = false);
-// Ê¹ÓÃOpenCVµÄ½Ç¶ÈÅĞ¶Ï
+// ä½¿ç”¨OpenCVçš„è§’åº¦åˆ¤æ–­
 DLL_EXPORTS void Canny2(const Mat &srcImage, Mat &dstImage, double lowThreshold, double highThreshold, int sizeOfAperture = 3, bool L2 = false);
-// 1.0¸Ä½ø°æ£¬¶ÔCanny1·½·¨£¬²Î¿¼OpenCVµÄ·½·¨×ªÎª¾ø¶ÔÖµÇó½â
-// ¾­¹ı²âÊÔ£¬Canny3µÄĞ§¹ûÓëCanny2Ğ§¹û»ù±¾Ò»ÖÂ£¬²ÉÓÃ¾ø¶ÔÖµÇó½â¸üºÃ£¬ÓëÖ±½ÓÊ¹ÓÃcv::cannyĞ§¹ûÒ²»ù±¾Ò»ÖÂ
+// 1.0æ”¹è¿›ç‰ˆï¼Œå¯¹Canny1æ–¹æ³•ï¼Œå‚è€ƒOpenCVçš„æ–¹æ³•è½¬ä¸ºç»å¯¹å€¼æ±‚è§£
+// ç»è¿‡æµ‹è¯•ï¼ŒCanny3çš„æ•ˆæœä¸Canny2æ•ˆæœåŸºæœ¬ä¸€è‡´ï¼Œé‡‡ç”¨ç»å¯¹å€¼æ±‚è§£æ›´å¥½ï¼Œä¸ç›´æ¥ä½¿ç”¨cv::cannyæ•ˆæœä¹ŸåŸºæœ¬ä¸€è‡´
 DLL_EXPORTS void Canny3(const Mat &srcImage, Mat &dstImage, double lowThreshold, double highThreshold, int sizeOfAperture = 3, bool L2 = false);
 
-// Ï¸»¯Ëã·¨
-// µÚÒ»ÖÖÊµÏÖ·½Ê½
+// ç»†åŒ–ç®—æ³•
+// ç¬¬ä¸€ç§å®ç°æ–¹å¼
 DLL_EXPORTS void thin1(const Mat &src, Mat &dst, const int iterations);
-// OpenCV/ximgprocÄ£¿éÊµÏÖ·½Ê½,²âÊÔ±íÃ÷£¬OpenCVµÄÊµÏÖ·½Ê½Ğ§¹û¸üºÃ
+// OpenCV/ximgprocæ¨¡å—å®ç°æ–¹å¼,æµ‹è¯•è¡¨æ˜ï¼ŒOpenCVçš„å®ç°æ–¹å¼æ•ˆæœæ›´å¥½
 DLL_EXPORTS void thin2( Mat &src, Mat &dst);
 
 

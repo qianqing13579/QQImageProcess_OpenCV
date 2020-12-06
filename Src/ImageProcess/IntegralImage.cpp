@@ -7,132 +7,132 @@ namespace QQ
 
 
 //2015-3-4 16:53:57,by QQ
-//¸Ä½øµÄ¼ÆËãÏñËØ»Ò¶ÈÖµ»ı·ÖÍ¼Ïñ
-//srcImage:»Ò¶ÈÍ¼
-//image_Integral£ºsrcImage´óĞ¡ÏàÍ¬µÄCV_32SC1ÀàĞÍ
-//·½·¨£ºIntegral(y,x) = Integral(y-1,x) + rowSum(y);
+//æ”¹è¿›çš„è®¡ç®—åƒç´ ç°åº¦å€¼ç§¯åˆ†å›¾åƒ
+//srcImage:ç°åº¦å›¾
+//image_Integralï¼šsrcImageå¤§å°ç›¸åŒçš„CV_32SC1ç±»å‹
+//æ–¹æ³•ï¼šIntegral(y,x) = Integral(y-1,x) + rowSum(y);
 void CalculateIntegralImage(const Mat &srcImage,Mat &image_Integral)
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst=srcImage.cols;
 	int height_Dst=srcImage.rows;
-	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 	image_Integral.setTo(Scalar(0));
 
-	/////////////////////////////step 2.¼ÆËã»ı·ÖÍ¼/////////////////////////////////////////////
+	/////////////////////////////step 2.è®¡ç®—ç§¯åˆ†å›¾/////////////////////////////////////////////
 	int width_Src=srcImage.cols;
 	int height_Src=srcImage.rows;
 	
-	//Ã¿¸öÏñËØµÄÍ¨µÀÊı
+	//æ¯ä¸ªåƒç´ çš„é€šé“æ•°
 	int channelCount_Src=srcImage.channels();
-	int channelCount_Integral=image_Integral.channels();//Ã¿¸öÏñËØµÄÍ¨µÀÊı
+	int channelCount_Integral=image_Integral.channels();//æ¯ä¸ªåƒç´ çš„é€šé“æ•°
 	
-	//ĞĞµÄÍ¨µÀÊı
+	//è¡Œçš„é€šé“æ•°
 	int widthStep_Src=channelCount_Src*width_Src;
 	int widthStep_Integral=channelCount_Integral*width_Src;
 	
-	//µÚÒ»ĞĞ
+	//ç¬¬ä¸€è¡Œ
 	uchar *row_Src=srcImage.data;
-	int *row_Integral=(int *)image_Integral.data;//×¢ÒâÖ¸ÕëµÄ×ª»»
+	int *row_Integral=(int *)image_Integral.data;//æ³¨æ„æŒ‡é’ˆçš„è½¬æ¢
 	for (int y=0;y<=height_Src-1;++y)
 	{
-		int sum=0;//µ±Ç°ĞĞµÄÀÛ¼ÓºÍ
-		//ÁĞ
+		int sum=0;//å½“å‰è¡Œçš„ç´¯åŠ å’Œ
+		//åˆ—
 		uchar *col_Src=row_Src;
 		int *col_Integral=row_Integral;
 		for (int x=0;x<=width_Src-1;++x)
 		{
-			//¸ÃĞĞµÄÀÛ¼Ó
+			//è¯¥è¡Œçš„ç´¯åŠ 
 			sum+=col_Src[0];
 
-			//¼ÆËãµÚ0ĞĞ,µÚÒ»ĞĞµ¥¶À´¦Àí
+			//è®¡ç®—ç¬¬0è¡Œ,ç¬¬ä¸€è¡Œå•ç‹¬å¤„ç†
 			if (y==0)
 			{
 				col_Integral[0]=sum;
 			}
 			else
 			{
-				//·ÇµÚ0ĞĞ
-				//µ±Ç°ĞĞÀÛ¼ÓºÍ+Í¬ÁĞµÄÉÏÒ»¸öÔªËØµÄÖµ
-				col_Integral[0]=sum+col_Integral[0-widthStep_Integral];//ÏÂ±ê
-				//col_Integral[0]=sum+*(col_Integral-image_Integral.cols);//Ö¸ÕëÒÆ¶¯
+				//éç¬¬0è¡Œ
+				//å½“å‰è¡Œç´¯åŠ å’Œ+åŒåˆ—çš„ä¸Šä¸€ä¸ªå…ƒç´ çš„å€¼
+				col_Integral[0]=sum+col_Integral[0-widthStep_Integral];//ä¸‹æ ‡
+				//col_Integral[0]=sum+*(col_Integral-image_Integral.cols);//æŒ‡é’ˆç§»åŠ¨
 
 			}
 
-			//ÏÂÒ»¸öÏñËØ
+			//ä¸‹ä¸€ä¸ªåƒç´ 
 			col_Src++;
 			col_Integral++;
 
 		}
-		//ÏÂÒ»ĞĞ
+		//ä¸‹ä¸€è¡Œ
 		row_Src+=widthStep_Src;
 		row_Integral+=widthStep_Integral;
 	}
-	//ÁÙÊ±·ÃÎÊÓÃ
+	//ä¸´æ—¶è®¿é—®ç”¨
 	//printf("2:%d\n",image_Integral.at<int>(srcImage.rows-1,srcImage.cols-1));
 	//printf("2:%d\n",*((int *)image_Integral.data+image_Integral.cols*image_Integral.rows*image_Integral.channels()-1));
 
 }
 
 
-//¼ÆËãÏñËØ»Ò¶ÈÖµ»ı·ÖÍ¼Ïñ
-//srcImage:»Ò¶ÈÍ¼
-//image_Integral£ºsrcImage´óĞ¡ÏàÍ¬µÄCV_32SC1ÀàĞÍ
-//·½·¨£ºIntegral(y,x) = Integral(y,x-1) + Integral(y-1,x) - Integral(y-1,x-1) + Image(y,x);
+//è®¡ç®—åƒç´ ç°åº¦å€¼ç§¯åˆ†å›¾åƒ
+//srcImage:ç°åº¦å›¾
+//image_Integralï¼šsrcImageå¤§å°ç›¸åŒçš„CV_32SC1ç±»å‹
+//æ–¹æ³•ï¼šIntegral(y,x) = Integral(y,x-1) + Integral(y-1,x) - Integral(y-1,x-1) + Image(y,x);
 void CalculateIntegralImage_Old(const Mat &srcImage,Mat &image_Integral)
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst=srcImage.cols;
 	int height_Dst=srcImage.rows;
-	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 	
-	// OpenCV4.0Ö®ºó²»Ö§³ÖIplImage
+	// OpenCV4.0ä¹‹åä¸æ”¯æŒIplImage
 	// IplImage iplImage=image_Integral;
 	// cvSetZero(&iplImage);
 
-	/////////////////////////////step 2.¼ÆËã»ı·ÖÍ¼/////////////////////////////////////////////
+	/////////////////////////////step 2.è®¡ç®—ç§¯åˆ†å›¾/////////////////////////////////////////////
 	for (int y=0;y<=srcImage.rows-1;++y)
 	{
 		for (int x=0;x<=srcImage.cols-1;++x)
 		{
-			//µÚ0ĞĞ,µ¥¶À´¦Àí
+			//ç¬¬0è¡Œ,å•ç‹¬å¤„ç†
 			if (y==0)
 			{
-				//¼Ó×ó±ßºÍÏÂ±ß
+				//åŠ å·¦è¾¹å’Œä¸‹è¾¹
 				if (x!=0)
 				{
-					//Ö»ÓĞ×ó±ß
-					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y,x-1);//Ê¹ÓÃ¾ØÕó×ø±êµÄĞÎÊ½£¬·ÃÎÊ¸ü¿ì
+					//åªæœ‰å·¦è¾¹
+					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y,x-1);//ä½¿ç”¨çŸ©é˜µåæ ‡çš„å½¢å¼ï¼Œè®¿é—®æ›´å¿«
 
 				}
-				//¼ÓImage(x,y)
+				//åŠ Image(x,y)
 				image_Integral.at<int>(y,x)+=srcImage.at<uchar>(y,x);
 
 			}
 			else
 			{
-				//µÚ0ÁĞ
+				//ç¬¬0åˆ—
 				if (x==0)
 				{
-					//¼Ó×ó±ßºÍÏÂ±ß
-					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y-1,x);//Ö»ÓĞÏÂ±ß
+					//åŠ å·¦è¾¹å’Œä¸‹è¾¹
+					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y-1,x);//åªæœ‰ä¸‹è¾¹
 
-					//¼ÓImage(x,y)
+					//åŠ Image(x,y)
 					image_Integral.at<int>(y,x)+=srcImage.at<uchar>(y,x);
 				}
 				else
 				{
-					//·ÇµÚ0ĞĞ£¬·ÇµÚ0ÁĞ
-					//¼ÓÖÜ×ó±ßºÍÏÂ±ß
-					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y-1,x);//ÏÂ±ß
-					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y,x-1);//×ó±ß
+					//éç¬¬0è¡Œï¼Œéç¬¬0åˆ—
+					//åŠ å‘¨å·¦è¾¹å’Œä¸‹è¾¹
+					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y-1,x);//ä¸‹è¾¹
+					image_Integral.at<int>(y,x)+=image_Integral.at<int>(y,x-1);//å·¦è¾¹
 
-					//¼õÈ¥ÖØ¸´µÄ£¡
+					//å‡å»é‡å¤çš„ï¼
 					image_Integral.at<int>(y,x)-=image_Integral.at<int>(y-1,x-1);
 
-					//¼ÓImage(x,y)
+					//åŠ Image(x,y)
 					image_Integral.at<int>(y,x)+=srcImage.at<uchar>(y,x);
 
 				}
@@ -146,47 +146,47 @@ void CalculateIntegralImage_Old(const Mat &srcImage,Mat &image_Integral)
 }
 
 
-//¸Ä½øµÄ¼ÆËãÏñËØ»Ò¶ÈÖµ»ı·ÖÍ¼Ïñ
-//srcImage:»Ò¶ÈÍ¼
-//image_Integral£ºsrcImage´óĞ¡ÏàÍ¬µÄCV_32SC1ÀàĞÍ
-//·½·¨£ºIntegral(y,x) = Integral(y-1,x) + rowSum(y);
+//æ”¹è¿›çš„è®¡ç®—åƒç´ ç°åº¦å€¼ç§¯åˆ†å›¾åƒ
+//srcImage:ç°åº¦å›¾
+//image_Integralï¼šsrcImageå¤§å°ç›¸åŒçš„CV_32SC1ç±»å‹
+//æ–¹æ³•ï¼šIntegral(y,x) = Integral(y-1,x) + rowSum(y);
 void CalculateIntegralImage_2(const Mat &srcImage,Mat &image_Integral)
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst=srcImage.cols;
 	int height_Dst=srcImage.rows;
-	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 	
-	// OpenCV4.0Ö®ºó²»Ö§³ÖIplImage
+	// OpenCV4.0ä¹‹åä¸æ”¯æŒIplImage
 	// IplImage iplImage=image_Integral;
 	// cvSetZero(&iplImage);
 
-	/////////////////////////////step 2.¼ÆËã»ı·ÖÍ¼/////////////////////////////////////////////
+	/////////////////////////////step 2.è®¡ç®—ç§¯åˆ†å›¾/////////////////////////////////////////////
 	for (int y=0;y<=srcImage.rows-1;++y)
 	{
-		int sum=0;//µ±Ç°ĞĞµÄÀÛ¼ÓºÍ
+		int sum=0;//å½“å‰è¡Œçš„ç´¯åŠ å’Œ
 		uchar *row_Src=srcImage.data+y*srcImage.step[0];
 		int *row_Integral=(int *)(image_Integral.data+y*image_Integral.step[0]);
 		for (int x=0;x<=srcImage.cols-1;++x)
 		{
-			//ÁĞ
-			uchar *col_Src=row_Src+x*srcImage.channels();//º¯Êıµ÷ÓÃ·Ç³£µÍĞ§
+			//åˆ—
+			uchar *col_Src=row_Src+x*srcImage.channels();//å‡½æ•°è°ƒç”¨éå¸¸ä½æ•ˆ
 			int *col_Integral=row_Integral+x*image_Integral.channels();
-			//¸ÃĞĞµÄÀÛ¼Ó
+			//è¯¥è¡Œçš„ç´¯åŠ 
 			sum+=col_Src[0];
 
-			//¼ÆËãµÚ0ĞĞ,µÚÒ»ĞĞµ¥¶À´¦Àí
+			//è®¡ç®—ç¬¬0è¡Œ,ç¬¬ä¸€è¡Œå•ç‹¬å¤„ç†
 			if (y==0)
 			{
 				col_Integral[0]=sum;
 			}
 			else
 			{
-				//·ÇµÚ0ĞĞ
-				//µ±Ç°ĞĞÀÛ¼ÓºÍ+Í¬ÁĞµÄÉÏÒ»¸öÔªËØµÄÖµ
-				col_Integral[0]=sum+col_Integral[0-image_Integral.cols];//ÏÂ±ê
-				//col_Integral[0]=sum+*(col_Integral-image_Integral.cols);//Ö¸ÕëÒÆ¶¯
+				//éç¬¬0è¡Œ
+				//å½“å‰è¡Œç´¯åŠ å’Œ+åŒåˆ—çš„ä¸Šä¸€ä¸ªå…ƒç´ çš„å€¼
+				col_Integral[0]=sum+col_Integral[0-image_Integral.cols];//ä¸‹æ ‡
+				//col_Integral[0]=sum+*(col_Integral-image_Integral.cols);//æŒ‡é’ˆç§»åŠ¨
 
 			}
 
@@ -197,40 +197,40 @@ void CalculateIntegralImage_2(const Mat &srcImage,Mat &image_Integral)
 }
 
 
-//¸Ä½øµÄ¼ÆËãÏñËØ»Ò¶ÈÖµ»ı·ÖÍ¼Ïñ
-//srcImage:»Ò¶ÈÍ¼
-//image_Integral£ºsrcImage´óĞ¡ÏàÍ¬µÄCV_32SC1ÀàĞÍ
-//·½·¨£ºIntegral(y,x) = Integral(y-1,x) + rowSum(y);
+//æ”¹è¿›çš„è®¡ç®—åƒç´ ç°åº¦å€¼ç§¯åˆ†å›¾åƒ
+//srcImage:ç°åº¦å›¾
+//image_Integralï¼šsrcImageå¤§å°ç›¸åŒçš„CV_32SC1ç±»å‹
+//æ–¹æ³•ï¼šIntegral(y,x) = Integral(y-1,x) + rowSum(y);
 void CalculateIntegralImage_1(const Mat &srcImage,Mat &image_Integral)
 {
-	/////////////////////////////step 1.ÖØĞÂ·ÖÅäÍ¼Ïñ(Èç¹ûĞèÒª)/////////////////////////////////////////////
-	//ĞÂÍ¼ÏñµÄ´óĞ¡
+	/////////////////////////////step 1.é‡æ–°åˆ†é…å›¾åƒ(å¦‚æœéœ€è¦)/////////////////////////////////////////////
+	//æ–°å›¾åƒçš„å¤§å°
 	int width_Dst=srcImage.cols;
 	int height_Dst=srcImage.rows;
-	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//Èç¹ûÖØĞÂ·ÖÅä£¬Ö®Ç°µÄ¿Õ¼ä»áÈÓµô
+	image_Integral.create(Size(width_Dst,height_Dst),CV_32SC1);//å¦‚æœé‡æ–°åˆ†é…ï¼Œä¹‹å‰çš„ç©ºé—´ä¼šæ‰”æ‰
 	
-	// OpenCV4.0Ö®ºó²»Ö§³ÖIplImage
+	// OpenCV4.0ä¹‹åä¸æ”¯æŒIplImage
 	// IplImage iplImage=image_Integral;
 	// cvSetZero(&iplImage);
 
-	/////////////////////////////step 2.¼ÆËã»ı·ÖÍ¼/////////////////////////////////////////////
+	/////////////////////////////step 2.è®¡ç®—ç§¯åˆ†å›¾/////////////////////////////////////////////
 	for (int y=0;y<=srcImage.rows-1;++y)
 	{
-		int sum=0;//µ±Ç°ĞĞµÄÀÛ¼ÓºÍ
+		int sum=0;//å½“å‰è¡Œçš„ç´¯åŠ å’Œ
 		for (int x=0;x<=srcImage.cols-1;++x)
 		{
-			//¸ÃĞĞµÄÀÛ¼Ó
+			//è¯¥è¡Œçš„ç´¯åŠ 
 			sum+=srcImage.at<uchar>(y,x);
 
-			//¼ÆËãµÚ0ĞĞ,µÚÒ»ĞĞµ¥¶À´¦Àí
+			//è®¡ç®—ç¬¬0è¡Œ,ç¬¬ä¸€è¡Œå•ç‹¬å¤„ç†
 			if (y==0)
 			{
 				image_Integral.at<int>(y,x)=sum;
 			}
 			else
 			{
-				//·ÇµÚ0ĞĞ
-				//µ±Ç°ĞĞÀÛ¼ÓºÍ+Í¬ÁĞµÄÉÏÒ»¸öÔªËØµÄÖµ
+				//éç¬¬0è¡Œ
+				//å½“å‰è¡Œç´¯åŠ å’Œ+åŒåˆ—çš„ä¸Šä¸€ä¸ªå…ƒç´ çš„å€¼
 				image_Integral.at<int>(y,x)=sum+image_Integral.at<int>(y-1,x);
 			}
 

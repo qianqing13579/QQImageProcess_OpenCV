@@ -11,7 +11,7 @@ namespace QQ
 		CV_Assert(srcImage.type()==CV_8UC3);
 		dstImage.create(srcImage.size(), CV_8UC1);
 
-		// ¹¹½¨²éÕÒ±í
+		// æž„å»ºæŸ¥æ‰¾è¡¨
 		int LUT_R[256],LUT_G[256],LUT_B[256];
 		for (int i = 0; i <= 255; ++i)
 		{
@@ -20,7 +20,7 @@ namespace QQ
 			LUT_B[i] = 0.114*(i << 16);
 		}
 
-		// »Ò¶È»¯
+		// ç°åº¦åŒ–
 		int numberOfPixel = srcImage.rows*srcImage.cols;
 		uchar *dataOfSrc = srcImage.data;
 		uchar *dataOfDst = dstImage.data;
@@ -42,16 +42,16 @@ namespace QQ
 		CV_Assert(srcImage.type() == CV_8UC1);
 		dstImage.create(srcImage.size(), CV_8UC1);
 
-		// ÀàÐÍ×ª»»
+		// ç±»åž‹è½¬æ¢
 		Mat X;
 		srcImage.convertTo(X, CV_32FC1);
 
-		// GammaÐ£Õý
+		// Gammaæ ¡æ­£
 		Mat I;
 		//float gamma = 1 / 2.2;
-		pow(X, gamma, I); // ½øÐÐgammaÐ£Õý
+		pow(X, gamma, I); // è¿›è¡Œgammaæ ¡æ­£
 
-		// ¹éÒ»»¯µ½0~255
+		// å½’ä¸€åŒ–åˆ°0~255
 		cv::normalize(I, dstImage, 0, 255, NORM_MINMAX, CV_8UC1);
 
 	}
@@ -62,11 +62,11 @@ namespace QQ
 		CV_Assert(srcImage.type() == CV_8UC1);
 		dstImage.create(srcImage.size(), srcImage.type());
 
-		// ¼ÆËãÖ±·½Í¼
+		// è®¡ç®—ç›´æ–¹å›¾
 		int histogram[256];
 		GetHistogram(srcImage, histogram);
 
-		// ¼ÆËãÀÛ¼Æ·Ö²¼Ö±·½Í¼(Ò²¾ÍÊÇ±ä»»º¯Êýf(x))
+		// è®¡ç®—ç´¯è®¡åˆ†å¸ƒç›´æ–¹å›¾(ä¹Ÿå°±æ˜¯å˜æ¢å‡½æ•°f(x))
 		int numberOfPixel = srcImage.rows*srcImage.cols;
 		int LUT[256];
 		LUT[0] = 1.0*histogram[0] / numberOfPixel * 255;
@@ -78,7 +78,7 @@ namespace QQ
 			LUT[i] = 1.0*sum / numberOfPixel * 255;
 		}
 
-		// »Ò¶È±ä»»
+		// ç°åº¦å˜æ¢
 		uchar *dataOfSrc = srcImage.data;
 		uchar *dataOfDst = dstImage.data;
 		for (int i = 0; i <= numberOfPixel - 1; ++i)

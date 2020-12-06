@@ -9,7 +9,7 @@
 using namespace std;
 using namespace QQ;
 
-// Í¼ÏñÂ·¾¶
+// å›¾åƒè·¯å¾„
 #define LENA_GRAY		"../../../../Resource/Image/Gray/Lena512.bmp"
 #define LENA_COLOR		"../../../../Resource/Image/Color/Lena800.bmp"
 #define BEAUTY_COLOR	"../../../../Resource/Image/Color/Beauty.bmp"
@@ -38,79 +38,79 @@ void ImageProcessTest::TestConnectImage()
 
 void ImageProcessTest::TestProject()
 {
-	//²âÊÔË®Æ½Í¶Ó°
+	//æµ‹è¯•æ°´å¹³æŠ•å½±
 	//Mat image_Src=imread("D:/Image/Projects/WuHu/Src/2.jpg",-1);
 	
-	//»Ò¶È»¯
+	//ç°åº¦åŒ–
 	Mat image_Gray;
 	//cvtColor(image_Src,image_Gray,COLOR_BGR2GRAY);
 	//ProjectX(image_Gray,100);
 
-	//²âÊÔ´¹Ö±Í¶Ó°
+	//æµ‹è¯•å‚ç›´æŠ•å½±
 	Mat image_Src=imread("D:/Image/Projects/WuHu/Src/Test01.jpg",0);
 	ProjectY(image_Src,80);
 	
 }
 
-//²âÊÔMatºÍIplImage ÊÇ·ñ¶¼ÊÇ4×Ö½Ú¶ÔÆë
-//²âÊÔÍ¼Æ¬,9*7µ¥Í¨µÀ»Ò¶ÈÍ¼
-void ImageProcessTest::TestMat_IplImage4ALigned()//²âÊÔMatÊÇ·ñ4×Ö½Ú¶ÔÆë
+//æµ‹è¯•Matå’ŒIplImage æ˜¯å¦éƒ½æ˜¯4å­—èŠ‚å¯¹é½
+//æµ‹è¯•å›¾ç‰‡,9*7å•é€šé“ç°åº¦å›¾
+void ImageProcessTest::TestMat_IplImage4ALigned()//æµ‹è¯•Matæ˜¯å¦4å­—èŠ‚å¯¹é½
 {
 	
 	// Mat mat=imread(string(GRAY)+"White_Small.bmp",-1);
 	// int widthStep_Mat=mat.step[0];//9
 
-	// OpenCV4.0Ö®ºó²»Ö§³ÖIplImage
+	// OpenCV4.0ä¹‹åä¸æ”¯æŒIplImage
 	// IplImage *iplImage=cvLoadImage((string(GRAY)+"White_Small.bmp").c_str(),-1);
 	// int widthStep_Ipl=iplImage->widthStep;//12
 
 	// int pixelCount=mat.cols*mat.rows;
 	
-	// //´òÓ¡³öMat
+	// //æ‰“å°å‡ºMat
 	// uchar *imageData=mat.data;
 	// printf("Mat\n");
 	// for (int i=0;i<=pixelCount-1;++i)
 	// {
-	// 	printf("%d,",*imageData++);//°¤¸ö´òÓ¡³öÀ´£¬Ã»ÓĞÌî³äµÄÊı¾İ
+	// 	printf("%d,",*imageData++);//æŒ¨ä¸ªæ‰“å°å‡ºæ¥ï¼Œæ²¡æœ‰å¡«å……çš„æ•°æ®
 	// }
 	// printf("\n\n");
 	
-	// //´òÓ¡³öIplImage
+	// //æ‰“å°å‡ºIplImage
 	// uchar *imageData_Ipl=(uchar *)iplImage->imageData;
 	// printf("IplImage\n");
 	// for (int i=0;i<=pixelCount-1;++i)
 	// {
-	// 	printf("%d,",*imageData_Ipl++);//°¤¸ö´òÓ¡³öÀ´£¬Ìî³äµÄÊı¾İ
+	// 	printf("%d,",*imageData_Ipl++);//æŒ¨ä¸ªæ‰“å°å‡ºæ¥ï¼Œå¡«å……çš„æ•°æ®
 	// }
 	// printf("\n\n");
 	
-	// ////////////////////////////IplImage×ªÎªMat//////////////////////////////////////////////
+	// ////////////////////////////IplImageè½¬ä¸ºMat//////////////////////////////////////////////
 	
-	// //½«4×Ö½Ú¶ÔÆëµÄIplImage×ª»¯ÎªMat
+	// //å°†4å­—èŠ‚å¯¹é½çš„IplImageè½¬åŒ–ä¸ºMat
 	// Mat ipl2Mat_True = cvarrToMat(iplImage, true);
 	// int withStep3=ipl2Mat_True.step[0];//9
 	// uchar *imageData2=ipl2Mat_True.data;
 	// printf("Mat ipl2Mat_True(iplImage,true)\n");
 	// for (int i=0;i<=pixelCount-1;++i)
 	// {
-	// 	printf("%d,",*imageData2++);//°¤¸ö´òÓ¡³öÀ´£¬Ìî³äµÄÊı¾İ
+	// 	printf("%d,",*imageData2++);//æŒ¨ä¸ªæ‰“å°å‡ºæ¥ï¼Œå¡«å……çš„æ•°æ®
 	// }
 	// printf("\n\n");
 
 	
-	// //½«4×Ö½Ú¶ÔÆëµÄIplImage×ª»¯ÎªMat
+	// //å°†4å­—èŠ‚å¯¹é½çš„IplImageè½¬åŒ–ä¸ºMat
 	// Mat ipl2Mat_false=cvarrToMat(iplImage, false);
 	// int withStep4=ipl2Mat_false.step[0];//12
 	// uchar *imageData3=ipl2Mat_false.data;
 	// printf("Mat ipl2Mat_false(iplImage,false)\n");
 	// for (int i=0;i<=pixelCount-1;++i)
 	// {
-	// 	printf("%d,",*imageData3++);//°¤¸ö´òÓ¡³öÀ´£¬Ìî³äµÄÊı¾İ
+	// 	printf("%d,",*imageData3++);//æŒ¨ä¸ªæ‰“å°å‡ºæ¥ï¼Œå¡«å……çš„æ•°æ®
 	// }
 
 }
 
-//²âÊÔËã·¨Ö´ĞĞÆ½¾ùÊ±¼ä
+//æµ‹è¯•ç®—æ³•æ‰§è¡Œå¹³å‡æ—¶é—´
 void ImageProcessTest::TestMeanTime()
 {
 	double sum=0;
@@ -139,39 +139,39 @@ void ImageProcessTest::TestDrawHist()
 {
 	Mat image=imread(string(LENA_GRAY),-1);
 
-	//ÇóÖ±·½Í¼
+	//æ±‚ç›´æ–¹å›¾
 	Mat histogram;
-	int histSize=256;//»Ò¶ÈµÈ¼¶
+	int histSize=256;//ç°åº¦ç­‰çº§
 	calcHist(&image, 
-		1,//MatµÄ¸öÊı
-		0,//ÓÃÀ´¼ÆËãÖ±·½Í¼µÄÍ¨µÀË÷Òı£¬Í¨µÀË÷ÒıÒÀ´ÎÅÅ¿ª
-		Mat(),//maskÕâÀï±íÊ¾²»ÓÃmask,
-		histogram, //Ö±·½Í¼
-		1, //Ö±·½Í¼µÄÎ¬Êı£¬Èç¹û¼ÆËã2¸öÖ±·½Í¼£¬¾ÍÎª2
-		&histSize, //Ö±·½Í¼µÄµÈ¼¶Êı(Èç»Ò¶ÈµÈ¼¶),Ò²¾ÍÊÇÃ¿ÁĞµÄĞĞÊı
-		0//·ÖÁ¿µÄ±ä»¯·¶Î§
+		1,//Matçš„ä¸ªæ•°
+		0,//ç”¨æ¥è®¡ç®—ç›´æ–¹å›¾çš„é€šé“ç´¢å¼•ï¼Œé€šé“ç´¢å¼•ä¾æ¬¡æ’å¼€
+		Mat(),//maskè¿™é‡Œè¡¨ç¤ºä¸ç”¨mask,
+		histogram, //ç›´æ–¹å›¾
+		1, //ç›´æ–¹å›¾çš„ç»´æ•°ï¼Œå¦‚æœè®¡ç®—2ä¸ªç›´æ–¹å›¾ï¼Œå°±ä¸º2
+		&histSize, //ç›´æ–¹å›¾çš„ç­‰çº§æ•°(å¦‚ç°åº¦ç­‰çº§),ä¹Ÿå°±æ˜¯æ¯åˆ—çš„è¡Œæ•°
+		0//åˆ†é‡çš„å˜åŒ–èŒƒå›´
 		);
 	
-	//»­Ö±·½Í¼
+	//ç”»ç›´æ–¹å›¾
 	Mat image_Hist(100,256,CV_8UC1);
 	DrawHistogram(histogram,image_Hist);
 	namedWindow("Hist",1);
 	imshow("Hist",image_Hist);
 
-	//Ö±·½Í¼¾ùºâ»¯
+	//ç›´æ–¹å›¾å‡è¡¡åŒ–
 	Mat image_Equalize;
 	equalizeHist(image,image_Equalize);
-	//¼ÆËãÖ±·½Í¼
+	//è®¡ç®—ç›´æ–¹å›¾
 	calcHist(&image_Equalize, 
-		1,//MatµÄ¸öÊı
-		0,//ÓÃÀ´¼ÆËãÖ±·½Í¼µÄÍ¨µÀË÷Òı£¬Í¨µÀË÷ÒıÒÀ´ÎÅÅ¿ª
-		Mat(),//maskÕâÀï±íÊ¾²»ÓÃmask,
-		histogram, //Ö±·½Í¼
-		1, //Ö±·½Í¼µÄÎ¬Êı£¬Èç¹û¼ÆËã2¸öÖ±·½Í¼£¬¾ÍÎª2
-		&histSize, //Ö±·½Í¼µÄµÈ¼¶Êı(Èç»Ò¶ÈµÈ¼¶),Ò²¾ÍÊÇÃ¿ÁĞµÄĞĞÊı
-		0//·ÖÁ¿µÄ±ä»¯·¶Î§
+		1,//Matçš„ä¸ªæ•°
+		0,//ç”¨æ¥è®¡ç®—ç›´æ–¹å›¾çš„é€šé“ç´¢å¼•ï¼Œé€šé“ç´¢å¼•ä¾æ¬¡æ’å¼€
+		Mat(),//maskè¿™é‡Œè¡¨ç¤ºä¸ç”¨mask,
+		histogram, //ç›´æ–¹å›¾
+		1, //ç›´æ–¹å›¾çš„ç»´æ•°ï¼Œå¦‚æœè®¡ç®—2ä¸ªç›´æ–¹å›¾ï¼Œå°±ä¸º2
+		&histSize, //ç›´æ–¹å›¾çš„ç­‰çº§æ•°(å¦‚ç°åº¦ç­‰çº§),ä¹Ÿå°±æ˜¯æ¯åˆ—çš„è¡Œæ•°
+		0//åˆ†é‡çš„å˜åŒ–èŒƒå›´
 		);
-	//»­Ö±·½Í¼
+	//ç”»ç›´æ–¹å›¾
 	Mat histogramImage(100,256,CV_8UC1);
 	DrawHistogram(histogram,histogramImage);
 	namedWindow("EqualizeHist",1);
@@ -180,36 +180,36 @@ void ImageProcessTest::TestDrawHist()
 	waitKey(0);
 
 }
-void ImageProcessTest::TestImageMedianMinMax()//²âÊÔÍ¼ÏñµÄÁÁ¶ÈÖĞÖµ£¬×î´óÖµ£¬×îĞ¡Öµ	
+void ImageProcessTest::TestImageMedianMinMax()//æµ‹è¯•å›¾åƒçš„äº®åº¦ä¸­å€¼ï¼Œæœ€å¤§å€¼ï¼Œæœ€å°å€¼	
 {
 	Mat image=imread(string(LENA_GRAY),-1);
 
-	//ÇóÖ±·½Í¼
+	//æ±‚ç›´æ–¹å›¾
 	Mat histogram;
-	int histSize=256;//»Ò¶ÈµÈ¼¶
+	int histSize=256;//ç°åº¦ç­‰çº§
 	calcHist(&image, 
-		1,//MatµÄ¸öÊı
-		0,//ÓÃÀ´¼ÆËãÖ±·½Í¼µÄÍ¨µÀË÷Òı£¬Í¨µÀË÷ÒıÒÀ´ÎÅÅ¿ª
-		Mat(),//maskÕâÀï±íÊ¾²»ÓÃmask,
-		histogram, //Ö±·½Í¼
-		1, //Ö±·½Í¼µÄÎ¬Êı£¬Èç¹û¼ÆËã2¸öÖ±·½Í¼£¬¾ÍÎª2
-		&histSize, //Ö±·½Í¼µÄµÈ¼¶Êı(Èç»Ò¶ÈµÈ¼¶),Ò²¾ÍÊÇÃ¿ÁĞµÄĞĞÊı
-		0//·ÖÁ¿µÄ±ä»¯·¶Î§
+		1,//Matçš„ä¸ªæ•°
+		0,//ç”¨æ¥è®¡ç®—ç›´æ–¹å›¾çš„é€šé“ç´¢å¼•ï¼Œé€šé“ç´¢å¼•ä¾æ¬¡æ’å¼€
+		Mat(),//maskè¿™é‡Œè¡¨ç¤ºä¸ç”¨mask,
+		histogram, //ç›´æ–¹å›¾
+		1, //ç›´æ–¹å›¾çš„ç»´æ•°ï¼Œå¦‚æœè®¡ç®—2ä¸ªç›´æ–¹å›¾ï¼Œå°±ä¸º2
+		&histSize, //ç›´æ–¹å›¾çš„ç­‰çº§æ•°(å¦‚ç°åº¦ç­‰çº§),ä¹Ÿå°±æ˜¯æ¯åˆ—çš„è¡Œæ•°
+		0//åˆ†é‡çš„å˜åŒ–èŒƒå›´
 		);
-	//¼ÆËãÁÁ¶ÈÖĞÖµ
+	//è®¡ç®—äº®åº¦ä¸­å€¼
 	int medianValue=0;
 	//CalcImageMedianGray(histogram,image.cols*image.rows,medianValue);
 
-	//¼ÆËãÁÁ¶È×î´óÖµºÍ×îĞ¡Öµ
+	//è®¡ç®—äº®åº¦æœ€å¤§å€¼å’Œæœ€å°å€¼
 	int maxValue,minValue;
 	//CalcImageMaxMinGray(histogram,maxValue,minValue);
 
 	//printf("Median:%d\nMin:%d\nMax:%d\n",medianValue,minValue,maxValue);
 }
 
-void ImageProcessTest::TestSmooth()//²âÊÔ×Ô¼ºµÄÂË²¨Æ÷
+void ImageProcessTest::TestSmooth()//æµ‹è¯•è‡ªå·±çš„æ»¤æ³¢å™¨
 {
-	//²âÊÔ¾ùÖµÂË²¨
+	//æµ‹è¯•å‡å€¼æ»¤æ³¢
 	Mat image_Src=imread(string(BEAUTY_GRAY),-1);
 	Mat image_Blur;
 	clock_t t1;
@@ -239,7 +239,7 @@ void ImageProcessTest::TestSmooth()//²âÊÔ×Ô¼ºµÄÂË²¨Æ÷
 	printf("OpenCV blur time:%d ms\n",sum>>4);
 	imwrite(string(RESULT)+"meanBlur_OpenCV.bmp",image_Blur_OpenCV);
 
-	//²âÊÔÖĞÖµÂË²¨
+	//æµ‹è¯•ä¸­å€¼æ»¤æ³¢
 	sum=0;
 	for (int i=1;i<=2;i++)
 	{
@@ -270,7 +270,7 @@ void ImageProcessTest::TestSmooth()//²âÊÔ×Ô¼ºµÄÂË²¨Æ÷
 void ImageProcessTest::TestConvolution()
 {
 	Mat srcImage = imread(BEAUTY_GRAY, -1);
-	// Èñ»¯
+	// é”åŒ–
 	Mat kernel = (Mat_<float>(3, 3) << -1, -1, -1,
 		-1, 9, -1,
 		-1, -1, -1.);
@@ -281,12 +281,12 @@ void ImageProcessTest::TestConvolution()
 	{
 		time1 = getTickCount();
 
-		// ²âÊÔ»·¾³£ºCore i5-6200U,12G,Release
+		// æµ‹è¯•ç¯å¢ƒï¼šCore i5-6200U,12G,Release
 		//Convolution1(srcImage, kernel, dstImage);// 24
 		Convolution12(srcImage, kernel, dstImage);// 21
 
 		//Convolution2(srcImage, kernel, dstImage);// 17
-		//Convolution22(srcImage, kernel, dstImage);// 13,ÓÅ»¯ºóµÄËã·¨ËÙ¶È½Ï¿ì
+		//Convolution22(srcImage, kernel, dstImage);// 13,ä¼˜åŒ–åçš„ç®—æ³•é€Ÿåº¦è¾ƒå¿«
 
 		time2 = getTickCount();
 		sum += (time2 - time1)*1000.0 / getTickFrequency();
@@ -297,7 +297,7 @@ void ImageProcessTest::TestConvolution()
 	
 }
 
-void ImageProcessTest::TestEdge()//²âÊÔ±ßÔµ¼ì²â
+void ImageProcessTest::TestEdge()//æµ‹è¯•è¾¹ç¼˜æ£€æµ‹
 {
 	Mat image_Src=imread(string(LENA_GRAY),-1);
 	Mat image_Robert;
@@ -317,7 +317,7 @@ void ImageProcessTest::TestEdge()//²âÊÔ±ßÔµ¼ì²â
 	imwrite(string(RESULT)+"Robert.bmp",image_Robert);
 
 	//Sobel
-	//±ÈOpenCV¼ÆËã³öÀ´µÄ½á¹ûÁÁ¶ÈÒª´ó
+	//æ¯”OpenCVè®¡ç®—å‡ºæ¥çš„ç»“æœäº®åº¦è¦å¤§
 	Mat image_Sobel;
 	for (int i=1;i<=16;i++)
 	{
@@ -405,21 +405,21 @@ void ImageProcessTest::TestCanny()
 
 void ImageProcessTest::TestGeometryTransformation()
 {
-	//Ë«ÏßĞÔ²åÖµ
+	//åŒçº¿æ€§æ’å€¼
 	Mat image_Src=imread(string(BEAUTY_COLOR),-1);
 	Mat image_Dst;
 	BilinearInterpolation(image_Src,image_Dst,Size(800,400));
 	imwrite(string(RESULT)+"BilinearInterpolation.bmp",image_Dst);
 
-	//×î½üÁÚ²åÖµ(Í¼Ïñ²úÉú¾â³İ×´±ßÔµ)
+	//æœ€è¿‘é‚»æ’å€¼(å›¾åƒäº§ç”Ÿé”¯é½¿çŠ¶è¾¹ç¼˜)
 	NearestInterpolation(image_Src,image_Dst,Size(800,400));
 	imwrite(string(RESULT)+"NearestInterpolation.bmp",image_Dst);
 	
-	// ´¹Ö±·­×ª
+	// å‚ç›´ç¿»è½¬
 	VerticalFlip(image_Src, image_Dst);
 	imwrite(string(RESULT) + "VerticalFlip.bmp", image_Dst);
 
-	// ²âÊÔË®Æ½·­×ª
+	// æµ‹è¯•æ°´å¹³ç¿»è½¬
 	Mat dst2;
 	HorizontalFlip(image_Src, dst2);
 	imwrite(string(RESULT) + "HorizontalFlip.bmp", dst2);
@@ -437,7 +437,7 @@ void ImageProcessTest::TestThin()
 {
 	Mat srcImage = imread("D:/Image/Gray/thin.bmp", 0);
 	Mat dstImage;
-	QQ::thin1(srcImage, dstImage, 200); // µü´úµÄ´ÎÊı¸ù¾İÄ¿±êµÄ²»Í¬¶ø±ä»¯
+	QQ::thin1(srcImage, dstImage, 200); // è¿­ä»£çš„æ¬¡æ•°æ ¹æ®ç›®æ ‡çš„ä¸åŒè€Œå˜åŒ–
 	//thin2(srcImage, dstImage); 
 	imwrite(string(RESULT) + "Thin.bmp", dstImage);
 
@@ -484,10 +484,10 @@ void ImageProcessTest::TestGradientHist()
 	{
 		time1 = getTickCount();
 
-		// ²âÊÔ»·¾³£ºCore i5-4460,8G,Release,²âÊÔÍ¼Æ¬LENA_GRAY
+		// æµ‹è¯•ç¯å¢ƒï¼šCore i5-4460,8G,Release,æµ‹è¯•å›¾ç‰‡LENA_GRAY
 		ComputeGradient2(srcImage, gradient, gradientAngle, 9, false);// 12.860420 ms
 
-		// µ÷ÓÃHOG
+		// è°ƒç”¨HOG
 		//ComputeGradient_HOG(srcImage, gradient, gradientAngle, 9, false);// 6.196427
 
 		time2 = getTickCount();
@@ -534,14 +534,14 @@ void ImageProcessTest::TestGradientHist()
 
 }
 
-// LBPµÄ²âÊÔ
-#define CELLSIZE_LBP  16  // LBPµÄ´°¿Ú´óĞ¡£¬4,8£¬16
+// LBPçš„æµ‹è¯•
+#define CELLSIZE_LBP  16  // LBPçš„çª—å£å¤§å°ï¼Œ4,8ï¼Œ16
 #define PATH "D:/Image/Texture/Example_02/"
 
-// LBPµÈ¼ÛÄ£Ê½ + SVM
+// LBPç­‰ä»·æ¨¡å¼ + SVM
 void ImageProcessTest::LBP_Uniform_SVM()
 {
-	// ¶ÁÈëÑµÁ·Ñù±¾Â·¾¶ºÍÀà±ğ
+	// è¯»å…¥è®­ç»ƒæ ·æœ¬è·¯å¾„å’Œç±»åˆ«
 	vector<string> fileNameListOfTrainData;
 	vector<int> labelsOfTrainData;
 	string line;
@@ -553,7 +553,7 @@ void ImageProcessTest::LBP_Uniform_SVM()
 			continue;
 
 		++numberOfLine;
-		if (numberOfLine % 2 == 0)//¶Áµ½Ñù±¾Àà±ğ
+		if (numberOfLine % 2 == 0)//è¯»åˆ°æ ·æœ¬ç±»åˆ«
 		{
 			labelsOfTrainData.push_back(atoi(line.c_str()));
 		}
@@ -566,24 +566,24 @@ void ImageProcessTest::LBP_Uniform_SVM()
 	}
 	trainData.close();
 
-	// ¼ÆËãÑù±¾LBPÌØÕ÷ÏòÁ¿¾ØÕóºÍÀà±ğ¾ØÕó
+	// è®¡ç®—æ ·æœ¬LBPç‰¹å¾å‘é‡çŸ©é˜µå’Œç±»åˆ«çŸ©é˜µ
 	LOG_INFO(stdout, "Computing LBP Feature...\n");
 	
-	// Ê×ÏÈ¼ÆËãÌØÕ÷ÏòÁ¿µÄ³¤¶È
+	// é¦–å…ˆè®¡ç®—ç‰¹å¾å‘é‡çš„é•¿åº¦
 	LBP lbp;
-	Mat srcImage = imread(fileNameListOfTrainData[0], 0);// ¶ÁÈë»Ò¶ÈÍ¼
+	Mat srcImage = imread(fileNameListOfTrainData[0], 0);// è¯»å…¥ç°åº¦å›¾
 	Mat featureVector;
 	lbp.ComputeLBPFeatureVector_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
-	int lengthOfFeatureVector = featureVector.size[1]; // size:Ã¿Ò»Î¬ÔªËØµÄ¸öÊı
+	int lengthOfFeatureVector = featureVector.size[1]; // size:æ¯ä¸€ç»´å…ƒç´ çš„ä¸ªæ•°
 	
-	Mat allfeatureVectors(fileNameListOfTrainData.size(), lengthOfFeatureVector, CV_32FC1); // Ñù±¾µÄÌØÕ÷ÏòÁ¿¾ØÕó
+	Mat allfeatureVectors(fileNameListOfTrainData.size(), lengthOfFeatureVector, CV_32FC1); // æ ·æœ¬çš„ç‰¹å¾å‘é‡çŸ©é˜µ
 	Mat classOfSample(fileNameListOfTrainData.size(), 1, CV_32SC1);
 	for (int i = 0; i < fileNameListOfTrainData.size(); ++i)
 	{
-		// ¶ÁÈëÍ¼Æ¬
+		// è¯»å…¥å›¾ç‰‡
 		Mat srcImage = imread(fileNameListOfTrainData[i], -1);
 
-		// ¼ÆËãÑù±¾LBPÌØÕ÷ÏòÁ¿
+		// è®¡ç®—æ ·æœ¬LBPç‰¹å¾å‘é‡
 		lbp.ComputeLBPFeatureVector_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
 
 		for (int j = 0; j <= lengthOfFeatureVector - 1; ++j)
@@ -599,7 +599,7 @@ void ImageProcessTest::LBP_Uniform_SVM()
 	}
 	LOG_INFO(stdout, "Computing LBP Feature done!\n");
 
-	// Ê¹ÓÃSVM·ÖÀàÆ÷ÑµÁ·
+	// ä½¿ç”¨SVMåˆ†ç±»å™¨è®­ç»ƒ
 	LOG_INFO(stdout, "Traing SVM...\n");
 	Ptr<cv::ml::SVM> svm = cv::ml::SVM::create();
 	svm->setType(cv::ml::SVM::C_SVC);
@@ -609,10 +609,10 @@ void ImageProcessTest::LBP_Uniform_SVM()
 	svm->save(string(PATH)+"Classifier.xml");
 	LOG_INFO(stdout, "Traing done!\n");
 
-	// Ê¹ÓÃÑµÁ·ºÃµÄ·ÖÀàÆ÷½øĞĞÊ¶±ğ
+	// ä½¿ç”¨è®­ç»ƒå¥½çš„åˆ†ç±»å™¨è¿›è¡Œè¯†åˆ«
 	LOG_INFO(stdout, "Testing...\n");
 	vector<string> fileNameListOfTestData;
-	ifstream testData(string(PATH) + "TestData.txt", ios::in);// ×¢ÒâÒªÈ¥µô×îºóÒ»ĞĞµÄ»»ĞĞ£¬·ñÔò×îºóÒ»·ùÍ¼Æ¬¶Á³öÀ´¾ÍÊÇ¿ÕµÄ
+	ifstream testData(string(PATH) + "TestData.txt", ios::in);// æ³¨æ„è¦å»æ‰æœ€åä¸€è¡Œçš„æ¢è¡Œï¼Œå¦åˆ™æœ€åä¸€å¹…å›¾ç‰‡è¯»å‡ºæ¥å°±æ˜¯ç©ºçš„
 	while (getline(testData, line))
 	{
 		if (line.empty())
@@ -624,9 +624,9 @@ void ImageProcessTest::LBP_Uniform_SVM()
 	ofstream resultOfPrediction(string(PATH) + "PredictResult.txt", ios::out);
 	for (int i = 0; i < fileNameListOfTestData.size(); ++i)
 	{
-		Mat testImage = imread(fileNameListOfTestData[i], 0);// ¶ÁÈë»Ò¶ÈÍ¼
+		Mat testImage = imread(fileNameListOfTestData[i], 0);// è¯»å…¥ç°åº¦å›¾
 
-		// ¼ÆËãLBPÌØÕ÷ÏòÁ¿
+		// è®¡ç®—LBPç‰¹å¾å‘é‡
 		Mat featureVectorOfTestImage;
 		lbp.ComputeLBPFeatureVector_Uniform(testImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVectorOfTestImage);
 
@@ -642,10 +642,10 @@ void ImageProcessTest::LBP_Uniform_SVM()
 	LOG_INFO(stdout, "Testing done!\n");
 	resultOfPrediction.close();
 }
-// LBPĞı×ª²»±ä£¬µÈ¼ÛÄ£Ê½+SVM
+// LBPæ—‹è½¬ä¸å˜ï¼Œç­‰ä»·æ¨¡å¼+SVM
 void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 {
-	// ¶ÁÈëÑµÁ·Ñù±¾Â·¾¶ºÍÀà±ğ
+	// è¯»å…¥è®­ç»ƒæ ·æœ¬è·¯å¾„å’Œç±»åˆ«
 	vector<string> fileNameListOfTrainData;
 	vector<int> labelsOfTrainData;
 	string line;
@@ -657,7 +657,7 @@ void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 			continue;
 
 		++numberOfLine;
-		if (numberOfLine % 2 == 0)//¶Áµ½Ñù±¾Àà±ğ
+		if (numberOfLine % 2 == 0)//è¯»åˆ°æ ·æœ¬ç±»åˆ«
 		{
 			labelsOfTrainData.push_back(atoi(line.c_str()));
 		}
@@ -670,24 +670,24 @@ void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 	}
 	trainData.close();
 
-	// ¼ÆËãÑù±¾LBPÌØÕ÷ÏòÁ¿¾ØÕóºÍÀà±ğ¾ØÕó
+	// è®¡ç®—æ ·æœ¬LBPç‰¹å¾å‘é‡çŸ©é˜µå’Œç±»åˆ«çŸ©é˜µ
 	LOG_INFO(stdout, "Computing LBP Feature...\n");
 
-	// Ê×ÏÈ¼ÆËãÌØÕ÷ÏòÁ¿µÄ³¤¶È
+	// é¦–å…ˆè®¡ç®—ç‰¹å¾å‘é‡çš„é•¿åº¦
 	LBP lbp;
-	Mat srcImage = imread(fileNameListOfTrainData[0], 0);// ¶ÁÈë»Ò¶ÈÍ¼
+	Mat srcImage = imread(fileNameListOfTrainData[0], 0);// è¯»å…¥ç°åº¦å›¾
 	Mat featureVector;
 	lbp.ComputeLBPFeatureVector_Rotation_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
-	int lengthOfFeatureVector = featureVector.size[1]; // size:Ã¿Ò»Î¬ÔªËØµÄ¸öÊı
+	int lengthOfFeatureVector = featureVector.size[1]; // size:æ¯ä¸€ç»´å…ƒç´ çš„ä¸ªæ•°
 
-	Mat allfeatureVectors(fileNameListOfTrainData.size(), lengthOfFeatureVector, CV_32FC1); // Ñù±¾µÄÌØÕ÷ÏòÁ¿¾ØÕó
+	Mat allfeatureVectors(fileNameListOfTrainData.size(), lengthOfFeatureVector, CV_32FC1); // æ ·æœ¬çš„ç‰¹å¾å‘é‡çŸ©é˜µ
 	Mat classOfSample(fileNameListOfTrainData.size(), 1, CV_32SC1);
 	for (int i = 0; i < fileNameListOfTrainData.size(); ++i)
 	{
-		// ¶ÁÈëÍ¼Æ¬
+		// è¯»å…¥å›¾ç‰‡
 		Mat srcImage = imread(fileNameListOfTrainData[i], -1);
 
-		// ¼ÆËãÑù±¾LBPÌØÕ÷ÏòÁ¿
+		// è®¡ç®—æ ·æœ¬LBPç‰¹å¾å‘é‡
 		lbp.ComputeLBPFeatureVector_Rotation_Uniform(srcImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVector);
 
 		for (int j = 0; j <= lengthOfFeatureVector - 1; ++j)
@@ -703,7 +703,7 @@ void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 	}
 	LOG_INFO(stdout, "Computing LBP Feature done!\n");
 
-	// Ê¹ÓÃSVM·ÖÀàÆ÷ÑµÁ·
+	// ä½¿ç”¨SVMåˆ†ç±»å™¨è®­ç»ƒ
 	LOG_INFO(stdout, "Traing SVM...\n");
 	Ptr<cv::ml::SVM> svm = cv::ml::SVM::create();
 	svm->setType(cv::ml::SVM::C_SVC);
@@ -713,10 +713,10 @@ void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 	svm->save(string(PATH) + "Classifier.xml");
 	LOG_INFO(stdout, "Traing done!\n");
 
-	// Ê¹ÓÃÑµÁ·ºÃµÄ·ÖÀàÆ÷½øĞĞÊ¶±ğ
+	// ä½¿ç”¨è®­ç»ƒå¥½çš„åˆ†ç±»å™¨è¿›è¡Œè¯†åˆ«
 	LOG_INFO(stdout, "Testing...\n");
 	vector<string> fileNameListOfTestData;
-	ifstream testData(string(PATH) + "TestData.txt", ios::in);// ×¢ÒâÒªÈ¥µô×îºóÒ»ĞĞµÄ»»ĞĞ£¬·ñÔò×îºóÒ»·ùÍ¼Æ¬¶Á³öÀ´¾ÍÊÇ¿ÕµÄ
+	ifstream testData(string(PATH) + "TestData.txt", ios::in);// æ³¨æ„è¦å»æ‰æœ€åä¸€è¡Œçš„æ¢è¡Œï¼Œå¦åˆ™æœ€åä¸€å¹…å›¾ç‰‡è¯»å‡ºæ¥å°±æ˜¯ç©ºçš„
 	while (getline(testData, line))
 	{
 		if (line.empty())
@@ -728,9 +728,9 @@ void ImageProcessTest::LBP_Rotation_Uniform_SVM()
 	ofstream resultOfPrediction(string(PATH) + "PredictResult.txt", ios::out);
 	for (int i = 0; i < fileNameListOfTestData.size(); ++i)
 	{
-		Mat testImage = imread(fileNameListOfTestData[i], 0);// ¶ÁÈë»Ò¶ÈÍ¼
+		Mat testImage = imread(fileNameListOfTestData[i], 0);// è¯»å…¥ç°åº¦å›¾
 
-		// ¼ÆËãLBPÌØÕ÷ÏòÁ¿
+		// è®¡ç®—LBPç‰¹å¾å‘é‡
 		Mat featureVectorOfTestImage;
 		lbp.ComputeLBPFeatureVector_Rotation_Uniform(testImage, Size(CELLSIZE_LBP, CELLSIZE_LBP), featureVectorOfTestImage);
 
@@ -751,19 +751,19 @@ void ImageProcessTest::TestLBP()
 	LBP lbp;
 	Mat srcImage = imread(BEAUTY_GRAY, -1);
 
-    // ²âÊÔLBPÍ¼Ïñ
+    // æµ‹è¯•LBPå›¾åƒ
     Mat lbpImage;
     lbp.ComputeLBPImage_Uniform(srcImage,lbpImage);
     imwrite("LBPImage.jpg",lbpImage);
 
-	// ²âÊÔLBPÌØÕ÷ÏòÁ¿
+	// æµ‹è¯•LBPç‰¹å¾å‘é‡
 //    Mat featureVector;
 //	double time1, time2, sum = 0;
 //	for (int i = 0; i < NUM_LOOP; ++i)
 //	{
 //		time1 = getTickCount();
 
-//		// ²âÊÔ»·¾³£ºCore i5-6200U,12G,Release
+//		// æµ‹è¯•ç¯å¢ƒï¼šCore i5-6200U,12G,Release
 //		//lbp.ComputeLBPFeatureVector_256_O_2(srcImage, Size(16, 16), featureVector);// 16.706699
 //		//lbp.ComputeLBPFeatureVector_256_O(srcImage, Size(16, 16), featureVector);// 17.877541
 //		//lbp.ComputeLBPFeatureVector_256(srcImage, Size(16, 16), featureVector);// 17.640340
